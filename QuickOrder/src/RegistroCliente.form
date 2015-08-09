@@ -65,21 +65,19 @@
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="Label_Nickname" max="32767" attributes="0"/>
-                                      <Component id="Label_Nombre" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="Label_Apellido" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="Label_Email" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="Label_Direccion" alignment="0" min="-2" pref="49" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="Label_Nickname" min="-2" max="-2" attributes="0"/>
+                                  <Component id="Label_Nombre" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="Label_Apellido" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="Label_Email" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="Label_Fecha" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="Label_Direccion" alignment="0" min="-2" pref="95" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="Spinner_D" min="-2" pref="49" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="Label_Fecha_D" min="-2" pref="7" max="-2" attributes="0"/>
+                                      <Component id="Label_Fecha_D" min="-2" pref="15" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="Spinner_M" min="-2" pref="47" max="-2" attributes="0"/>
                                       <EmptySpace max="32767" attributes="0"/>
@@ -93,7 +91,7 @@
                                   <Component id="Text_Nombre" alignment="0" max="32767" attributes="0"/>
                                   <Component id="Text_Apellido" alignment="0" max="32767" attributes="0"/>
                                   <Component id="Text_Email" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="Text_Direccion" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                  <Component id="Text_Direccion" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
