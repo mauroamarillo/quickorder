@@ -8,8 +8,9 @@ import java.util.Map;
 import javax.swing.JPanel;
 
 public class PanelImagenes extends JPanel {
-
-    public PanelImagenes() {
+    RegistroRestaurante RR;
+    public PanelImagenes(RegistroRestaurante RR) {
+        this.RR=RR;
         setPreferredSize(new Dimension(170, 500));
     }
 

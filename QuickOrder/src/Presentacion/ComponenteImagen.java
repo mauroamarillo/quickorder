@@ -1,14 +1,16 @@
 package Presentacion;
 
 import Logica.FileController;
+import java.awt.BorderLayout;
 import java.awt.Image;
+import java.beans.PropertyVetoException;
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -20,7 +22,7 @@ import javax.swing.ImageIcon;
  * @author Jean
  */
 public class ComponenteImagen extends javax.swing.JPanel {
-
+    
     private final PanelImagenes contenedor;
     private final String Pach_Img;
     private final String nombre;
@@ -34,7 +36,6 @@ public class ComponenteImagen extends javax.swing.JPanel {
      * @param Pach_Img
      * @param contenedor
      */
-
     public ComponenteImagen(int index, String nombre, String Pach_Img, PanelImagenes contenedor) {
         initComponents();
         this.Pach_Img = Pach_Img;
@@ -49,7 +50,7 @@ public class ComponenteImagen extends javax.swing.JPanel {
         Text_Nombre.setText(nombre);
         this.contenedor = contenedor;
     }
-
+    
     public void GuardarImagen(String pach) {
         File destino = new File(pach + nombre);
         File foto = new File(Pach_Img);
@@ -58,7 +59,7 @@ public class ComponenteImagen extends javax.swing.JPanel {
         } catch (IOException ex) {
             Logger.getLogger(ComponenteImagen.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
     }
 
     /**
@@ -127,7 +128,21 @@ public class ComponenteImagen extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void Label_ImgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Label_ImgMouseClicked
-       
+        
+        Image img = new ImageIcon(Pach_Img).getImage();
+        Image newImg;
+        newImg = img.getScaledInstance(479, 306, java.awt.Image.SCALE_AREA_AVERAGING);
+        ImageIcon ico = new ImageIcon(newImg);
+        JLabel I = new JLabel();
+        I.setIcon(ico);
+        
+        JDialog d = new JDialog(this.contenedor.RR.ventanaPrincipal, true);
+        d.setLocationRelativeTo(null);
+        d.setMaximumSize(new java.awt.Dimension(479, 306));
+        d.setMinimumSize(new java.awt.Dimension(479, 306));
+        d.setPreferredSize(new java.awt.Dimension(479, 306));
+        d.add(I);
+        d.setVisible(true);
     }//GEN-LAST:event_Label_ImgMouseClicked
 
 

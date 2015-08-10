@@ -4,6 +4,7 @@ import Datos.Estructura;
 import java.awt.Dimension;
 import java.io.File;
 import java.sql.SQLException;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static javax.swing.JFileChooser.APPROVE_OPTION;
@@ -28,8 +29,9 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
      */
     QuickOrder ventanaPrincipal;
     private PanelCategorias PC = new PanelCategorias();
-    private PanelImagenes PI = new PanelImagenes();
+    private PanelImagenes PI = new PanelImagenes(this);
     File foto[] = null;
+    int idCat[];
 
     public RegistroRestaurante(QuickOrder vp) {
 
@@ -37,6 +39,7 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
         initComponents();
 
         disponerCategorias();
+
         Scroll_Categorias.setViewportView(PC);
         Scroll_Categorias.setPreferredSize(new Dimension(192, 233));
         Scroll_Imagenes.setViewportView(PI);
@@ -49,8 +52,8 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
 
     private void disponerCategorias() {
         /*  aca tiene que llegar una coleccion con las categorias y sus id 
-            cuando la logica este implementado correctamente se corregira
-        */
+         cuando la logica este implementado correctamente se corregira
+         */
         Estructura es = ventanaPrincipal.est;
         try {
             java.sql.ResultSet rs = es.consultarCategorias();
@@ -265,8 +268,13 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
 
     private void Button_RegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_RegistrarActionPerformed
         //registrar
-        PI.GuardarColeccion(Text_Nickname.getText());
-       // JOptionPane.showMessageDialog(this, "- ERROR -", "Error", JOptionPane.ERROR_MESSAGE);
+        idCat = PC.getCategorias();
+        String aux = "";
+        for (int x = 0; x < idCat.length; x++) {
+            aux += idCat[x] + " - ";
+        }
+        JOptionPane.showMessageDialog(this, aux, "categorias", JOptionPane.DEFAULT_OPTION);
+        // PI.GuardarColeccion(Text_Nickname.getText());
     }//GEN-LAST:event_Button_RegistrarActionPerformed
 
 

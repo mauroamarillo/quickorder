@@ -15,15 +15,23 @@ public class ComponenteCategoria extends javax.swing.JPanel {
     /**
      * Creates new form ComponenteCategoria
      *
-     * @param index
-     * @param nombre
-     */
-    public ComponenteCategoria(int index,String nombre) {
-        initComponents();
-        jCheckBox1.setText(index+" - "+nombre);
-        this.jCheckBox1.setActionCommand("key_" + index);
-    }
 
+     */
+    private final int index;
+    private final String nombre;
+    public ComponenteCategoria(int index,String nombre) {
+       initComponents();
+        this.index = index;
+        this.nombre = nombre;
+        valor.setText(this.index+" - "+nombre);
+        this.valor.setActionCommand("key_" + index);
+    }
+    public javax.swing.JCheckBox getValor(){
+        return valor;
+    }
+    public int getIndex(){
+        return index;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,28 +41,28 @@ public class ComponenteCategoria extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jCheckBox1 = new javax.swing.JCheckBox();
+        valor = new javax.swing.JCheckBox();
 
         setMaximumSize(new java.awt.Dimension(120, 30));
         setMinimumSize(new java.awt.Dimension(140, 30));
 
-        jCheckBox1.setText("Nombre Categoria");
-        jCheckBox1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        valor.setText("Nombre Categoria");
+        valor.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jCheckBox1, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+            .addComponent(valor, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jCheckBox1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(valor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox valor;
     // End of variables declaration//GEN-END:variables
 }
