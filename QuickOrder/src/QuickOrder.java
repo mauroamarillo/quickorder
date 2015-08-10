@@ -7,6 +7,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
+import Datos.Estructura;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -86,11 +87,11 @@ public class QuickOrder extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
+            .addGap(0, 1200, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 579, Short.MAX_VALUE)
+            .addGap(0, 779, Short.MAX_VALUE)
         );
 
         pack();
@@ -142,6 +143,10 @@ public class QuickOrder extends javax.swing.JFrame {
                 new QuickOrder().setVisible(true);
             }
         });
+        
+        Estructura est = new Estructura();
+        est.generarSt();
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
