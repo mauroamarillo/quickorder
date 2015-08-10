@@ -29,11 +29,4 @@ public class Estructura {
             return null;
         }
     }
-    public ResultSet consultarCategorias() throws SQLException{
-        String seleccion = "SELECT * ";
-        seleccion +="FROM categorias ";     
-        ResultSet rs = st.executeQuery(seleccion);
-        return rs;
-    }
-    
 }
