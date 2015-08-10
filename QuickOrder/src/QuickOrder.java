@@ -4,6 +4,7 @@ import java.beans.PropertyVetoException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import Datos.Estructura;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -192,6 +193,10 @@ public class QuickOrder extends javax.swing.JFrame {
                 new QuickOrder().setVisible(true);
             }
         });
+        
+        Estructura est = new Estructura();
+        est.generarSt();
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
