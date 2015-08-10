@@ -1,4 +1,6 @@
+package Presentacion;
 
+import Logica.FileController;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
@@ -136,9 +138,7 @@ public class RegistroCliente extends javax.swing.JInternalFrame implements Inter
         Label_Fecha_A.setText("A");
 
         Label_resultadoImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/perfil.jpg"))); // NOI18N
-        Label_resultadoImg.setMinimumSize(new java.awt.Dimension(150, 150));
         Label_resultadoImg.setName(""); // NOI18N
-        Label_resultadoImg.setPreferredSize(new java.awt.Dimension(150, 150));
         Label_resultadoImg.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 Label_resultadoImgMouseClicked(evt);
@@ -173,7 +173,7 @@ public class RegistroCliente extends javax.swing.JInternalFrame implements Inter
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                        .addComponent(Label_resultadoImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Label_resultadoImg)
                         .addGap(100, 100, 100))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -215,7 +215,7 @@ public class RegistroCliente extends javax.swing.JInternalFrame implements Inter
             .addGroup(layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Label_resultadoImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Label_resultadoImg)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)

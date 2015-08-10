@@ -1,3 +1,5 @@
+package Logica;
+
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -7,9 +9,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 
-abstract class FileController {
+public abstract class FileController {
     
-    static void copiarArchivo(File source, File dest) throws IOException {
+    public static void copiarArchivo(File source, File dest) throws IOException {
         Files.copy(source.toPath(), dest.toPath());
     }
     
@@ -20,7 +22,7 @@ abstract class FileController {
     por eso lo dejo aca tambien
     */
     
-    static void copyFileUsingFileStreams(File source, File dest) throws IOException {
+    public static void copyFileUsingFileStreams(File source, File dest) throws IOException {
 	InputStream input = null;
 	OutputStream output = null;
 	try {
