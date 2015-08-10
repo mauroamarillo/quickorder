@@ -33,7 +33,7 @@ public class ComponenteCategoria extends javax.swing.JPanel {
 
         jCheckBox1 = new javax.swing.JCheckBox();
 
-        setMaximumSize(new java.awt.Dimension(140, 30));
+        setMaximumSize(new java.awt.Dimension(120, 30));
         setMinimumSize(new java.awt.Dimension(140, 30));
 
         jCheckBox1.setText("Nombre Categoria");

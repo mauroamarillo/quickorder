@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 public class PanelCategorias extends JPanel {
 
     public PanelCategorias(){
-       setPreferredSize(new Dimension(187, 0));
+       setPreferredSize(new Dimension(170, 0));
     }
     
     private int pos = 1;
@@ -17,7 +17,7 @@ public class PanelCategorias extends JPanel {
     public void AgregarCategoria(int index, String nombre) {
         //instancia nueva a componente
         int x = pos * 26;
-        setPreferredSize(new Dimension(187, x));
+        setPreferredSize(new Dimension(170, x));
         ComponenteCategoria CC = new ComponenteCategoria(index, nombre);
         this.add(CC);//se añade al jpanel
         this.validate();
