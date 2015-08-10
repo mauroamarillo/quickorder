@@ -19,7 +19,7 @@ import Datos.Estructura;
 public class QuickOrder extends javax.swing.JFrame {
 
     private boolean operando = false;
-
+/*ppuuuasdasd*/
     public QuickOrder() {
         this.est = new Estructura();
         est.generarSt();
