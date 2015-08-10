@@ -22,7 +22,7 @@ public class Configuracion {
     }
     
     public void conectarBD(){
-        String url = "jdbc:postgresql://localhost:5432/Laboratorio";
+        String url = "jdbc:postgresql://localhost:5433/quickorderDB";
         String usuario = "postgres";
         String contrasenia = "1234";
         
