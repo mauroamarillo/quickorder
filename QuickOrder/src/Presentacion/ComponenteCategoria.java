@@ -20,7 +20,7 @@ public class ComponenteCategoria extends javax.swing.JPanel {
      */
     public ComponenteCategoria(int index,String nombre) {
         initComponents();
-        jCheckBox1.setText(nombre);
+        jCheckBox1.setText(index+" - "+nombre);
         this.jCheckBox1.setActionCommand("key_" + index);
     }
 

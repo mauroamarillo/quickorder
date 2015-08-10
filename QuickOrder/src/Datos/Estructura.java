@@ -10,7 +10,8 @@ package Datos;
  * @author usuario
  */
 
-import Datos.Configuracion;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Estructura {
@@ -28,4 +29,11 @@ public class Estructura {
             return null;
         }
     }
+    public ResultSet consultarCategorias() throws SQLException{
+        String seleccion = "SELECT * ";
+        seleccion +="FROM categorias ";     
+        ResultSet rs = st.executeQuery(seleccion);
+        return rs;
+    }
+    
 }

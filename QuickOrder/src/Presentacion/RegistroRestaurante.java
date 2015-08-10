@@ -1,8 +1,11 @@
 package Presentacion;
 
-
+import Datos.Estructura;
 import java.awt.Dimension;
 import java.io.File;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static javax.swing.JFileChooser.APPROVE_OPTION;
 import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameEvent;
@@ -37,7 +40,7 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
         Scroll_Categorias.setViewportView(PC);
         Scroll_Categorias.setPreferredSize(new Dimension(192, 233));
         Scroll_Imagenes.setViewportView(PI);
-        Scroll_Imagenes.setPreferredSize(new Dimension(245,233));
+        Scroll_Imagenes.setPreferredSize(new Dimension(245, 233));
         this.setLocation(200, 50);
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         this.addInternalFrameListener(this);
@@ -45,12 +48,17 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
     }
 
     private void disponerCategorias() {
-        /*aca en vez de un bucle con 20 numeros se recorren las categorias obtenidas de la base de datos
-         La X seria para el ID de categoria y donde dice categoria va el nombre*/
-        int x, y = 10;
-
-        for (x = 0; x < y; x++) {
-            PC.AgregarCategoria(x, "Categoria " + x);
+        /*  aca tiene que llegar una coleccion con las categorias y sus id 
+            cuando la logica este implementado correctamente se corregira
+        */
+        Estructura es = ventanaPrincipal.est;
+        try {
+            java.sql.ResultSet rs = es.consultarCategorias();
+            while (rs.next()) {
+                PC.AgregarCategoria(rs.getInt("idcategoria"), rs.getString("categoria"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RegistroRestaurante.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -257,7 +265,8 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
 
     private void Button_RegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_RegistrarActionPerformed
         //registrar
-        JOptionPane.showMessageDialog(this, "- ERROR -", "Error", JOptionPane.ERROR_MESSAGE);
+        PI.GuardarColeccion(Text_Nickname.getText());
+       // JOptionPane.showMessageDialog(this, "- ERROR -", "Error", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_Button_RegistrarActionPerformed
 
 

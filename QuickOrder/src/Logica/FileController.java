@@ -16,7 +16,7 @@ public abstract class FileController {
     }
     
     /*
-    Encontre otras 3 formas de copiar archivos
+    Encontre otras 3 formas mas de copiar archivos
     por lo que lei capas la siguiente sirve 
     mas al momento de implementar el servidor
     por eso lo dejo aca tambien

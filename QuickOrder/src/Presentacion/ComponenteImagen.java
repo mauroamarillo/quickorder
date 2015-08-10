@@ -1,7 +1,13 @@
 package Presentacion;
 
-
+import Logica.FileController;
 import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /*
@@ -16,6 +22,9 @@ import javax.swing.ImageIcon;
 public class ComponenteImagen extends javax.swing.JPanel {
 
     private final PanelImagenes contenedor;
+    private final String Pach_Img;
+    private final String nombre;
+    private final int index;
 
     /**
      * Creates new form ComponenteImagen
@@ -25,8 +34,12 @@ public class ComponenteImagen extends javax.swing.JPanel {
      * @param Pach_Img
      * @param contenedor
      */
+
     public ComponenteImagen(int index, String nombre, String Pach_Img, PanelImagenes contenedor) {
         initComponents();
+        this.Pach_Img = Pach_Img;
+        this.nombre = nombre;
+        this.index = index;
         this.jButton1.setActionCommand("key_" + index);
         Image img = new ImageIcon(Pach_Img).getImage();
         Image newImg;
@@ -35,6 +48,17 @@ public class ComponenteImagen extends javax.swing.JPanel {
         Label_Img.setIcon(ico);
         Text_Nombre.setText(nombre);
         this.contenedor = contenedor;
+    }
+
+    public void GuardarImagen(String pach) {
+        File destino = new File(pach + nombre);
+        File foto = new File(Pach_Img);
+        try {
+            FileController.copiarArchivo(foto, destino);
+        } catch (IOException ex) {
+            Logger.getLogger(ComponenteImagen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     /**
@@ -57,6 +81,11 @@ public class ComponenteImagen extends javax.swing.JPanel {
         Label_Img.setMaximumSize(new java.awt.Dimension(55, 55));
         Label_Img.setMinimumSize(new java.awt.Dimension(55, 55));
         Label_Img.setPreferredSize(new java.awt.Dimension(55, 55));
+        Label_Img.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Label_ImgMouseClicked(evt);
+            }
+        });
 
         jButton1.setText("Borrar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -93,8 +122,13 @@ public class ComponenteImagen extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.setVisible(false);
-        contenedor.remove(this);
+        contenedor.borrarImagen(this.index);
+        contenedor.validate();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void Label_ImgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Label_ImgMouseClicked
+       
+    }//GEN-LAST:event_Label_ImgMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

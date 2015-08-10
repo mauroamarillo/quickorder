@@ -22,9 +22,9 @@ public class Configuracion {
     }
     
     public void conectarBD(){
-        String url = "jdbc:postgresql://localhost:5432/prueba2";
+        String url = "jdbc:postgresql://localhost:5432/Laboratorio";
         String usuario = "postgres";
-        String contrasenia = "postgres";
+        String contrasenia = "1234";
         
         if (conexion != null)
             return;
@@ -36,7 +36,7 @@ public class Configuracion {
             //JOptionPane.showMessageDialog(null, ":)");
         }
         catch(Exception e){
-            JOptionPane.showMessageDialog(null, "ERROR: No se ha podido conectar a la base de datos","ERROR",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "ERROR: No se ha podido conectar a la base de datos"+e,"ERROR",JOptionPane.ERROR_MESSAGE);
         }
     }
 }

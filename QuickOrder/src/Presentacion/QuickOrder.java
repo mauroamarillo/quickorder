@@ -11,6 +11,7 @@ import Datos.Estructura;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 /**
  *
  * @author Jean
@@ -19,11 +20,9 @@ public class QuickOrder extends javax.swing.JFrame {
 
     private boolean operando = false;
 
-    /**
-     * Creates new form QuickOrder
-     */
     public QuickOrder() {
-
+        this.est = new Estructura();
+        est.generarSt();
         initComponents();
         setResizable(false);
         setLocationRelativeTo(null);
@@ -154,16 +153,15 @@ public class QuickOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu1KeyPressed
 
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
-       
+
     }//GEN-LAST:event_jMenu1ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-      
+
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    Estructura est;
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -194,10 +192,7 @@ public class QuickOrder extends javax.swing.JFrame {
                 new QuickOrder().setVisible(true);
             }
         });
-        
-        Estructura est = new Estructura();
-        est.generarSt();
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
