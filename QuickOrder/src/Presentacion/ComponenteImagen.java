@@ -1,9 +1,7 @@
 package Presentacion;
 
 import Logica.FileController;
-import java.awt.BorderLayout;
 import java.awt.Image;
-import java.beans.PropertyVetoException;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -24,7 +22,7 @@ import javax.swing.JLabel;
 public class ComponenteImagen extends javax.swing.JPanel {
     
     private final PanelImagenes contenedor;
-    private final String Pach_Img;
+    private final String Path_Img;
     private final String nombre;
     private final int index;
 
@@ -33,16 +31,16 @@ public class ComponenteImagen extends javax.swing.JPanel {
      *
      * @param index
      * @param nombre
-     * @param Pach_Img
+     * @param Path_Img
      * @param contenedor
      */
-    public ComponenteImagen(int index, String nombre, String Pach_Img, PanelImagenes contenedor) {
+    public ComponenteImagen(int index, String nombre, String Path_Img, PanelImagenes contenedor) {
         initComponents();
-        this.Pach_Img = Pach_Img;
+        this.Path_Img = Path_Img;
         this.nombre = nombre;
         this.index = index;
         this.jButton1.setActionCommand("key_" + index);
-        Image img = new ImageIcon(Pach_Img).getImage();
+        Image img = new ImageIcon(Path_Img).getImage();
         Image newImg;
         newImg = img.getScaledInstance(55, 55, java.awt.Image.SCALE_FAST);
         ImageIcon ico = new ImageIcon(newImg);
@@ -51,9 +49,9 @@ public class ComponenteImagen extends javax.swing.JPanel {
         this.contenedor = contenedor;
     }
     
-    public void GuardarImagen(String pach) {
-        File destino = new File(pach + nombre);
-        File foto = new File(Pach_Img);
+    public void GuardarImagen(String path) {
+        File destino = new File(path + nombre);
+        File foto = new File(Path_Img);
         try {
             FileController.copiarArchivo(foto, destino);
         } catch (IOException ex) {
@@ -129,13 +127,12 @@ public class ComponenteImagen extends javax.swing.JPanel {
 
     private void Label_ImgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Label_ImgMouseClicked
         
-        Image img = new ImageIcon(Pach_Img).getImage();
+        Image img = new ImageIcon(Path_Img).getImage();
         Image newImg;
         newImg = img.getScaledInstance(479, 306, java.awt.Image.SCALE_AREA_AVERAGING);
         ImageIcon ico = new ImageIcon(newImg);
         JLabel I = new JLabel();
-        I.setIcon(ico);
-        
+        I.setIcon(ico);       
         JDialog d = new JDialog(this.contenedor.RR.ventanaPrincipal, true);
         d.setLocationRelativeTo(null);
         d.setMaximumSize(new java.awt.Dimension(479, 306));

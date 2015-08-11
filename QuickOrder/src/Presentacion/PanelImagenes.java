@@ -16,31 +16,31 @@ public class PanelImagenes extends JPanel {
 
     private int pos = 1;
     //Nos sirve para almacenar a los objetos creados
-    private final Map nota = new HashMap();
+    private final Map IMGs = new HashMap();
 
     public void AgregarImagen(int index, String nombre, String Pach_Img) {
         pos++;
+        this.RR.getTTT().setText(""+pos);
         int x = pos * 100;
-        setSize(new Dimension(170, x));
+        this.setPreferredSize(new Dimension(170, x));
         ComponenteImagen CI = new ComponenteImagen(index, nombre, Pach_Img, this);
         this.add(CI);
         this.validate();
-        this.nota.put("key_" + index, CI);
-
+        this.IMGs.put("key_" + index, CI);
     }
-
     public void GuardarColeccion(String nickRestaurant) {
-        String pach = "C:\\imagenes\\" + nickRestaurant+"\\";
-        new File(pach).mkdirs();
-        Iterator it = nota.entrySet().iterator();
+        String path = "C:\\imagenes\\" + nickRestaurant+"\\";
+        new File(path).mkdirs();
+        Iterator it = IMGs.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
             ComponenteImagen CI = ((ComponenteImagen) entry.getValue());
-            CI.GuardarImagen(pach);
+            CI.GuardarImagen(path);
         }
     }
     public void borrarImagen(int key){
-       nota.remove("key_" + key);
+       pos--;
+       IMGs.remove("key_" + key);
     }
     /*
      // este codigo lo dejo porque se ve como se hace la iteracion y puede servir para devolver todos las imagenes
@@ -48,7 +48,7 @@ public class PanelImagenes extends JPanel {
      //se obtiene el comando ejecutado
      String comando = e.getActionCommand();
      //se recorre el MAP
-     Iterator it = nota.entrySet().iterator();
+     Iterator it = IMGs.entrySet().iterator();
      while (it.hasNext()) {
      Map.Entry entry = (Map.Entry) it.next();
      //se obtiene el KEY -> identificador unico

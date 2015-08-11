@@ -4,6 +4,8 @@ import Datos.Estructura;
 import java.awt.Dimension;
 import java.io.File;
 import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,18 +53,17 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
     }
 
     private void disponerCategorias() {
-        /*  aca tiene que llegar una coleccion con las categorias y sus id 
-         cuando la logica este implementado correctamente se corregira
-         */
-        Estructura es = ventanaPrincipal.est;
-        try {
-            java.sql.ResultSet rs = es.consultarCategorias();
-            while (rs.next()) {
-                PC.AgregarCategoria(rs.getInt("idcategoria"), rs.getString("categoria"));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(RegistroRestaurante.class.getName()).log(Level.SEVERE, null, ex);
+        /*pido las categorias al ControladorUsuario*/
+        Map categorias = ventanaPrincipal.CU.consultarCategorias();
+        Iterator it = categorias.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            PC.AgregarCategoria(((int) entry.getKey()), ((String) entry.getValue()));
         }
+    }
+
+    public javax.swing.JTextField getTTT() {
+        return Text_Nickname;
     }
 
     /**
@@ -203,11 +204,13 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
                                     .addComponent(Text_Email)
                                     .addComponent(Text_Direccion)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(Label_Imagenes)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton1)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(Scroll_Imagenes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(Label_Imagenes)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jButton1))
+                                            .addComponent(Scroll_Imagenes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(0, 0, Short.MAX_VALUE)))))
                         .addGap(76, 76, 76))))
         );
         layout.setVerticalGroup(
@@ -287,9 +290,9 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
         int option = jFileChooser1.showOpenDialog(this);
         if (APPROVE_OPTION == option) {
             cantImg++;
-            String pach = jFileChooser1.getSelectedFile().getPath();
+            String path = jFileChooser1.getSelectedFile().getPath();
             String nombre = jFileChooser1.getSelectedFile().getName();
-            PI.AgregarImagen(cantImg, nombre, pach);
+            PI.AgregarImagen(cantImg, nombre, path);
             /*ImageIcon icon = new ImageIcon(fil);
              Image img = new ImageIcon(fil).getImage();
              Image newImg;

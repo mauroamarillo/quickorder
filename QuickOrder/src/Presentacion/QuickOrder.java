@@ -1,11 +1,12 @@
 package Presentacion;
 
+import Logica.ControladorUsuario;
 import java.awt.BorderLayout;
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import Datos.Estructura;
+import javax.swing.UnsupportedLookAndFeelException;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -19,12 +20,23 @@ import Datos.Estructura;
 public class QuickOrder extends javax.swing.JFrame {
 
     private boolean operando = false;
-/*
-codigo para ver si anda bien esto
-*/
+    ControladorUsuario CU = new ControladorUsuario();
+    /*
+     codigo para ver si anda bien esto
+     */
+
     public QuickOrder() {
-        this.est = new Estructura();
-        est.generarSt();
+        try {
+            javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
+        }
         initComponents();
         setResizable(false);
         setLocationRelativeTo(null);
@@ -161,8 +173,6 @@ codigo para ver si anda bien esto
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
 
     }//GEN-LAST:event_jMenuItem4ActionPerformed
-
-    Estructura est;
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

@@ -14,7 +14,6 @@ public abstract class FileController {
     public static void copiarArchivo(File source, File dest) throws IOException {
         Files.copy(source.toPath(), dest.toPath());
     }
-    
     /*
     Encontre otras 3 formas mas de copiar archivos
     por lo que lei capas la siguiente sirve 

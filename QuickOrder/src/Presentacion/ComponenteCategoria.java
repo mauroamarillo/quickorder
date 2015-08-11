@@ -15,7 +15,6 @@ public class ComponenteCategoria extends javax.swing.JPanel {
     /**
      * Creates new form ComponenteCategoria
      *
-
      */
     private final int index;
     private final String nombre;

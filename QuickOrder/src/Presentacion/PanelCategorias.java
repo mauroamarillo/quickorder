@@ -12,10 +12,10 @@ public class PanelCategorias extends JPanel {
     public PanelCategorias() {
         setPreferredSize(new Dimension(170, 0));
     }
-
+    
     private int pos = 1;
     //Nos sirve para almacenar a los objetos creados
-    private final Map nota = new HashMap();
+    private final Map CATs = new HashMap();
     //private int idCat[] = null;
  
     public void AgregarCategoria(int index, String nombre) {
@@ -26,14 +26,14 @@ public class PanelCategorias extends JPanel {
         this.add(CC);//se añade al jpanel
         this.validate();
         //se añade al MAP
-        this.nota.put("key_" + index, CC);
+        this.CATs.put("key_" + index, CC);
         //se incrementa contador de componentes
         pos++;
     }
     /*obtener las categorias seleccionadas*/
     public int[] getCategorias() {
         int x = 0, y = 0;
-        Iterator it = nota.entrySet().iterator();
+        Iterator it = CATs.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
             ComponenteCategoria CC = ((ComponenteCategoria) entry.getValue());
@@ -42,7 +42,7 @@ public class PanelCategorias extends JPanel {
             }
         }
         int[] idCat = new int[x];
-        it = nota.entrySet().iterator();
+        it = CATs.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
             ComponenteCategoria CC = ((ComponenteCategoria) entry.getValue());

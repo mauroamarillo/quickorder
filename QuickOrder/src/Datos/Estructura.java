@@ -10,12 +10,12 @@ package Datos;
  * @author usuario
  */
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Estructura {
     private Statement st;
+    
+    
     
     public Statement generarSt(){
         Configuracion config = new Configuracion();

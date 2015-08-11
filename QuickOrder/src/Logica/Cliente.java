@@ -11,14 +11,15 @@ package Logica;
  */
 
 import java.sql.Date;
+import java.util.HashMap;
 
 public class Cliente extends Usuario {
     private String apellido;
     private Date fechaNac;
-    private Imagen imagen;
-    private Lista pedidos;
+    private String imagen;
+    private HashMap pedidos;
     
-    public Cliente(String nickname, String nombre, String email, String direccion, String apellido, Date fechaNac, Imagen imagen, Lista pedidos){
+    public Cliente(String nickname, String nombre, String email, String direccion, String apellido, Date fechaNac, String imagen, HashMap pedidos){
         super(nickname,nombre,email,direccion);
         this.apellido = apellido;
         this.fechaNac = fechaNac;
@@ -34,11 +35,11 @@ public class Cliente extends Usuario {
         return fechaNac;
     }
     
-    public Imagen getImagen(){
+    public String getImagen(){
         return imagen;
     }
     
-    public Lista getPedidos(){
+    public HashMap getPedidos(){
         return pedidos;
     }
     
@@ -50,11 +51,11 @@ public class Cliente extends Usuario {
         this.fechaNac = fechaNac;
     }
     
-    public void setImagen(Imagen imagen){
+    public void setImagen(String imagen){
         this.imagen = imagen;
     }
     
-    public void setPedidos(Lista pedidos){
+    public void setPedidos(HashMap pedidos){
         this.pedidos = pedidos;
     }
     
