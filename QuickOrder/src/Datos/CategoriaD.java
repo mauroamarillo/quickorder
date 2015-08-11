@@ -24,7 +24,7 @@ public class CategoriaD {
         return rs;
     }
     
-    public int agregarCategoria(String nombre) throws SQLException{
+    public int insertCategoria(String nombre) throws SQLException{
         String insert = "INSERT INTO categorias(nombre) VALUES('"+ nombre +"');";
         st.execute(insert);
         return 0;
