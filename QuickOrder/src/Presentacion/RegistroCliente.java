@@ -281,7 +281,6 @@ public class RegistroCliente extends javax.swing.JInternalFrame implements Inter
         if (APPROVE_OPTION == option) {
             foto = jFileChooser1.getSelectedFile();
             String fil = jFileChooser1.getSelectedFile().getPath();
-            //ImageIcon icon = new ImageIcon(fil);
             Image img = new ImageIcon(fil).getImage();
             Image newImg;
             newImg = img.getScaledInstance(150, 150, java.awt.Image.SCALE_FAST);
@@ -298,7 +297,7 @@ public class RegistroCliente extends javax.swing.JInternalFrame implements Inter
         try {
             fechaSQL = new java.sql.Date(formatter.parse(fechaTexo).getTime());
             ventanaPrincipal.CU.insertarCliente(Text_Nickname.getText(), Text_Email.getText(), Text_Direccion.getText(), Text_Nombre.getText(), Text_Apellido.getText(), fechaSQL, foto);
-            JOptionPane.showMessageDialog(this, "Restaurante registrado", "- EXITO -", JOptionPane.DEFAULT_OPTION);
+            JOptionPane.showMessageDialog(this, "Cliente registrado", "- EXITO -", JOptionPane.DEFAULT_OPTION);
             ventanaPrincipal.setOperando(false);
             this.dispose();
         } catch (ParseException ex) {

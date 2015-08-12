@@ -44,6 +44,10 @@ public class ControladorUsuario {
         }
         validarDatosC(C);
         UsuarioDatos.agregarCliente(C);
+        if (img != null) {
+            File destino = new File("C:\\imagenes\\" + nick + ".jpg");
+            FileController.copiarArchivo(img, destino);
+        }
     }
 
     public void insertarRestaurante(String nick, String email, String dir, String nombre, HashMap IMGs, int cat[]) throws SQLException, Exception {
