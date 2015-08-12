@@ -5,18 +5,19 @@
  */
 package Logica;
 
+import java.util.HashMap;
+
 /**
  *
  * @author usuario
  */
 public class Restaurante extends Usuario {
-    private Lista categorias;
-    private Lista individuales;
-    private Lista promociones;
-    private Lista imagenes;
-
+    private HashMap categorias;
+    private HashMap individuales;
+    private HashMap promociones;
+    private HashMap imagenes;
  
-    public Restaurante(String nickname, String nombre, String email, String direccion, Lista categorias, Lista individuales, Lista promociones, Lista imagenes){
+    public Restaurante(String nickname, String nombre, String email, String direccion, HashMap categorias, HashMap individuales, HashMap promociones, HashMap imagenes){
         super(nickname,nombre,email,direccion);
         this.categorias = categorias;
         this.individuales = individuales;
@@ -26,31 +27,31 @@ public class Restaurante extends Usuario {
 
    
     
-    public Lista getCategorias(){
+    public HashMap getCategorias(){
         return categorias;
     }
     
-    public Lista getIndividuales(){
+    public HashMap getIndividuales(){
         return individuales;
     }
     
-    public Lista getPromociones(){
+    public HashMap getPromociones(){
         return promociones;
     }
     
-    public void setCategorias(Lista categorias){
+    public void setCategorias(HashMap categorias){
         this.categorias = categorias;
     }
     
-    public void setIndividuales(Lista individuales){
+    public void setIndividuales(HashMap individuales){
         this.individuales = individuales;
     }
     
-    public void setPromociones(Lista promociones){
+    public void setPromociones(HashMap promociones){
         this.promociones = promociones;
     }
     
-    public void setImagenes(Lista imagenes){
+    public void setImagenes(HashMap imagenes){
         this.imagenes = imagenes;
     }
     

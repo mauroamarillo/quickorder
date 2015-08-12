@@ -58,10 +58,13 @@ public class QuickOrder extends javax.swing.JFrame {
 
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        Registros = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         Menu_RCliente = new javax.swing.JMenuItem();
         Menu_RRestaurante = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        Menu_RIndividual = new javax.swing.JMenuItem();
+        Menu_RPromocion = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
 
@@ -82,7 +85,7 @@ public class QuickOrder extends javax.swing.JFrame {
         });
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Registros");
+        Registros.setText("Registros");
 
         jMenu4.setText("Registrar Usuario");
 
@@ -104,7 +107,22 @@ public class QuickOrder extends javax.swing.JFrame {
         });
         jMenu4.add(Menu_RRestaurante);
 
-        jMenu2.add(jMenu4);
+        Registros.add(jMenu4);
+
+        jMenu5.setText("Registrar Producto");
+
+        Menu_RIndividual.setText("Individual");
+        Menu_RIndividual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Menu_RIndividualActionPerformed(evt);
+            }
+        });
+        jMenu5.add(Menu_RIndividual);
+
+        Menu_RPromocion.setText("Promocion");
+        jMenu5.add(Menu_RPromocion);
+
+        Registros.add(jMenu5);
 
         jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem4.setText("Registrar Pedido");
@@ -113,9 +131,9 @@ public class QuickOrder extends javax.swing.JFrame {
                 jMenuItem4ActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem4);
+        Registros.add(jMenuItem4);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(Registros);
 
         jMenu3.setText("Información");
         jMenuBar1.add(jMenu3);
@@ -174,6 +192,19 @@ public class QuickOrder extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    private void Menu_RIndividualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Menu_RIndividualActionPerformed
+        if (!operando) {
+            RegistroIndividual registroIndividual = new RegistroIndividual(this);
+            this.add(registroIndividual, BorderLayout.CENTER);
+            try {
+                registroIndividual.setSelected(true);
+                operando = true;
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_Menu_RIndividualActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -209,11 +240,14 @@ public class QuickOrder extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem Menu_RCliente;
+    private javax.swing.JMenuItem Menu_RIndividual;
+    private javax.swing.JMenuItem Menu_RPromocion;
     private javax.swing.JMenuItem Menu_RRestaurante;
+    private javax.swing.JMenu Registros;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem4;
     // End of variables declaration//GEN-END:variables

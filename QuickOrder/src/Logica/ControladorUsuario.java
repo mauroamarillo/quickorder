@@ -6,8 +6,11 @@ import java.io.File;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,7 +18,7 @@ import java.util.logging.Logger;
  */
 public class ControladorUsuario {
 
-    CategoriaD categoriaDatos = new CategoriaD();
+    CategoriaD CategoriaDatos = new CategoriaD();
     UsuarioD UsuarioDatos = new UsuarioD();
 
     public ControladorUsuario() {
@@ -25,7 +28,7 @@ public class ControladorUsuario {
         HashMap resultado = new HashMap();
         java.sql.ResultSet rs;
         try {
-            rs = categoriaDatos.consultarCategorias();
+            rs = CategoriaDatos.consultarCategorias();
             while (rs.next()) {
                 resultado.put(rs.getInt("idCat"), rs.getString("nombre"));
             }
@@ -106,6 +109,50 @@ public class ControladorUsuario {
             throw new Exception("Email Ocupado");
         }
 
+    }
+
+    public HashMap retornarRestaurantes() throws SQLException {
+        HashMap resultado = new HashMap();
+        java.sql.ResultSet rs = UsuarioDatos.listarRestaurantes();
+        while (rs.next()) {
+            Restaurante R = new Restaurante(rs.getString("nickname"), rs.getString("nombre"), rs.getString("email"), rs.getString("direccion"), null, null, null, null);
+            resultado.put(R.getNickname(), R);
+        }
+        Iterator it = resultado.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            Restaurante R = ((Restaurante) entry.getValue());
+            R.setImagenes(retornarIMGsRestaurantes(R.nickname));
+        }
+        it = resultado.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            Restaurante R = ((Restaurante) entry.getValue());
+            R.setImagenes(retornarIMGsRestaurantes(R.nickname));
+        }
+        return resultado;
+    }
+
+    public HashMap retornarIMGsRestaurantes(String nick) throws SQLException {
+        HashMap resultado = new HashMap();
+        java.sql.ResultSet rs = UsuarioDatos.listarIMGsRestaurante(nick);
+        int index = 1;
+        while (rs.next()) {
+            Imagen I = new Imagen(rs.getString("path"));
+            resultado.put(index, I);
+            index++;
+        }
+        return resultado;
+    }
+
+    public HashMap retornarCategoriasRestaurantes(String nick) throws SQLException {
+        HashMap resultado = new HashMap();
+        java.sql.ResultSet rs = CategoriaDatos.listarCatsRestaurante(nick);
+        while (rs.next()) {
+            Categoria C = new Categoria(rs.getString("nombre"));
+            resultado.put(C.getNombre(), C);
+        }
+        return resultado;
     }
 
 }

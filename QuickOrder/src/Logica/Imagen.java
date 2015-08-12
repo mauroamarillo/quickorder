@@ -10,13 +10,18 @@ package Logica;
  * @author usuario
  */
 public class Imagen implements ICollectible {
+
     private String path;
-    
-    public String getPath(){
+
+    public Imagen(String path) {
+        this.path = path;
+    }
+
+    public String getPath() {
         return path;
     }
-    
-    public void setPath(String path){
+
+    public void setPath(String path) {
         this.path = path;
     }
 }

@@ -13,19 +13,11 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class UsuarioD {
 
     private final Estructura es = new Estructura();
     private final Statement st = es.generarSt();
-    /*public ResultSet consultarDatosUsuario() throws SQLException {
-     String seleccion = "SELECT * FROM categorias ";
-     ResultSet rs = st.executeQuery(seleccion);
-     return rs;
-     }
-     */
 
     public boolean nickOcupado(String nick) throws SQLException {
         String query = "SELECT nickname FROM usuarios WHERE nickname = '" + nick + "';";
@@ -75,19 +67,35 @@ public class UsuarioD {
             Map.Entry entry = (Map.Entry) it.next();
             String path = ((String) entry.getValue());
             String Imagen = "INSERT INTO imagenes (path)"
-                    + "VALUES('" + path + "') RETURNING \"idImg\"";
+                    + "VALUES('" + path + "') RETURNING \"idImg\";";
             ResultSet rs = st.executeQuery(Imagen);
             rs.next();
             Imagen = " INSERT INTO restaurantes_imagenes(restaurante,imagen)"
-                    + " VALUES('" + R.getNickname() + "','" + rs.getString("idImg") + "')";
+                    + " VALUES('" + R.getNickname() + "','" + rs.getString("idImg") + "');";
             st.execute(Imagen);
         }
         /*Asocio el restaurante con sus categorias*/
         for (int x = 0; x < cat.length; x++) {
             String categoria = "INSERT INTO restaurantes_categorias(restaurante,categoria) "
-                    + "VALUES('" + R.getNickname() + "','" + cat[x] + "')";
+                    + "VALUES('" + R.getNickname() + "','" + cat[x] + "');";
             st.execute(categoria);
         }
         return 0;
     }
+
+    public ResultSet listarRestaurantes() throws SQLException {
+        String query = " SELECT * "
+                + " FROM usuarios u, restaurantes r"
+                + " WHERE u.nickname = r.\"nicknameR\";";
+        return st.executeQuery(query);
+    }
+
+    public ResultSet listarIMGsRestaurante(String nick) throws SQLException {
+        String query = "SELECT \"idImg\", path "
+                + " FROM imagenes , restaurantes_imagenes"
+                + " WHERE \"idImg\" = imagen"
+                + " AND restaurante = '" + nick + "';";
+        return st.executeQuery(query);
+    }
+
 }
