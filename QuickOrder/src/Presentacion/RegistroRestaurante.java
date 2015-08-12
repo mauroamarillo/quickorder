@@ -4,6 +4,7 @@ import Datos.Estructura;
 import java.awt.Dimension;
 import java.io.File;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Vector;
@@ -270,14 +271,17 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
     }//GEN-LAST:event_Text_DireccionActionPerformed
 
     private void Button_RegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_RegistrarActionPerformed
-        //registrar
         idCat = PC.getCategorias();
-        String aux = "";
-        for (int x = 0; x < idCat.length; x++) {
-            aux += idCat[x] + " - ";
+        HashMap IMGs = PI.GuardarColeccion(Text_Nickname.getText());
+        try {
+            ventanaPrincipal.CU.insertarRestaurante(Text_Nickname.getText(), Text_Email.getText(), Text_Direccion.getText(), Text_Nombre.getText(), IMGs, idCat);
+            JOptionPane.showMessageDialog(this, "Restaurante registrado", "- EXITO -", JOptionPane.DEFAULT_OPTION);
+            ventanaPrincipal.setOperando(false);
+            this.dispose();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(RegistroRestaurante.class.getName()).log(Level.SEVERE, null, ex);
         }
-        JOptionPane.showMessageDialog(this, aux, "categorias", JOptionPane.DEFAULT_OPTION);
-        // PI.GuardarColeccion(Text_Nickname.getText());
     }//GEN-LAST:event_Button_RegistrarActionPerformed
 
 
@@ -293,13 +297,6 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
             String path = jFileChooser1.getSelectedFile().getPath();
             String nombre = jFileChooser1.getSelectedFile().getName();
             PI.AgregarImagen(cantImg, nombre, path);
-            /*ImageIcon icon = new ImageIcon(fil);
-             Image img = new ImageIcon(fil).getImage();
-             Image newImg;
-             newImg = img.getScaledInstance(150, 150, java.awt.Image.SCALE_FAST);
-             ImageIcon ico = new ImageIcon(newImg);
-             Label_resultadoImg.setIcon(ico);*/
-
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

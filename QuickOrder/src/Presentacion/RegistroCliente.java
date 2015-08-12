@@ -1,13 +1,9 @@
 package Presentacion;
 
-import Logica.FileController;
 import java.awt.Image;
 import java.io.File;
-import java.io.IOException;
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -295,29 +291,23 @@ public class RegistroCliente extends javax.swing.JInternalFrame implements Inter
     }//GEN-LAST:event_Label_resultadoImgMouseClicked
 
     private void Button_RegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_RegistrarActionPerformed
-        //registrar
-        /*No estoy seguro si esto va aca pero esta como para mostrar como usar la funcion copiarArchivo de la clase FileController 
-         if (Text_Nickname.getText().compareTo("") != 0 && foto != null) {
-         File directorio = new File("C:\\imagenes\\" + Text_Nickname.getText() + ".jpg");
-         try {
-         FileController.copiarArchivo(foto, directorio);
-         } catch (IOException ex) {
-         Logger.getLogger(RegistroCliente.class.getName()).log(Level.SEVERE, null, ex);
-         }
-         } else {
-         JOptionPane.showMessageDialog(this, "- no se culple la condicion -", "Error", JOptionPane.ERROR_MESSAGE);
-         }
-         */
-        String fechaTexo = Spinner_A.getValue().toString()+"-"+Spinner_M.getValue().toString()+"-"+Spinner_D.getValue().toString();
+
+        String fechaTexo = Spinner_A.getValue().toString() + "-" + Spinner_M.getValue().toString() + "-" + Spinner_D.getValue().toString();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
-        java.sql.Date effect_from;
+        java.sql.Date fechaSQL;
         try {
-            effect_from = new java.sql.Date(formatter.parse(fechaTexo).getTime());
-            ventanaPrincipal.CU.insertarCliente(Text_Nickname.getText(), Text_Nombre.getText(), Text_Email.getText(), Text_Direccion.getText(), Text_Apellido.getText(), effect_from, "C:\\imagenes\\" + Text_Nickname.getText() + ".jpg");
+            fechaSQL = new java.sql.Date(formatter.parse(fechaTexo).getTime());
+            ventanaPrincipal.CU.insertarCliente(Text_Nickname.getText(), Text_Email.getText(), Text_Direccion.getText(), Text_Nombre.getText(), Text_Apellido.getText(), fechaSQL, foto);
+            JOptionPane.showMessageDialog(this, "Restaurante registrado", "- EXITO -", JOptionPane.DEFAULT_OPTION);
+            ventanaPrincipal.setOperando(false);
+            this.dispose();
         } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(RegistroCliente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(RegistroCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }//GEN-LAST:event_Button_RegistrarActionPerformed
 
 

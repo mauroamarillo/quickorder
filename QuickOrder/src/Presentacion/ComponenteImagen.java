@@ -20,7 +20,7 @@ import javax.swing.JLabel;
  * @author Jean
  */
 public class ComponenteImagen extends javax.swing.JPanel {
-    
+
     private final PanelImagenes contenedor;
     private final String Path_Img;
     private final String nombre;
@@ -48,16 +48,18 @@ public class ComponenteImagen extends javax.swing.JPanel {
         Text_Nombre.setText(nombre);
         this.contenedor = contenedor;
     }
-    
-    public void GuardarImagen(String path) {
-        File destino = new File(path + nombre);
+
+    public String GuardarImagen(String path, String nom) {
+        File destino = new File(path + nom);
         File foto = new File(Path_Img);
         try {
             FileController.copiarArchivo(foto, destino);
+            return destino.getPath();
         } catch (IOException ex) {
             Logger.getLogger(ComponenteImagen.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
-        
+
     }
 
     /**
@@ -126,13 +128,13 @@ public class ComponenteImagen extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void Label_ImgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Label_ImgMouseClicked
-        
+
         Image img = new ImageIcon(Path_Img).getImage();
         Image newImg;
         newImg = img.getScaledInstance(479, 306, java.awt.Image.SCALE_AREA_AVERAGING);
         ImageIcon ico = new ImageIcon(newImg);
         JLabel I = new JLabel();
-        I.setIcon(ico);       
+        I.setIcon(ico);
         JDialog d = new JDialog(this.contenedor.RR.ventanaPrincipal, true);
         d.setLocationRelativeTo(null);
         d.setMaximumSize(new java.awt.Dimension(479, 306));

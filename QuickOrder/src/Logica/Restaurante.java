@@ -23,6 +23,8 @@ public class Restaurante extends Usuario {
         this.promociones = promociones;
         this.imagenes = imagenes;
     }
+
+   
     
     public Lista getCategorias(){
         return categorias;
