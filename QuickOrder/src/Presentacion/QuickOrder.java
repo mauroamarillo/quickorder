@@ -17,6 +17,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  *
  * @author Jean
  */
+
 public class QuickOrder extends javax.swing.JFrame {
 
     private boolean operando = false;
@@ -86,6 +87,11 @@ public class QuickOrder extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         Registros.setText("Registros");
+        Registros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RegistrosActionPerformed(evt);
+            }
+        });
 
         jMenu4.setText("Registrar Usuario");
 
@@ -125,7 +131,7 @@ public class QuickOrder extends javax.swing.JFrame {
         Registros.add(jMenu5);
 
         jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem4.setText("Registrar Pedido");
+        jMenuItem4.setText("Generar Pedido");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem4ActionPerformed(evt);
@@ -204,6 +210,20 @@ public class QuickOrder extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_Menu_RIndividualActionPerformed
+
+    private void RegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrosActionPerformed
+        if(!operando){
+            GenerarPedido genPedido = new GenerarPedido(this);
+            this.add(genPedido,BorderLayout.CENTER);
+            try{
+                genPedido.setSelected(true);
+                operando = true;
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+    }//GEN-LAST:event_RegistrosActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
