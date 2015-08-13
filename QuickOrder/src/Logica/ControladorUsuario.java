@@ -49,14 +49,12 @@ public final class ControladorUsuario {
             FileController.copiarArchivo(img, destino);
         }
     }
-
     public void insertarRestaurante(String nick, String email, String dir, String nombre, HashMap IMGs, int cat[]) throws SQLException, Exception {
         Restaurante R = new Restaurante(nick, nombre, email, dir, null, null, null, null);
         validarDatosR(R, cat);
         UsuarioDatos.agregarRestaurante(R, IMGs, cat);
         this.Restaurantes = retornarRestaurantes();
     }
-
     private void validarDatosC(Cliente C) throws SQLException, Exception {
 
         if (C.getNickname().isEmpty()) {
@@ -162,6 +160,9 @@ public final class ControladorUsuario {
             }
         }
         return res;
+    }
+    public Restaurante buscarRestaurante(String nickname){
+        return (Restaurante) Restaurantes.get(nickname);
     }
 
 }

@@ -11,8 +11,9 @@ package Logica;
  */
 public class Individual extends Producto {
     
-    public Individual(String nombre, String descripcion, float precio, Imagen imagen){
-        super(nombre,descripcion,precio,imagen);
+    public Individual(String nombre, String descripcion, float precio, String imagen,Restaurante restaurante){
+        super(nombre,descripcion,precio,imagen,restaurante);
     }
+    
     
 }

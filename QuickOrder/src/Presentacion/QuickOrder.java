@@ -1,5 +1,6 @@
 package Presentacion;
 
+import Logica.ControladorProductos;
 import Logica.ControladorUsuario;
 import java.awt.BorderLayout;
 import java.beans.PropertyVetoException;
@@ -23,6 +24,7 @@ public class QuickOrder extends javax.swing.JFrame {
 
     private boolean operando = false;
     ControladorUsuario CU;
+    ControladorProductos CP;
     /*
      codigo para ver si anda bien esto
      */
@@ -31,15 +33,20 @@ public class QuickOrder extends javax.swing.JFrame {
         try {
             javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedLookAndFeelException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.CU = new ControladorUsuario();
+        this.CP = new ControladorProductos(CU);
         initComponents();
         setResizable(false);
         setLocationRelativeTo(null);

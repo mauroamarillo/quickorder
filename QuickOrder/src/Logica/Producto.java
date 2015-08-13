@@ -9,48 +9,60 @@ package Logica;
  *
  * @author usuario
  */
-public abstract class Producto implements ICollectible{
+public abstract class Producto implements ICollectible {
+
     protected String nombre;
     protected String descripcion;
     protected float precio;
-    protected Imagen imagen;
-    
-    public Producto(String nombre, String descripcion, float precio, Imagen imagen){
+    protected Restaurante restaurante;
+
+    protected String imagen;
+
+    public Producto(String nombre, String descripcion, float precio, String imagen, Restaurante restaurante) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
         this.imagen = imagen;
+        this.restaurante = restaurante;
     }
-    
-    public String getNombre(){
+
+    public String getNombre() {
         return nombre;
     }
-    
-    public String getDescripcion(){
+
+    public String getDescripcion() {
         return descripcion;
     }
-    
-    public float getPrecio(){
+
+    public float getPrecio() {
         return precio;
     }
-    
-    public void setNombre(String nombre){
+
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    
-    public void setDescripcion(String descripcion){
+
+    public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    
-    public void setPrecio(float precio){
+
+    public void setPrecio(float precio) {
         this.precio = precio;
     }
 
-    public Imagen getImagen() {
+    public String getImagen() {
         return imagen;
     }
 
-    public void setImagen(Imagen imagen) {
+    public void setImagen(String imagen) {
         this.imagen = imagen;
+    }
+
+    public Restaurante getRestaurante() {
+        return restaurante;
+    }
+
+    public void setRestaurante(Restaurante restaurante) {
+        this.restaurante = restaurante;
     }
 }

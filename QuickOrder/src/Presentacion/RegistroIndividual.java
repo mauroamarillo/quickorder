@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import static javax.swing.JFileChooser.APPROVE_OPTION;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -27,20 +28,6 @@ public class RegistroIndividual extends javax.swing.JInternalFrame {
 
     QuickOrder ventanaPrincipal;
     File foto;
-    /*
-     El caso de uso consiste en dar de alta un producto de un restaurante en
-     el sistema. 
-     En primer lugar el administrador indica el nombre del 
-     producto, una descripción (en una línea simple) y el restaurante que lo 
-     vende. Además indica si es un producto individual o una promoción.
-     En caso de ser individual indica su precio.
-     En caso de ser una promoción, deberá indicar a que productos individuales
-     refiere dicha promoción, así 
-     como sus cantidades por producto individual y el descuento porcentual. 
-     Finalmente, el sistema permite adjuntar una imagen elegida. Si los datos 
-     son correctos el sistema da de alta al nuevo producto con los datos 
-     especificados anteriormente.
-     */
 
     public RegistroIndividual(QuickOrder vp) {
         this.ventanaPrincipal = vp;
@@ -280,7 +267,15 @@ public class RegistroIndividual extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_Button_CancelarActionPerformed
 
     private void Button_AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_AceptarActionPerformed
-
+        try {
+            ventanaPrincipal.CP.insertarIndividual(Text_Nombre.getText(), Text_Descripcion.getText(), Text_Precio.getText(), foto, ventanaPrincipal.CU.buscarRestaurante((String) jList2.getSelectedValue()));
+            JOptionPane.showMessageDialog(null, "Producto Ingresado", "Exito!", JOptionPane.DEFAULT_OPTION);
+            ventanaPrincipal.setOperando(false);
+            this.dispose();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(RegistroIndividual.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_Button_AceptarActionPerformed
 
     private void Label_ImgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Label_ImgMouseClicked
@@ -308,7 +303,7 @@ public class RegistroIndividual extends javax.swing.JInternalFrame {
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
             Restaurante R = ((Restaurante) entry.getValue());
-            model.addElement(R.getNickname());
+            model.addElement(R.getNickname() + " - " + R.getNombre());
         }
         jList2.setModel(model);
     }//GEN-LAST:event_Text_FiltroKeyReleased

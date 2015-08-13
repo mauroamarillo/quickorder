@@ -5,6 +5,8 @@
  */
 package Logica;
 
+import java.util.HashMap;
+
 /**
  *
  * @author usuario
@@ -12,10 +14,10 @@ package Logica;
 public class Promocion extends Producto {
     private boolean activa;
     private float descuento;
-    private Lista prodPromos;
+    private HashMap prodPromos;
     
-    public Promocion(String nombre, String descripcion, float precio, Imagen imagen, boolean activa, float descuento){
-        super(nombre,descripcion,precio,imagen);
+    public Promocion(String nombre, String descripcion, float precio, String imagen, boolean activa, float descuento,Restaurante restaurante){
+        super(nombre,descripcion,precio,imagen,restaurante);
         this.activa = activa;
         this.descuento = descuento;
     }
@@ -37,11 +39,11 @@ public class Promocion extends Producto {
         this.descuento = descuento;
     }
 
-    public Lista getProdPromos() {
+    public HashMap getProdPromos() {
         return prodPromos;
     }
 
-    public void setProdPromos(Lista prodPromos) {
+    public void setProdPromos(HashMap prodPromos) {
         this.prodPromos = prodPromos;
     }
 }
