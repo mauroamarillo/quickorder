@@ -10,23 +10,19 @@ package Datos;
  * @author usuario
  */
 
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Estructura {
     private Statement st;
-    
-    
-    
-    public Statement generarSt(){
+      
+    public Statement generarSt() throws  SQLException, ClassNotFoundException{
         Configuracion config = new Configuracion();
         config.conectarBD();
         
-        try{
+      
             st = config.getConexion().createStatement();
             return st;
-        }
-        catch(Exception e){
-            return null;
-        }
+      
     }
 }

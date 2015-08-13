@@ -73,7 +73,7 @@ public class RegistroCliente extends javax.swing.JInternalFrame implements Inter
         Button_Registrar = new javax.swing.JButton();
         Button_Cancelar = new javax.swing.JButton();
 
-        jFileChooser1.setFileFilter(new FileNameExtensionFilter("JPG & GIF Images", "jpg", "gif"));
+        jFileChooser1.setFileFilter(new FileNameExtensionFilter("Imagenes jpg ", "jpg"));
 
         setClosable(true);
         setForeground(java.awt.Color.cyan);

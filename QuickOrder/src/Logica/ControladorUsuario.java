@@ -8,32 +8,29 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
-/**
- *
- * @author Jean
- */
-public class ControladorUsuario {
+public final class ControladorUsuario {
 
-    CategoriaD CategoriaDatos = new CategoriaD();
-    UsuarioD UsuarioDatos = new UsuarioD();
+    private final CategoriaD CategoriaDatos;
+    private final UsuarioD UsuarioDatos;
+    private HashMap Restaurantes = new HashMap();
 
-    public ControladorUsuario() {
+    public ControladorUsuario() throws SQLException, ClassNotFoundException {
+        this.UsuarioDatos = new UsuarioD();
+        this.CategoriaDatos = new CategoriaD();
+        this.Restaurantes = retornarRestaurantes();
     }
 
-    public HashMap consultarCategorias() {
+    public HashMap getRestaurantes() {
+        return Restaurantes;
+    }
+
+    public HashMap consultarCategorias() throws SQLException {
         HashMap resultado = new HashMap();
         java.sql.ResultSet rs;
-        try {
-            rs = CategoriaDatos.consultarCategorias();
-            while (rs.next()) {
-                resultado.put(rs.getInt("idCat"), rs.getString("nombre"));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ControladorUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        rs = CategoriaDatos.consultarCategorias();
+        while (rs.next()) {
+            resultado.put(rs.getInt("idCat"), rs.getString("nombre"));
         }
         return resultado;
     }
@@ -57,6 +54,7 @@ public class ControladorUsuario {
         Restaurante R = new Restaurante(nick, nombre, email, dir, null, null, null, null);
         validarDatosR(R, cat);
         UsuarioDatos.agregarRestaurante(R, IMGs, cat);
+        this.Restaurantes = retornarRestaurantes();
     }
 
     private void validarDatosC(Cliente C) throws SQLException, Exception {
@@ -82,7 +80,6 @@ public class ControladorUsuario {
         if (UsuarioDatos.emailOcupado(C.email)) {
             throw new Exception("Email Ocupado");
         }
-
     }
 
     private void validarDatosR(Restaurante R, int cat[]) throws SQLException, Exception {
@@ -108,7 +105,6 @@ public class ControladorUsuario {
         if (UsuarioDatos.emailOcupado(R.email)) {
             throw new Exception("Email Ocupado");
         }
-
     }
 
     public HashMap retornarRestaurantes() throws SQLException {
@@ -128,7 +124,7 @@ public class ControladorUsuario {
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
             Restaurante R = ((Restaurante) entry.getValue());
-            R.setImagenes(retornarIMGsRestaurantes(R.nickname));
+            R.setCategorias(retornarCategoriasRestaurantes(R.nickname));
         }
         return resultado;
     }
@@ -153,6 +149,19 @@ public class ControladorUsuario {
             resultado.put(C.getNombre(), C);
         }
         return resultado;
+    }
+
+    public HashMap filtrarRestaurantes(String filtro) {
+        HashMap res = new HashMap();
+        Iterator it = Restaurantes.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            Restaurante R = ((Restaurante) entry.getValue());
+            if (R.getNickname().contains(filtro)) {
+                res.put(R.getNickname(), R);
+            }
+        }
+        return res;
     }
 
 }

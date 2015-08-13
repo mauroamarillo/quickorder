@@ -5,7 +5,7 @@
     <Component class="javax.swing.JFileChooser" name="jFileChooser1">
       <Properties>
         <Property name="fileFilter" type="javax.swing.filechooser.FileFilter" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="new FileNameExtensionFilter(&quot;JPG &amp; GIF Images&quot;, &quot;jpg&quot;, &quot;gif&quot;)" type="code"/>
+          <Connection code="new FileNameExtensionFilter(&quot;Imagenes jpg &quot;, &quot;jpg&quot;)" type="code"/>
         </Property>
       </Properties>
     </Component>

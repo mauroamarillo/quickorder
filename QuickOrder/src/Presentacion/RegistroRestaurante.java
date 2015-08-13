@@ -55,12 +55,19 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
 
     private void disponerCategorias() {
         /*pido las categorias al ControladorUsuario*/
-        Map categorias = ventanaPrincipal.CU.consultarCategorias();
-        Iterator it = categorias.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry entry = (Map.Entry) it.next();
-            PC.AgregarCategoria(((int) entry.getKey()), ((String) entry.getValue()));
+        Map categorias;
+        try {
+            categorias = ventanaPrincipal.CU.consultarCategorias();
+            Iterator it = categorias.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry entry = (Map.Entry) it.next();
+                PC.AgregarCategoria(((int) entry.getKey()), ((String) entry.getValue()));
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);            
+            Logger.getLogger(RegistroRestaurante.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     public javax.swing.JTextField getTTT() {
@@ -95,7 +102,7 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
         jButton1 = new javax.swing.JButton();
 
         jFileChooser1.setCurrentDirectory(new java.io.File("C:\\Users\\Jean\\Pictures"));
-        jFileChooser1.setFileFilter(new FileNameExtensionFilter("JPG & GIF Images", "jpg", "gif"));
+        jFileChooser1.setFileFilter(new FileNameExtensionFilter("JPG Images", "jpg"));
 
         setClosable(true);
         setForeground(java.awt.Color.cyan);

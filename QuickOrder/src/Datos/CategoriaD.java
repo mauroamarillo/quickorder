@@ -15,8 +15,13 @@ import java.sql.Statement;
 
 public class CategoriaD {
 
-    private Estructura es = new Estructura();
-    private Statement st = es.generarSt();
+    private final Estructura es;
+    private final Statement st;
+
+    public CategoriaD() throws SQLException, ClassNotFoundException {
+        es = new Estructura();
+        st = es.generarSt();
+    }
 
     public ResultSet consultarCategorias() throws SQLException {
         String seleccion = "SELECT * FROM categorias ";

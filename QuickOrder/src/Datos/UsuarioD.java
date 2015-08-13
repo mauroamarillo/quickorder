@@ -17,7 +17,11 @@ import java.util.Map;
 public class UsuarioD {
 
     private final Estructura es = new Estructura();
-    private final Statement st = es.generarSt();
+    private final Statement st;
+
+    public UsuarioD() throws SQLException, ClassNotFoundException {
+        this.st = es.generarSt();
+    }
 
     public boolean nickOcupado(String nick) throws SQLException {
         String query = "SELECT nickname FROM usuarios WHERE nickname = '" + nick + "';";

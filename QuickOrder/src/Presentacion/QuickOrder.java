@@ -3,8 +3,10 @@ package Presentacion;
 import Logica.ControladorUsuario;
 import java.awt.BorderLayout;
 import java.beans.PropertyVetoException;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 import javax.swing.UnsupportedLookAndFeelException;
 /*
@@ -17,16 +19,15 @@ import javax.swing.UnsupportedLookAndFeelException;
  *
  * @author Jean
  */
-
 public class QuickOrder extends javax.swing.JFrame {
 
     private boolean operando = false;
-    ControladorUsuario CU = new ControladorUsuario();
+    ControladorUsuario CU;
     /*
      codigo para ver si anda bien esto
      */
 
-    public QuickOrder() {
+    public QuickOrder() throws SQLException, ClassNotFoundException {
         try {
             javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (ClassNotFoundException ex) {
@@ -38,6 +39,7 @@ public class QuickOrder extends javax.swing.JFrame {
         } catch (UnsupportedLookAndFeelException ex) {
             Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.CU = new ControladorUsuario();
         initComponents();
         setResizable(false);
         setLocationRelativeTo(null);
@@ -212,17 +214,18 @@ public class QuickOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_Menu_RIndividualActionPerformed
 
     private void RegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrosActionPerformed
-        if(!operando){
+        if (!operando) {
             GenerarPedido genPedido = new GenerarPedido(this);
-            this.add(genPedido,BorderLayout.CENTER);
-            try{
+            this.add(genPedido, BorderLayout.CENTER);
+            try {
                 genPedido.setSelected(true);
                 operando = true;
             } catch (PropertyVetoException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
                 Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
     }//GEN-LAST:event_RegistrosActionPerformed
 
     public static void main(String args[]) {
@@ -252,7 +255,15 @@ public class QuickOrder extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new QuickOrder().setVisible(true);
+                try {
+                    new QuickOrder().setVisible(true);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
+                    Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
+                    Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
