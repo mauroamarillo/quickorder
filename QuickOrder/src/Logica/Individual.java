@@ -10,10 +10,12 @@ package Logica;
  * @author usuario
  */
 public class Individual extends Producto {
-    
-    public Individual(String nombre, String descripcion, float precio, String imagen,Restaurante restaurante){
-        super(nombre,descripcion,precio,imagen,restaurante);
+
+    private float precio;
+
+    public Individual(String nombre, String descripcion, float precio, String imagen, Restaurante restaurante) {
+        super(nombre, descripcion, imagen, restaurante);
+        this.precio = precio;
     }
-    
-    
+
 }

@@ -13,15 +13,12 @@ public abstract class Producto implements ICollectible {
 
     protected String nombre;
     protected String descripcion;
-    protected float precio;
     protected Restaurante restaurante;
-
     protected String imagen;
 
-    public Producto(String nombre, String descripcion, float precio, String imagen, Restaurante restaurante) {
+    public Producto(String nombre, String descripcion, String imagen, Restaurante restaurante) {
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.precio = precio;
         this.imagen = imagen;
         this.restaurante = restaurante;
     }
@@ -35,7 +32,8 @@ public abstract class Producto implements ICollectible {
     }
 
     public float getPrecio() {
-        return precio;
+        return 0;
+        
     }
 
     public void setNombre(String nombre) {
@@ -44,10 +42,6 @@ public abstract class Producto implements ICollectible {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public void setPrecio(float precio) {
-        this.precio = precio;
     }
 
     public String getImagen() {

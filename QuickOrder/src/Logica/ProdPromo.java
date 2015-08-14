@@ -9,13 +9,13 @@ package Logica;
  *
  * @author usuario
  */
-public class ProdPromo implements ICollectible{
+public class ProdPromo{
     private int cantidad;
     private Individual individual;
     
-    public ProdPromo(int cantidad, Individual inidividual){
+    public ProdPromo(int cantidad, Individual ind){
         this.cantidad = cantidad;
-        this.individual = individual;
+        this.individual = ind;
     }
 
     public int getCantidad() {

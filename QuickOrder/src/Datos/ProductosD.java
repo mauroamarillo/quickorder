@@ -6,9 +6,15 @@
 package Datos;
 
 import Logica.Individual;
+import Logica.ProdPromo;
+import Logica.Producto;
+import Logica.Promocion;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  *
@@ -32,13 +38,47 @@ public class ProductosD {
         return rs.next();
     }
 
-    public void agregarIndividual(Individual I) throws SQLException {
+    private void agregarProducto(Producto P) throws SQLException {
         String query = " INSERT INTO productos(restaurante,nombre,descripcion) "
-                + " VALUES ('" + I.getRestaurante().getNickname() + "','" + I.getNombre() + "','" + I.getDescripcion() + "');";
+                + " VALUES ('" + P.getRestaurante().getNickname() + "','" + P.getNombre() + "','" + P.getDescripcion() + "');";
         st.execute(query);
+    }
 
-        query = " INSERT INTO individuales(restaurante,nombre,precio) "
+    public void agregarIndividual(Individual I) throws SQLException {
+        agregarProducto(I);
+        String query = " INSERT INTO individuales(restaurante,nombre,precio) "
                 + " VALUES ('" + I.getRestaurante().getNickname() + "','" + I.getNombre() + "'," + I.getPrecio() + ");";
+        st.execute(query);
+    }
+
+    public ResultSet listarIndividuales() throws SQLException {
+        String query = " SELECT p.restaurante, p.nombre, i.precio, p.descripcion "
+                + " FROM productos p, individuales i"
+                + " WHERE p.restaurante = i.restaurante"
+                + " AND p.nombre = i.nombre";
+        return st.executeQuery(query);
+    }
+
+    public void agregarPromocion(Promocion P) throws SQLException {
+        agregarProducto(P);
+        String activa = "false";
+        if (P.getActiva()) {
+            activa = "true";
+        }
+        String query = " INSERT INTO promociones(restaurante,nombre,activa,descuento) "
+                + " VALUES ('" + P.getRestaurante().getNickname() + "','" + P.getNombre() + "'," + activa + "," + P.getDescuento() + ");";
+        st.execute(query);
+        Iterator it = P.getProdPromos().entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            ProdPromo I = ((ProdPromo) entry.getValue());
+            vincularPromocionProducto(P, I);
+        }
+    }
+
+    public void vincularPromocionProducto(Promocion Promo, ProdPromo Prod) throws SQLException {
+        String query = " INSERT INTO productos_promociones(restaurante,nombrepromo,nombreprod,cantidad) "
+                + " VALUES ('" + Promo.getRestaurante().getNickname() + "','" + Promo.getNombre() + "','" + Prod.getIndividual().getNombre() + "'," + Prod.getCantidad() + ");";
         st.execute(query);
     }
 }

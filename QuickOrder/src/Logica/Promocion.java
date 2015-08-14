@@ -14,12 +14,14 @@ import java.util.HashMap;
 public class Promocion extends Producto {
     private boolean activa;
     private float descuento;
-    private HashMap prodPromos;
+    private HashMap prodPromo;
     
-    public Promocion(String nombre, String descripcion, float precio, String imagen, boolean activa, float descuento,Restaurante restaurante){
-        super(nombre,descripcion,precio,imagen,restaurante);
+    
+    public Promocion(String nombre, String descripcion, String imagen, boolean activa, float descuento, Restaurante restaurante, HashMap subProductos){
+        super(nombre,descripcion,imagen,restaurante);
         this.activa = activa;
         this.descuento = descuento;
+        this.prodPromo = subProductos;
     }
 
     
@@ -40,10 +42,10 @@ public class Promocion extends Producto {
     }
 
     public HashMap getProdPromos() {
-        return prodPromos;
+        return prodPromo;
     }
 
     public void setProdPromos(HashMap prodPromos) {
-        this.prodPromos = prodPromos;
+        this.prodPromo = prodPromos;
     }
 }

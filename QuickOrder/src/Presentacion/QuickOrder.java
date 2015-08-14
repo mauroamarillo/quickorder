@@ -135,6 +135,11 @@ public class QuickOrder extends javax.swing.JFrame {
         jMenu5.add(Menu_RIndividual);
 
         Menu_RPromocion.setText("Promocion");
+        Menu_RPromocion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Menu_RPromocionActionPerformed(evt);
+            }
+        });
         jMenu5.add(Menu_RPromocion);
 
         Registros.add(jMenu5);
@@ -209,9 +214,14 @@ public class QuickOrder extends javax.swing.JFrame {
 
     private void Menu_RIndividualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Menu_RIndividualActionPerformed
         if (!operando) {
-            RegistroIndividual registroIndividual = new RegistroIndividual(this);
-            this.add(registroIndividual, BorderLayout.CENTER);
+            RegistroIndividual registroIndividual = null;
             try {
+                registroIndividual = new RegistroIndividual(this);
+            } catch (SQLException ex) {
+                Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                this.add(registroIndividual, BorderLayout.CENTER);
                 registroIndividual.setSelected(true);
                 operando = true;
             } catch (PropertyVetoException ex) {
@@ -234,6 +244,19 @@ public class QuickOrder extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_RegistrosActionPerformed
+
+    private void Menu_RPromocionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Menu_RPromocionActionPerformed
+        if (!operando) {
+            RegistroPromocion registroPromocion = new RegistroPromocion(this);
+            this.add(registroPromocion, BorderLayout.CENTER);
+            try {
+                registroPromocion.setSelected(true);
+                operando = true;
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_Menu_RPromocionActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

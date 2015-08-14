@@ -29,14 +29,10 @@ public class RegistroIndividual extends javax.swing.JInternalFrame {
     QuickOrder ventanaPrincipal;
     File foto;
 
-    public RegistroIndividual(QuickOrder vp) {
+    public RegistroIndividual(QuickOrder vp) throws SQLException {
         this.ventanaPrincipal = vp;
         initComponents();
-        try {
-            cargarRestaurantes();
-        } catch (SQLException ex) {
-            Logger.getLogger(RegistroIndividual.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        cargarRestaurantes();
         //ESTE CAMPO SOLO PUEDE SER NUMERICO
         Text_Precio.setDocument(new LimitadorCaracteres());
         this.setLocation(220, 80);
