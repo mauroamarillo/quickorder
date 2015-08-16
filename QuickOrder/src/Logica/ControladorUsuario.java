@@ -13,16 +13,31 @@ public final class ControladorUsuario {
 
     private final CategoriaD CategoriaDatos;
     private final UsuarioD UsuarioDatos;
+
+    private final ControladorProductos CP;
+
+    public ControladorProductos getCP() {
+        return CP;
+    }
+
     private HashMap Restaurantes = new HashMap();
+    private HashMap Categorias = new HashMap();
 
     public ControladorUsuario() throws SQLException, ClassNotFoundException {
         this.UsuarioDatos = new UsuarioD();
         this.CategoriaDatos = new CategoriaD();
         this.Restaurantes = retornarRestaurantes();
+        this.Categorias = consultarCategorias();
+        this.CP = new ControladorProductos(this);
+
     }
 
     public HashMap getRestaurantes() {
         return Restaurantes;
+    }
+
+    public HashMap getCategorias() {
+        return Categorias;
     }
 
     public HashMap consultarCategorias() throws SQLException {
@@ -33,6 +48,31 @@ public final class ControladorUsuario {
             resultado.put(rs.getInt("idCat"), rs.getString("nombre"));
         }
         return resultado;
+    }
+
+    public HashMap consultarRestaurantesPorCategoria(Categoria categoria) {
+        HashMap res = new HashMap();
+        Iterator it = Restaurantes.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            Restaurante R = ((Restaurante) entry.getValue());
+            if (R.getCategorias().containsKey(categoria.getNombre())) {
+                res.put(R.getNickname(), R);
+            }
+        }
+        return res;
+    }
+
+    public Restaurante buscarRestaurantePorNick_Nombre(String n_n) {
+        Iterator it = Restaurantes.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            Restaurante R = ((Restaurante) entry.getValue());
+            if ((R.getNickname() + " - " + R.getNombre()).equals(n_n)) {
+                return R;
+            }
+        }
+        return null;
     }
 
     public void insertarCliente(String nick, String email, String dir, String nombre, String apellido, Date fecha, File img) throws SQLException, Exception {
@@ -49,12 +89,14 @@ public final class ControladorUsuario {
             FileController.copiarArchivo(img, destino);
         }
     }
+
     public void insertarRestaurante(String nick, String email, String dir, String nombre, HashMap IMGs, int cat[]) throws SQLException, Exception {
         Restaurante R = new Restaurante(nick, nombre, email, dir, null, null, null, null);
         validarDatosR(R, cat);
         UsuarioDatos.agregarRestaurante(R, IMGs, cat);
         this.Restaurantes = retornarRestaurantes();
     }
+
     private void validarDatosC(Cliente C) throws SQLException, Exception {
 
         if (C.getNickname().isEmpty()) {
@@ -109,24 +151,35 @@ public final class ControladorUsuario {
         HashMap resultado = new HashMap();
         java.sql.ResultSet rs = UsuarioDatos.listarRestaurantes();
         while (rs.next()) {
-            Restaurante R = new Restaurante(rs.getString("nickname"), rs.getString("nombre"), rs.getString("email"), rs.getString("direccion"), null, null, null, null);
+            Restaurante R = new Restaurante(rs.getString("nickname"), rs.getString("nombre"), rs.getString("email"), rs.getString("direccion"), new HashMap(),new HashMap(),new HashMap(), new HashMap());
             resultado.put(R.getNickname(), R);
         }
         Iterator it = resultado.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
             Restaurante R = ((Restaurante) entry.getValue());
-            R.setImagenes(retornarIMGsRestaurantes(R.nickname));
+            R.setImagenes(retornarIMGsRestaurantes(R.getNickname()));
         }
         it = resultado.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
             Restaurante R = ((Restaurante) entry.getValue());
-            R.setCategorias(retornarCategoriasRestaurantes(R.nickname));
+            R.setCategorias(retornarCategoriasRestaurantes(R.getNickname()));
         }
         return resultado;
     }
-
+/*
+    public void asignarProductoI(Individual I) {
+        Iterator it = Restaurantes.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            Restaurante R = ((Restaurante) entry.getValue());
+            if(R.getNickname().equals(I.getRestaurante().getNickname())){
+                R.getIndividuales().put(I.getRestaurante().getNickname() + "_" + I.getNombre(), I);
+            }           
+        }
+    }
+*/
     public HashMap retornarIMGsRestaurantes(String nick) throws SQLException {
         HashMap resultado = new HashMap();
         java.sql.ResultSet rs = UsuarioDatos.listarIMGsRestaurante(nick);
@@ -161,7 +214,8 @@ public final class ControladorUsuario {
         }
         return res;
     }
-    public Restaurante buscarRestaurante(String nickname){
+
+    public Restaurante buscarRestaurante(String nickname) {
         return (Restaurante) Restaurantes.get(nickname);
     }
 

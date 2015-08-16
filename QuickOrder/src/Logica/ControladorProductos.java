@@ -12,26 +12,34 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import javax.swing.JOptionPane;
 
 /**
  *
  * @author Jean
  */
+
 public final class ControladorProductos {
 
     private final ControladorUsuario CU;
+
     private final ProductosD PD;
+
     private final HashMap individuales;
+    private final HashMap promociones;
+
+    public HashMap getPromociones() {
+        return promociones;
+    }
 
     public HashMap getIndividuales() {
         return individuales;
     }
 
-    public ControladorProductos(ControladorUsuario CU) throws SQLException, ClassNotFoundException {
-        this.CU = CU;
+    public ControladorProductos(ControladorUsuario C) throws SQLException, ClassNotFoundException {
+        this.CU = C;
         this.PD = new ProductosD();
         this.individuales = retornarIndividuales();
+        this.promociones = new HashMap();
 
     }
 
@@ -68,8 +76,11 @@ public final class ControladorProductos {
         HashMap resultado = new HashMap();
         java.sql.ResultSet rs = PD.listarIndividuales();
         while (rs.next()) {
-            Individual I = new Individual(rs.getString("nombre"), rs.getString("descripcion"), rs.getFloat("precio"), "sin imagen", CU.buscarRestaurante(rs.getString("restaurante")));
+            Restaurante R = CU.buscarRestaurante(rs.getString("restaurante"));
+            Individual I = new Individual(rs.getString("nombre"), rs.getString("descripcion"), rs.getFloat("precio"), "sin imagen",R);
+            R.getIndividuales().put(I.getRestaurante().getNickname() + "_" + I.getNombre(), I);
             resultado.put(I.getRestaurante().getNickname() + "_" + I.getNombre(), I);
+            
         }
         /* Iterator it = resultado.entrySet().iterator();
          while (it.hasNext()) {
@@ -80,7 +91,7 @@ public final class ControladorProductos {
         return resultado;
     }
 
-    public HashMap buscarProductos(Restaurante R) {
+    public HashMap buscarProductosI(Restaurante R) {
         HashMap resultado = new HashMap();
         Iterator it = individuales.entrySet().iterator();
         while (it.hasNext()) {

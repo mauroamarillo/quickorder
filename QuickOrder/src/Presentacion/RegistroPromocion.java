@@ -67,7 +67,7 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
     }
 
     private void cargarProductos(Restaurante R) {
-        HashMap OBJs = ventanaPrincipal.CP.buscarProductos(R);
+        HashMap OBJs = ventanaPrincipal.CU.getCP().buscarProductosI(R);
         Iterator it = OBJs.entrySet().iterator();
         DefaultListModel model = new DefaultListModel();
         while (it.hasNext()) {
@@ -427,7 +427,7 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
     private void Button_AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_AceptarActionPerformed
         try {
             if (foto != null) {
-                ventanaPrincipal.CP.insertarPromocion(Text_Nombre.getText(), Text_Descripcion.getText(), foto.getPath(), true, Float.parseFloat(Text_Descuento.getText()), ventanaPrincipal.CU.buscarRestaurante(ListaRestaurante.getSelectedValue().toString()), subProductos);
+                ventanaPrincipal.CU.getCP().insertarPromocion(Text_Nombre.getText(), Text_Descripcion.getText(), foto.getPath(), true, Float.parseFloat(Text_Descuento.getText()), ventanaPrincipal.CU.buscarRestaurante(ListaRestaurante.getSelectedValue().toString()), subProductos);
             } else {
                 throw new Exception("Asignar Imagen");
             }
@@ -488,7 +488,7 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
     private void ListaSubProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListaSubProductoMouseClicked
         JList list = (JList) evt.getSource();
         if (evt.getClickCount() == 2) {
-            agregarLineaProducto(ventanaPrincipal.CP.buscarIndividual((String) list.getSelectedValue(), (String) ListaRestaurante.getSelectedValue()));
+            agregarLineaProducto(ventanaPrincipal.CU.getCP().buscarIndividual((String) list.getSelectedValue(), (String) ListaRestaurante.getSelectedValue()));
         }
     }//GEN-LAST:event_ListaSubProductoMouseClicked
 

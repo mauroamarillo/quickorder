@@ -16,6 +16,10 @@ public class Restaurante extends Usuario {
     private HashMap individuales;
     private HashMap promociones;
     private HashMap imagenes;
+
+    public HashMap getImagenes() {
+        return imagenes;
+    }
  
     public Restaurante(String nickname, String nombre, String email, String direccion, HashMap categorias, HashMap individuales, HashMap promociones, HashMap imagenes){
         super(nickname,nombre,email,direccion);

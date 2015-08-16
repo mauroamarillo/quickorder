@@ -24,7 +24,6 @@ public class QuickOrder extends javax.swing.JFrame {
 
     private boolean operando = false;
     ControladorUsuario CU;
-    ControladorProductos CP;
     /*
      codigo para ver si anda bien esto
      */
@@ -46,7 +45,6 @@ public class QuickOrder extends javax.swing.JFrame {
             Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.CU = new ControladorUsuario();
-        this.CP = new ControladorProductos(CU);
         initComponents();
         setResizable(false);
         setLocationRelativeTo(null);
@@ -76,7 +74,8 @@ public class QuickOrder extends javax.swing.JFrame {
         Menu_RIndividual = new javax.swing.JMenuItem();
         Menu_RPromocion = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
+        Infirmacion = new javax.swing.JMenu();
+        Menu_Info_Rest = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quick Order");
@@ -105,7 +104,7 @@ public class QuickOrder extends javax.swing.JFrame {
         jMenu4.setText("Registrar Usuario");
 
         Menu_RCliente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
-        Menu_RCliente.setText("Registrar Cliente");
+        Menu_RCliente.setText("Cliente");
         Menu_RCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Menu_RClienteActionPerformed(evt);
@@ -114,7 +113,7 @@ public class QuickOrder extends javax.swing.JFrame {
         jMenu4.add(Menu_RCliente);
 
         Menu_RRestaurante.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
-        Menu_RRestaurante.setText("Registrar Restaurante");
+        Menu_RRestaurante.setText("Restaurante");
         Menu_RRestaurante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Menu_RRestauranteActionPerformed(evt);
@@ -155,8 +154,17 @@ public class QuickOrder extends javax.swing.JFrame {
 
         jMenuBar1.add(Registros);
 
-        jMenu3.setText("Información");
-        jMenuBar1.add(jMenu3);
+        Infirmacion.setText("Información");
+
+        Menu_Info_Rest.setText("Restaurantes");
+        Menu_Info_Rest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Menu_Info_RestActionPerformed(evt);
+            }
+        });
+        Infirmacion.add(Menu_Info_Rest);
+
+        jMenuBar1.add(Infirmacion);
 
         setJMenuBar(jMenuBar1);
 
@@ -217,14 +225,15 @@ public class QuickOrder extends javax.swing.JFrame {
             RegistroIndividual registroIndividual = null;
             try {
                 registroIndividual = new RegistroIndividual(this);
-            } catch (SQLException ex) {
-                Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try {
                 this.add(registroIndividual, BorderLayout.CENTER);
                 registroIndividual.setSelected(true);
                 operando = true;
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
+
             } catch (PropertyVetoException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
                 Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -257,6 +266,21 @@ public class QuickOrder extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_Menu_RPromocionActionPerformed
+
+    private void Menu_Info_RestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Menu_Info_RestActionPerformed
+        if (!operando) {
+            try {
+                VerInfoRestaurantes vir = new VerInfoRestaurantes(this);
+                this.add(vir, BorderLayout.CENTER);
+                vir.setSelected(true);
+                operando = true;
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_Menu_Info_RestActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -300,13 +324,14 @@ public class QuickOrder extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu Infirmacion;
+    private javax.swing.JMenuItem Menu_Info_Rest;
     private javax.swing.JMenuItem Menu_RCliente;
     private javax.swing.JMenuItem Menu_RIndividual;
     private javax.swing.JMenuItem Menu_RPromocion;
     private javax.swing.JMenuItem Menu_RRestaurante;
     private javax.swing.JMenu Registros;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;

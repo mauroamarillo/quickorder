@@ -264,7 +264,7 @@ public class RegistroIndividual extends javax.swing.JInternalFrame {
 
     private void Button_AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_AceptarActionPerformed
         try {
-            ventanaPrincipal.CP.insertarIndividual(Text_Nombre.getText(), Text_Descripcion.getText(), Text_Precio.getText(), foto, ventanaPrincipal.CU.buscarRestaurante((String) jList2.getSelectedValue()));
+            ventanaPrincipal.CU.getCP().insertarIndividual(Text_Nombre.getText(), Text_Descripcion.getText(), Text_Precio.getText(), foto, ventanaPrincipal.CU.buscarRestaurante((String) jList2.getSelectedValue()));
             JOptionPane.showMessageDialog(null, "Producto Ingresado", "Exito!", JOptionPane.DEFAULT_OPTION);
             ventanaPrincipal.setOperando(false);
             this.dispose();

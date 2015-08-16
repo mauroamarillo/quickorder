@@ -28,7 +28,7 @@ public class CategoriaD {
         ResultSet rs = st.executeQuery(seleccion);
         return rs;
     }
-
+    
     public int insertCategoria(String nombre) throws SQLException {
         String insert = "INSERT INTO categorias(nombre) VALUES('" + nombre + "');";
         st.execute(insert);
