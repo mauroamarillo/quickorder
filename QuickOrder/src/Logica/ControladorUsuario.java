@@ -19,7 +19,7 @@ public final class ControladorUsuario {
     public ControladorProductos getCP() {
         return CP;
     }
-
+    private HashMap clientes = new HashMap();
     private HashMap Restaurantes = new HashMap();
     private HashMap Categorias = new HashMap();
 
@@ -151,7 +151,7 @@ public final class ControladorUsuario {
         HashMap resultado = new HashMap();
         java.sql.ResultSet rs = UsuarioDatos.listarRestaurantes();
         while (rs.next()) {
-            Restaurante R = new Restaurante(rs.getString("nickname"), rs.getString("nombre"), rs.getString("email"), rs.getString("direccion"), new HashMap(),new HashMap(),new HashMap(), new HashMap());
+            Restaurante R = new Restaurante(rs.getString("nickname"), rs.getString("nombre"), rs.getString("email"), rs.getString("direccion"), new HashMap(), new HashMap(), new HashMap(), new HashMap());
             resultado.put(R.getNickname(), R);
         }
         Iterator it = resultado.entrySet().iterator();
@@ -168,18 +168,7 @@ public final class ControladorUsuario {
         }
         return resultado;
     }
-/*
-    public void asignarProductoI(Individual I) {
-        Iterator it = Restaurantes.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry entry = (Map.Entry) it.next();
-            Restaurante R = ((Restaurante) entry.getValue());
-            if(R.getNickname().equals(I.getRestaurante().getNickname())){
-                R.getIndividuales().put(I.getRestaurante().getNickname() + "_" + I.getNombre(), I);
-            }           
-        }
-    }
-*/
+
     public HashMap retornarIMGsRestaurantes(String nick) throws SQLException {
         HashMap resultado = new HashMap();
         java.sql.ResultSet rs = UsuarioDatos.listarIMGsRestaurante(nick);

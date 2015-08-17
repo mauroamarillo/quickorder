@@ -7,6 +7,7 @@ package Logica;
 
 import Datos.ProductosD;
 import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.HashMap;
@@ -17,15 +18,14 @@ import java.util.Map;
  *
  * @author Jean
  */
-
 public final class ControladorProductos {
 
     private final ControladorUsuario CU;
 
-    private final ProductosD PD;
+    private ProductosD PD;
 
-    private final HashMap individuales;
-    private final HashMap promociones;
+    private HashMap individuales;
+    private HashMap promociones;
 
     public HashMap getPromociones() {
         return promociones;
@@ -39,25 +39,34 @@ public final class ControladorProductos {
         this.CU = C;
         this.PD = new ProductosD();
         this.individuales = retornarIndividuales();
-        this.promociones = new HashMap();
+        this.promociones = retornarPromociones();
+        asignarProductosDePromocion();
 
+    }
+
+    private void guardarIMG(Producto P, File img) throws IOException {
+        if (img != null) {
+            new File("C:\\imagenes\\" + P.getRestaurante().getNickname() + "\\productos\\").mkdirs();
+            File destino = new File("C:\\imagenes\\" + P.getRestaurante().getNickname() + "\\productos\\" + P.getNombre() + ".jpg");
+            FileController.copiarArchivo(img, destino);
+        }
     }
 
     public void insertarIndividual(String nombre, String descripcion, String precio, File img, Restaurante restaurante) throws Exception, ParseException {
         float pre = Float.parseFloat(precio);
         Individual P;
+        if (restaurante == null) {
+            throw new Exception("Asignar Restaurante");
+        }
         if (img != null) {
-            P = new Individual(nombre, descripcion, pre, img.getPath(), restaurante);
+            P = new Individual(nombre, descripcion, pre, "C:\\imagenes\\" + restaurante.getNickname() + "\\productos\\" + nombre + ".jpg", restaurante);
         } else {
             P = new Individual(nombre, descripcion, pre, "sin_imagen", restaurante);
         }
         validarProducto(P);
         PD.agregarIndividual(P);
-        if (img != null) {
-            new File("C:\\imagenes\\" + P.getRestaurante().getNickname() + "\\productos\\").mkdirs();
-            File destino = new File("C:\\imagenes\\" + P.getRestaurante().getNickname() + "\\productos\\" + nombre + ".jpg");
-            FileController.copiarArchivo(img, destino);
-        }
+        guardarIMG(P, img);
+        this.individuales = retornarIndividuales();
     }
 
     public void validarProducto(Producto P) throws Exception {
@@ -77,10 +86,10 @@ public final class ControladorProductos {
         java.sql.ResultSet rs = PD.listarIndividuales();
         while (rs.next()) {
             Restaurante R = CU.buscarRestaurante(rs.getString("restaurante"));
-            Individual I = new Individual(rs.getString("nombre"), rs.getString("descripcion"), rs.getFloat("precio"), "sin imagen",R);
+            Individual I = new Individual(rs.getString("nombre"), rs.getString("descripcion"), rs.getFloat("precio"), "sin imagen", R);
             R.getIndividuales().put(I.getRestaurante().getNickname() + "_" + I.getNombre(), I);
             resultado.put(I.getRestaurante().getNickname() + "_" + I.getNombre(), I);
-            
+
         }
         /* Iterator it = resultado.entrySet().iterator();
          while (it.hasNext()) {
@@ -90,6 +99,11 @@ public final class ControladorProductos {
          }*/
         return resultado;
     }
+    /* desarrollar...
+     private void asignarImagenesI() {
+
+     }
+     */
 
     public HashMap buscarProductosI(Restaurante R) {
         HashMap resultado = new HashMap();
@@ -108,11 +122,48 @@ public final class ControladorProductos {
         return (Individual) individuales.get(restaurante + "_" + nombre);
     }
 
-    public void insertarPromocion(String nombre, String descripcion, String imagen, boolean activa, float descuento, Restaurante restaurante, HashMap subProductos) throws SQLException, Exception {
-        // JOptionPane.showMessageDialog(null, nombre);
-        Promocion P = new Promocion(nombre, descripcion, imagen, activa, descuento, restaurante, subProductos);
+    public void insertarPromocion(String nombre, String descripcion, File img, boolean activa, float descuento, Restaurante restaurante, HashMap subProductos) throws SQLException, Exception {
+        Promocion P;//= new Promocion(nombre, descripcion, img, activa, descuento, restaurante, subProductos);
+        if (restaurante == null) {
+            throw new Exception("Asignar Restaurante");
+        }
+        if (img != null) {
+            P = new Promocion(nombre, descripcion, "C:\\imagenes\\" + restaurante.getNickname() + "\\productos\\" + nombre + ".jpg", activa, descuento, restaurante, subProductos);
+        } else {
+            P = new Promocion(nombre, descripcion, "sin_imagen", activa, descuento, restaurante, subProductos);
+        }
         validarProducto(P);
         PD.agregarPromocion(P);
+        guardarIMG(P, img);
+        this.promociones = retornarPromociones();
+        asignarProductosDePromocion();
+    }
+
+    public HashMap retornarPromociones() throws SQLException {
+        HashMap resultado = new HashMap();
+        java.sql.ResultSet rs = PD.listarPromociones();
+        while (rs.next()) {
+            Restaurante R = CU.buscarRestaurante(rs.getString("restaurante"));
+            Promocion P = new Promocion(rs.getString("nombre"), rs.getString("descripcion"), "sin imagen", rs.getBoolean("activa"), rs.getFloat("descuento"), R, null);
+            R.getPromociones().put(P.getRestaurante().getNickname() + "_" + P.getNombre(), P);
+            resultado.put(P.getRestaurante().getNickname() + "_" + P.getNombre(), P);
+        }
+        return resultado;
+    }
+
+    public void asignarProductosDePromocion() throws SQLException {
+        Iterator it = promociones.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            Promocion P = ((Promocion) entry.getValue());
+            java.sql.ResultSet rs = PD.listarProductosDePromocion(P.getRestaurante().getNickname(), P.getNombre());
+            HashMap productosDePromo = new HashMap();
+            while (rs.next()) {
+                ProdPromo PP = new ProdPromo(rs.getInt("cantidad"), buscarIndividual(rs.getString("nombre"), rs.getString("restaurante")));
+                productosDePromo.put(PP.getIndividual().getRestaurante().getNickname() + "_" + PP.getIndividual().getNombre(), PP);
+            }
+            P.setProdPromos(productosDePromo);
+        }
     }
 
 }

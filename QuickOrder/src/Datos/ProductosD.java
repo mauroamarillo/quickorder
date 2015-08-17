@@ -38,10 +38,25 @@ public class ProductosD {
         return rs.next();
     }
 
+    private String guardarImagen(String Path) throws SQLException {
+        String Imagen = "INSERT INTO imagenes (path)"
+                + "VALUES('" + Path + "') RETURNING \"idImg\"";
+        ResultSet rs = st.executeQuery(Imagen);
+        rs.next();
+        return rs.getString("idImg");
+    }
+
+    private void agregarImagenProducto(Producto P) throws SQLException {
+        String query = " INSERT INTO productos_imagenes(restaurante,producto,imagen)"
+                + " VALUES('" + P.getRestaurante().getNickname() + "','" + P.getNombre() + "','" + guardarImagen(P.getImagen()) + "')";
+        st.execute(query);
+    }
+
     private void agregarProducto(Producto P) throws SQLException {
         String query = " INSERT INTO productos(restaurante,nombre,descripcion) "
                 + " VALUES ('" + P.getRestaurante().getNickname() + "','" + P.getNombre() + "','" + P.getDescripcion() + "');";
         st.execute(query);
+        agregarImagenProducto(P);
     }
 
     public void agregarIndividual(Individual I) throws SQLException {
@@ -81,4 +96,25 @@ public class ProductosD {
                 + " VALUES ('" + Promo.getRestaurante().getNickname() + "','" + Promo.getNombre() + "','" + Prod.getIndividual().getNombre() + "'," + Prod.getCantidad() + ");";
         st.execute(query);
     }
+
+    public ResultSet listarPromociones() throws SQLException {
+        String query = " SELECT p.restaurante, p.nombre, p.descripcion, pp.descuento, pp.activa "
+                + " FROM productos p,promociones pp"
+                + " WHERE p.restaurante = pp.restaurante"
+                + " AND p.nombre = pp.nombre";
+        return st.executeQuery(query);
+    }
+
+    public ResultSet listarProductosDePromocion(String restaurante, String nombre) throws SQLException {
+        String query = " SELECT p.restaurante, p.nombre, p.descripcion, i.precio, pp.cantidad"
+                + " FROM productos p,individuales i,productos_promociones pp "
+                + " WHERE p.restaurante = i.restaurante"
+                + " AND p.nombre = i.nombre"
+                + " AND i.restaurante = pp.restaurante"
+                + " AND i.nombre = pp.nombreprod"
+                + " AND pp.restaurante = '" + restaurante + "'"
+                + " AND pp.nombrepromo = '" + nombre + "'";
+        return st.executeQuery(query);
+    }
+
 }

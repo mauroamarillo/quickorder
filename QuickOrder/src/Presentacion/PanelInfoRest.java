@@ -58,12 +58,12 @@ public class PanelInfoRest extends javax.swing.JPanel {
                 Individual I = ((Individual) entry.getValue());
                 model.addElement(I.getNombre());
             }
-           /* it = R.getPromociones().entrySet().iterator();
+            it = R.getPromociones().entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry entry = (Map.Entry) it.next();
                 Promocion I = ((Promocion) entry.getValue());
                 model.addElement(I.getNombre());
-            }*/
+            }
             ListaProductos.setModel(model);
         }
     }

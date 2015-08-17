@@ -17,7 +17,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import static javax.swing.JFileChooser.APPROVE_OPTION;
 import javax.swing.JList;
@@ -427,12 +426,12 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
     private void Button_AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_AceptarActionPerformed
         try {
             if (foto != null) {
-                ventanaPrincipal.CU.getCP().insertarPromocion(Text_Nombre.getText(), Text_Descripcion.getText(), foto.getPath(), true, Float.parseFloat(Text_Descuento.getText()), ventanaPrincipal.CU.buscarRestaurante(ListaRestaurante.getSelectedValue().toString()), subProductos);
+                ventanaPrincipal.CU.getCP().insertarPromocion(Text_Nombre.getText(), Text_Descripcion.getText(), foto, true, Float.parseFloat(Text_Descuento.getText()), ventanaPrincipal.CU.buscarRestaurante(ListaRestaurante.getSelectedValue().toString()), subProductos);
+                JOptionPane.showMessageDialog(null, "Producto Ingresado", "Exito!", JOptionPane.DEFAULT_OPTION);
+                ventanaPrincipal.setOperando(false);
             } else {
                 throw new Exception("Asignar Imagen");
             }
-            //ventanaPrincipal.setOperando(false);
-            //this.dispose();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(RegistroPromocion.class.getName()).log(Level.SEVERE, null, ex);

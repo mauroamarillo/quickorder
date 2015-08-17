@@ -1,6 +1,5 @@
 package Presentacion;
 
-import Logica.ControladorProductos;
 import Logica.ControladorUsuario;
 import java.awt.BorderLayout;
 import java.beans.PropertyVetoException;
@@ -308,6 +307,7 @@ public class QuickOrder extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 try {
                     new QuickOrder().setVisible(true);

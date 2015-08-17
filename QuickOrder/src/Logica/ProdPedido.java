@@ -9,11 +9,12 @@ package Logica;
  *
  * @author usuario
  */
-public class ProdPedido implements ICollectible{
+public class ProdPedido {
+
     private int cantidad;
     private Producto producto;
-    
-    public ProdPedido(int cantidad, Producto producto){
+
+    public ProdPedido(int cantidad, Producto producto) {
         this.cantidad = cantidad;
         this.producto = producto;
     }
@@ -33,5 +34,5 @@ public class ProdPedido implements ICollectible{
     public void setProducto(Producto producto) {
         this.producto = producto;
     }
-    
+
 }

@@ -59,6 +59,7 @@ public class ComponenteImagen extends javax.swing.JPanel {
             return null;
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -121,7 +122,7 @@ public class ComponenteImagen extends javax.swing.JPanel {
 
     private void Label_ImgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Label_ImgMouseClicked
 
-        java.awt.Dimension D = new java.awt.Dimension(new ImageIcon(Path_Img).getIconWidth(),new ImageIcon(Path_Img).getIconHeight());
+        java.awt.Dimension D = new java.awt.Dimension(800, 600);
         Image img = new ImageIcon(Path_Img).getImage();
         Image newImg;
         newImg = img.getScaledInstance(D.width, D.height, java.awt.Image.SCALE_AREA_AVERAGING);
