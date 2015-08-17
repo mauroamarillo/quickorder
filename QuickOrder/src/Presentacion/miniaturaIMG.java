@@ -30,6 +30,7 @@ public final class miniaturaIMG extends JPanel {
     }
 
     public void cargarIMGs(String x) {
+
         Path = x;
         Image img = new ImageIcon(Path).getImage();
         Image newImg;

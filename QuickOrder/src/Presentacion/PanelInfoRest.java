@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import javax.swing.DefaultListModel;
+import javax.swing.JList;
 
 /**
  *
@@ -58,7 +59,11 @@ public class PanelInfoRest extends javax.swing.JPanel {
                 Individual I = ((Individual) entry.getValue());
                 model.addElement(I.getNombre());
             }
-            it = R.getPromociones().entrySet().iterator();
+            ListaProductos.setModel(model);
+        }
+        if (R.getPromociones() != null) {
+            Iterator it = R.getPromociones().entrySet().iterator();
+            DefaultListModel model = new DefaultListModel();
             while (it.hasNext()) {
                 Map.Entry entry = (Map.Entry) it.next();
                 Promocion I = ((Promocion) entry.getValue());
@@ -118,6 +123,11 @@ public class PanelInfoRest extends javax.swing.JPanel {
         });
         ListaProductos.setMaximumSize(new java.awt.Dimension(120, 190));
         ListaProductos.setMinimumSize(new java.awt.Dimension(120, 190));
+        ListaProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ListaProductosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(ListaProductos);
 
         ListaCategorias.setModel(new javax.swing.AbstractListModel() {
@@ -217,6 +227,13 @@ public class PanelInfoRest extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void ListaProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListaProductosMouseClicked
+        JList list = (JList) evt.getSource();
+        if (evt.getClickCount() == 2) {
+
+        }
+    }//GEN-LAST:event_ListaProductosMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -141,6 +141,9 @@
               <Dimension value="[120, 190]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="ListaProductosMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
