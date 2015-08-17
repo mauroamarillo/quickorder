@@ -91,19 +91,16 @@ public final class ControladorProductos {
             resultado.put(I.getRestaurante().getNickname() + "_" + I.getNombre(), I);
 
         }
-        /* Iterator it = resultado.entrySet().iterator();
-         while (it.hasNext()) {
-         Map.Entry entry = (Map.Entry) it.next();
-         Restaurante R = ((Restaurante) entry.getValue());
-         R.setImagenes(retornarIMGsRestaurantes(R.nickname));
-         }*/
+        Iterator it = resultado.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            Individual I = ((Individual) entry.getValue());
+            if (PD.obtenerIMGdeProducto(I) != null) {
+                I.setImagen(PD.obtenerIMGdeProducto(I));
+            }
+        }
         return resultado;
     }
-    /* desarrollar...
-     private void asignarImagenesI() {
-
-     }
-     */
 
     public HashMap buscarProductosI(Restaurante R) {
         HashMap resultado = new HashMap();
@@ -147,6 +144,14 @@ public final class ControladorProductos {
             Promocion P = new Promocion(rs.getString("nombre"), rs.getString("descripcion"), "sin imagen", rs.getBoolean("activa"), rs.getFloat("descuento"), R, null);
             R.getPromociones().put(P.getRestaurante().getNickname() + "_" + P.getNombre(), P);
             resultado.put(P.getRestaurante().getNickname() + "_" + P.getNombre(), P);
+        }
+        Iterator it = resultado.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            Promocion P = ((Promocion) entry.getValue());
+            if (PD.obtenerIMGdeProducto(P) != null) {
+                P.setImagen(PD.obtenerIMGdeProducto(P));
+            }
         }
         return resultado;
     }

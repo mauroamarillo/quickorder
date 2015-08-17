@@ -116,5 +116,14 @@ public class ProductosD {
                 + " AND pp.nombrepromo = '" + nombre + "'";
         return st.executeQuery(query);
     }
-
+    public String obtenerIMGdeProducto(Producto P) throws SQLException{
+        String query = "SELECT i.path"
+                + " FROM imagenes i, productos_imagenes p"
+                + " WHERE i.\"idImg\" = p.imagen"
+                + " AND p.restaurante = '"+P.getRestaurante().getNickname()+"'"
+                + " AND p.producto = '"+P.getNombre()+"';";
+         ResultSet rs = st.executeQuery(query);
+        rs.next();
+        return rs.getString("path");
+    }
 }
