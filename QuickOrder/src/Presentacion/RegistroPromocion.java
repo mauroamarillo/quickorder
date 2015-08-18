@@ -477,7 +477,11 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
     private void ListaRestauranteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListaRestauranteMouseClicked
         JList list = (JList) evt.getSource();
         if (evt.getClickCount() == 2) {
-            cargarProductos(ventanaPrincipal.CU.buscarRestaurante((String) list.getSelectedValue()));
+            try {
+                cargarProductos(ventanaPrincipal.CU.buscarRestaurante((String) list.getSelectedValue()));
+            } catch (SQLException ex) {
+                Logger.getLogger(RegistroPromocion.class.getName()).log(Level.SEVERE, null, ex);
+            }
             limpiarTabla();
         }
     }//GEN-LAST:event_ListaRestauranteMouseClicked

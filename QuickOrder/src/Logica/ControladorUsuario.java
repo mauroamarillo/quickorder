@@ -10,26 +10,35 @@ import java.util.Iterator;
 import java.util.Map;
 
 public final class ControladorUsuario {
-
+    /*acceso a capa logica*/
     private final CategoriaD CategoriaDatos;
     private final UsuarioD UsuarioDatos;
-
+    /*acceso a datos de productos*/
     private final ControladorProductos CP;
-
-    public ControladorProductos getCP() {
-        return CP;
-    }
-    private HashMap clientes = new HashMap();
+    /*Datos de usuarios, categorias guardados en el sistema*/
+    private HashMap Clientes = new HashMap();
     private HashMap Restaurantes = new HashMap();
     private HashMap Categorias = new HashMap();
 
     public ControladorUsuario() throws SQLException, ClassNotFoundException {
+        
         this.UsuarioDatos = new UsuarioD();
         this.CategoriaDatos = new CategoriaD();
+        
         this.Restaurantes = retornarRestaurantes();
+        this.Clientes = retornarClientes();
+        
         this.Categorias = consultarCategorias();
         this.CP = new ControladorProductos(this);
 
+    }
+
+    public ControladorProductos getCP() {
+        return CP;
+    }
+
+    public HashMap getClientes() {
+        return Clientes;
     }
 
     public HashMap getRestaurantes() {
@@ -146,6 +155,30 @@ public final class ControladorUsuario {
             throw new Exception("Email Ocupado");
         }
     }
+    /*FALTA COMPLETAR ESTO!!!!!!!!!!!!!!!!!!*/
+
+    public HashMap retornarClientes() throws SQLException {
+        HashMap resultado = new HashMap();
+        java.sql.ResultSet rs = UsuarioDatos.listarClientes();
+        while (rs.next()) {
+            Cliente C = new Cliente(rs.getString("nickname"), rs.getString("nombre"), rs.getString("email"), rs.getString("direccion"), rs.getString("apellido"), rs.getDate("fechaN"), "sin_imagen", null);
+            resultado.put(C.getNickname(), C);
+        }
+        /* Iterator it = resultado.entrySet().iterator();
+         while (it.hasNext()) {
+         Map.Entry entry = (Map.Entry) it.next();
+         Restaurante R = ((Restaurante) entry.getValue());
+         R.setImagenes(retornarIMGsRestaurantes(R.getNickname()));
+         }
+         it = resultado.entrySet().iterator();
+         while (it.hasNext()) {
+         Map.Entry entry = (Map.Entry) it.next();
+         Restaurante R = ((Restaurante) entry.getValue());
+         R.setCategorias(retornarCategoriasRestaurantes(R.getNickname()));
+         }*/
+        return resultado;
+
+    }
 
     public HashMap retornarRestaurantes() throws SQLException {
         HashMap resultado = new HashMap();
@@ -204,8 +237,23 @@ public final class ControladorUsuario {
         return res;
     }
 
-    public Restaurante buscarRestaurante(String nickname) {
+    /*
+     MECANISMO DE BUSQUEDA:
+     Primero vemos si el usuario que buscamos esta entre los datos que 
+     el sistema ya tiene y si no lo encontramos, buscamos en la base de datos
+     */
+    public Restaurante buscarRestaurante(String nickname) throws SQLException {
+        if ((Restaurante) Restaurantes.get(nickname) == null) {
+            Restaurantes = this.retornarRestaurantes();
+        }
         return (Restaurante) Restaurantes.get(nickname);
+    }
+
+    public Cliente buscarCliente(String nickname) throws SQLException {
+        if ((Cliente) Clientes.get(nickname) == null) {
+            Clientes = this.retornarRestaurantes();
+        }
+        return (Cliente) Clientes.get(nickname);
     }
 
 }

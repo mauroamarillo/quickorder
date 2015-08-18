@@ -5,6 +5,10 @@
  */
 package Presentacion;
 
+import Logica.Categoria;
+import Logica.Cliente;
+import Logica.Individual;
+import Logica.Promocion;
 import Logica.Restaurante;
 import java.awt.Image;
 import java.io.File;
@@ -19,6 +23,8 @@ import javax.swing.ImageIcon;
 import static javax.swing.JFileChooser.APPROVE_OPTION;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 /**
  *
@@ -27,17 +33,77 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class RegistroPedido extends javax.swing.JInternalFrame {
 
     QuickOrder ventanaPrincipal;
-    
-    public RegistroPedido(QuickOrder vp) {
+    DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Categorias");
+    DefaultMutableTreeNode nodoCategoria;
+    DefaultMutableTreeNode nodoRestaurante;
+    HashMap Categorias;
+
+    public RegistroPedido(QuickOrder vp) throws SQLException {
         this.ventanaPrincipal = vp;
-        
         initComponents();
+        this.Categorias = ventanaPrincipal.CU.getCategorias();
         jTree1.setEnabled(false);
+        cargarArbol();
+        cargarClientes();
         this.setLocation(200, 50);
         this.show();
     }
 
-   
+    private void cargarArbol() {
+        Iterator it = Categorias.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            String nombreCategoria = (String) entry.getValue();
+            nodoCategoria = new DefaultMutableTreeNode(nombreCategoria);
+            HashMap rest = ventanaPrincipal.CU.consultarRestaurantesPorCategoria(new Categoria(nombreCategoria));
+            Iterator it2 = rest.entrySet().iterator();
+            while (it2.hasNext()) {
+                Map.Entry entry2 = (Map.Entry) it2.next();
+                Restaurante R = (Restaurante) entry2.getValue();
+                nodoRestaurante = new DefaultMutableTreeNode(R.getNickname() + " - " + R.getNombre());
+                nodoRestaurante.setAllowsChildren(false);
+                nodoCategoria.add(nodoRestaurante);
+            }
+            raiz.add(nodoCategoria);
+        }
+        DefaultTreeModel modelo = new DefaultTreeModel(raiz);
+        this.jTree1.setModel(modelo);
+    }
+
+    private void cargarClientes() throws SQLException {
+        DefaultListModel model = new DefaultListModel();
+        HashMap clientes = ventanaPrincipal.CU.retornarClientes();
+
+        Iterator it = clientes.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            Cliente C = ((Cliente) entry.getValue());
+            model.addElement(C.getNickname()+" - " +C.getEmail());
+        }
+        jList1.setModel(model);
+    }
+
+    private void cargarProductos(Restaurante R) {
+        DefaultListModel model = new DefaultListModel();
+
+        if (R.getIndividuales() != null) {
+            Iterator it = R.getIndividuales().entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry entry = (Map.Entry) it.next();
+                Individual I = ((Individual) entry.getValue());
+                model.addElement(I.getNombre());
+            }
+        }
+        if (R.getPromociones() != null) {
+            Iterator it = R.getPromociones().entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry entry = (Map.Entry) it.next();
+                Promocion I = ((Promocion) entry.getValue());
+                model.addElement(I.getNombre());
+            }
+        }
+        //ListaProductos.setModel(model);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

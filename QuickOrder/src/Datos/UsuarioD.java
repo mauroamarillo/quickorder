@@ -102,4 +102,11 @@ public class UsuarioD {
         return st.executeQuery(query);
     }
 
+    public ResultSet listarClientes() throws SQLException {
+        String query = " SELECT * "
+                + " FROM usuarios u, clientes c"
+                + " WHERE u.nickname = c.\"nicknameC\";";
+        return st.executeQuery(query);
+    }
+
 }
