@@ -18,4 +18,9 @@ public class Individual extends Producto {
         this.precio = precio;
     }
 
+    @Override
+    public float getPrecio() {
+        return precio;
+    }
+
 }

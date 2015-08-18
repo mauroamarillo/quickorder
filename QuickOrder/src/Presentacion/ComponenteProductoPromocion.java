@@ -5,14 +5,13 @@
  */
 package Presentacion;
 
-import Logica.Individual;
-import Logica.Producto;
 import Logica.Promocion;
 import java.awt.Frame;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,9 +23,13 @@ public class ComponenteProductoPromocion extends javax.swing.JPanel {
      * Creates new form ComponenteProducto
      */
     private final Promocion P;
+    private int cantidad = 1;
 
-    public ComponenteProductoPromocion(Promocion Pr) {
+    private PanelProductos PP;
+
+    public ComponenteProductoPromocion(Promocion Pr, PanelProductos PP) {
         this.P = Pr;
+        this.PP = PP;
         initComponents();
         Nombre.setText(P.getNombre());
         if (!P.getImagen().equals("sin_imagen")) {
@@ -93,13 +96,13 @@ public class ComponenteProductoPromocion extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-
-        JLabel I = new JLabel();
-        I.setText("caca");
-        JDialog d = new JDialog(new Frame(), true);
-        d.setLocationByPlatform(true);
-        d.add(I);
-        d.setVisible(true);
+        try {
+            cantidad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese Cantidad"));
+            this.setVisible(false);
+            PP.agregarProductoPaLista(this, cantidad);
+        } catch (NumberFormatException nfe) {
+            JOptionPane.showMessageDialog(null, "Cantidad invalida", "ENTRADA INCORRECTA", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_formMouseClicked
 
 

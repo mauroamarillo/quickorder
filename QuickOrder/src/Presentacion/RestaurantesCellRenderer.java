@@ -9,7 +9,9 @@ import Logica.Restaurante;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridLayout;
+import java.awt.Image;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTree;
@@ -43,6 +45,11 @@ class RestaurantesCellRenderer implements TreeCellRenderer {
             Object userObject = ((DefaultMutableTreeNode) value).getUserObject();
             if (userObject instanceof Restaurante) {
                 R = (Restaurante) userObject;
+
+                
+                ImageIcon ico = new ImageIcon();
+
+                NombreRestaurante.setIcon(ico);
                 NombreRestaurante.setText(R.getNombre());
                 if (selected) {
                     renderer.setBackground(defaultRenderer.getBackgroundSelectionColor());
@@ -57,6 +64,8 @@ class RestaurantesCellRenderer implements TreeCellRenderer {
             returnValue = defaultRenderer.getTreeCellRendererComponent(tree,
                     value, selected, expanded, leaf, row, hasFocus);
         }
+        
+        
         return returnValue;
     }
 }

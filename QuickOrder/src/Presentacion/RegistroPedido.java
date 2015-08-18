@@ -24,6 +24,7 @@ import static javax.swing.JFileChooser.APPROVE_OPTION;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeCellRenderer;
@@ -35,14 +36,19 @@ import javax.swing.tree.TreeCellRenderer;
 public class RegistroPedido extends javax.swing.JInternalFrame {
 
     QuickOrder ventanaPrincipal;
+    /*nodos Para el arbol*/
     DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Categorias");
     DefaultMutableTreeNode nodoCategoria;
     DefaultMutableTreeNode nodoRestaurante;
+    /*modelo para la tabla*/
+    DefaultTableModel modeloTabla;
+
     HashMap Categorias;
 
     public RegistroPedido(QuickOrder vp) throws SQLException {
         this.ventanaPrincipal = vp;
         initComponents();
+        modeloTabla = new DefaultTableModel();
         this.Categorias = ventanaPrincipal.CU.getCategorias();
         ScrollProductos.setViewportView(new JPanel());
         cargarArbol();
@@ -87,26 +93,17 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         ListaClientes.setModel(model);
     }
 
-    private void cargarProductos(Restaurante R) {
-        DefaultListModel model = new DefaultListModel();
-        HashMap productos = new HashMap();
-        if (R.getIndividuales() != null) {
-            Iterator it = R.getIndividuales().entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry entry = (Map.Entry) it.next();
-                Individual I = ((Individual) entry.getValue());
-                model.addElement(I.getNombre());
-            }
-        }
-        if (R.getPromociones() != null) {
-            Iterator it = R.getPromociones().entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry entry = (Map.Entry) it.next();
-                Promocion I = ((Promocion) entry.getValue());
-                model.addElement(I.getNombre());
-            }
-        }
-        //ListaProductos.setModel(model);
+    public void agregarProductoIndividualTabla(Individual I, int c) {
+       // if (subProductos.get(I.getRestaurante().getNickname() + "_" + I.getNombre()) != null) {
+       //     JOptionPane.showMessageDialog(null, "El producto ya esta agregado", "ERROR", JOptionPane.INFORMATION_MESSAGE);
+       // } else {
+          //  int cant = Integer.parseInt(JOptionPane.showInputDialog("Ingrese Cantidad"));
+            modeloTabla.addRow(new Object[]{I.getNombre(),I.getDescripcion(),I.getClass().getName(),I.getPrecio(), c,(I.getPrecio()*c)});
+       // }
+    }
+
+    public void agregarProductoPromocionTabla(Promocion P, int c) {
+
     }
 
     /**
@@ -300,14 +297,14 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_ListaClientesValueChanged
 
     private void ArbolRestaurantesValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_ArbolRestaurantesValueChanged
-        if(evt.getNewLeadSelectionPath() == null){
+        if (evt.getNewLeadSelectionPath() == null) {
             return;
-        } 
+        }
         DefaultMutableTreeNode x = (DefaultMutableTreeNode) evt.getNewLeadSelectionPath().getLastPathComponent();
         if (x.getAllowsChildren() == false) {
-            PanelProductos PP = new PanelProductos();
-            PP.iniciarPanel(ventanaPrincipal.CU.getCP().buscarProductosI((Restaurante) x.getUserObject()),ventanaPrincipal.CU.getCP().buscarProductosP((Restaurante) x.getUserObject()));
-            ScrollProductos.setViewportView(PP);        
+            PanelProductos PP = new PanelProductos(this);
+            PP.iniciarPanel(ventanaPrincipal.CU.getCP().buscarProductosI((Restaurante) x.getUserObject()), ventanaPrincipal.CU.getCP().buscarProductosP((Restaurante) x.getUserObject()));
+            ScrollProductos.setViewportView(PP);
         }
     }//GEN-LAST:event_ArbolRestaurantesValueChanged
 

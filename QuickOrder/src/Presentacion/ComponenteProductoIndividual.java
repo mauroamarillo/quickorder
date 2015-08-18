@@ -6,12 +6,12 @@
 package Presentacion;
 
 import Logica.Individual;
-import Logica.Producto;
 import java.awt.Frame;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,15 +23,19 @@ public class ComponenteProductoIndividual extends javax.swing.JPanel {
      * Creates new form ComponenteProducto
      */
     private Individual P;
+    private int cantidad = 1;
 
-    public ComponenteProductoIndividual(Individual I) {
+    private PanelProductos PP;
+
+    public ComponenteProductoIndividual(Individual I, PanelProductos PP) {
         this.P = I;
+        this.PP = PP;
         initComponents();
         Nombre.setText(P.getNombre());
-         if (!P.getImagen().equals("sin_imagen")) {
+        if (!P.getImagen().equals("sin_imagen")) {
             Image img = new ImageIcon(P.getImagen()).getImage();
             Image newImg;
-            newImg = img.getScaledInstance(78,78, java.awt.Image.SCALE_AREA_AVERAGING);
+            newImg = img.getScaledInstance(78, 78, java.awt.Image.SCALE_AREA_AVERAGING);
             ImageIcon ico = new ImageIcon(newImg);
             IMG.setText("");
             IMG.setIcon(ico);
@@ -91,13 +95,14 @@ public class ComponenteProductoIndividual extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        try {
+            cantidad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese Cantidad"));
+            this.setVisible(false);
+            PP.agregarProductoIaLista(this, cantidad);
 
-        JLabel I = new JLabel();
-        I.setText("caca");
-        JDialog d = new JDialog(new Frame(), true);
-        d.setLocationByPlatform(true);
-        d.add(I);
-        d.setVisible(true);
+        } catch (NumberFormatException nfe) {
+            JOptionPane.showMessageDialog(null, "Cantidad invalida", "ENTRADA INCORRECTA", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_formMouseClicked
 
 

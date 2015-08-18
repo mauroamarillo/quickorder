@@ -87,11 +87,13 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
 
     private void borrarLineaProducto() {
         int selectedRow = TablaSubProductos.getSelectedRow();
-        DefaultTableModel tm = (DefaultTableModel) TablaSubProductos.getModel();
-        String nom = String.valueOf(tm.getValueAt(TablaSubProductos.getSelectedRow(), 0));
-        String nick = (String) ListaRestaurante.getSelectedValue();
-        subProductos.remove(nick + "_" + nom);
-        modelo.removeRow(selectedRow);
+        if (selectedRow > -1) {
+            DefaultTableModel tm = (DefaultTableModel) TablaSubProductos.getModel();
+            String nom = String.valueOf(tm.getValueAt(TablaSubProductos.getSelectedRow(), 0));
+            String nick = (String) ListaRestaurante.getSelectedValue();
+            subProductos.remove(nick + "_" + nom);
+            modelo.removeRow(selectedRow);
+        }
     }
 
     private void agregarLineaProducto(Individual I) {
