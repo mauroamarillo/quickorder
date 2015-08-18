@@ -216,7 +216,16 @@ public class QuickOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu1ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-
+        if (!operando) {
+            RegistroPedido registroPedido  = new RegistroPedido(this);
+            this.add(registroPedido, BorderLayout.CENTER);
+            try {
+                registroPedido.setSelected(true);
+                operando = true;
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void Menu_RIndividualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Menu_RIndividualActionPerformed

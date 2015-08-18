@@ -51,26 +51,25 @@ public class PanelInfoRest extends javax.swing.JPanel {
     }
 
     public void cargarproductos(Restaurante R) {
+        DefaultListModel model = new DefaultListModel();
+
         if (R.getIndividuales() != null) {
             Iterator it = R.getIndividuales().entrySet().iterator();
-            DefaultListModel model = new DefaultListModel();
             while (it.hasNext()) {
                 Map.Entry entry = (Map.Entry) it.next();
                 Individual I = ((Individual) entry.getValue());
                 model.addElement(I.getNombre());
             }
-            ListaProductos.setModel(model);
         }
         if (R.getPromociones() != null) {
             Iterator it = R.getPromociones().entrySet().iterator();
-            DefaultListModel model = new DefaultListModel();
             while (it.hasNext()) {
                 Map.Entry entry = (Map.Entry) it.next();
                 Promocion I = ((Promocion) entry.getValue());
                 model.addElement(I.getNombre());
             }
-            ListaProductos.setModel(model);
         }
+        ListaProductos.setModel(model);
     }
 
     public void cargarcategorias(Restaurante R) {
