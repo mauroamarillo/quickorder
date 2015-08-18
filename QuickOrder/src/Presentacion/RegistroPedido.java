@@ -22,9 +22,11 @@ import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import static javax.swing.JFileChooser.APPROVE_OPTION;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeCellRenderer;
 
 /**
  *
@@ -42,7 +44,7 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         this.ventanaPrincipal = vp;
         initComponents();
         this.Categorias = ventanaPrincipal.CU.getCategorias();
-        jTree1.setEnabled(false);
+        ScrollProductos.setViewportView(new JPanel());
         cargarArbol();
         cargarClientes();
         this.setLocation(200, 50);
@@ -60,14 +62,16 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
             while (it2.hasNext()) {
                 Map.Entry entry2 = (Map.Entry) it2.next();
                 Restaurante R = (Restaurante) entry2.getValue();
-                nodoRestaurante = new DefaultMutableTreeNode(R.getNickname() + " - " + R.getNombre());
+                nodoRestaurante = new DefaultMutableTreeNode(R);
                 nodoRestaurante.setAllowsChildren(false);
                 nodoCategoria.add(nodoRestaurante);
             }
             raiz.add(nodoCategoria);
         }
         DefaultTreeModel modelo = new DefaultTreeModel(raiz);
-        this.jTree1.setModel(modelo);
+        this.ArbolRestaurantes.setModel(modelo);
+        TreeCellRenderer renderer = new RestaurantesCellRenderer();
+        ArbolRestaurantes.setCellRenderer(renderer);
     }
 
     private void cargarClientes() throws SQLException {
@@ -78,14 +82,14 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
             Cliente C = ((Cliente) entry.getValue());
-            model.addElement(C.getNickname()+" - " +C.getEmail());
+            model.addElement(C.getNickname());
         }
-        jList1.setModel(model);
+        ListaClientes.setModel(model);
     }
 
     private void cargarProductos(Restaurante R) {
         DefaultListModel model = new DefaultListModel();
-
+        HashMap productos = new HashMap();
         if (R.getIndividuales() != null) {
             Iterator it = R.getIndividuales().entrySet().iterator();
             while (it.hasNext()) {
@@ -115,23 +119,23 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTree1 = new javax.swing.JTree();
-        jLabel2 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jLabel3 = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
+        ScrollClientes = new javax.swing.JScrollPane();
+        ListaClientes = new javax.swing.JList();
+        ScrollRestaurantes = new javax.swing.JScrollPane();
+        ArbolRestaurantes = new javax.swing.JTree();
+        ScrollProductos = new javax.swing.JScrollPane();
+        ScrollTabla = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        ButtonAceptar = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Registro Pedido");
-        setMaximumSize(new java.awt.Dimension(800, 425));
-        setMinimumSize(new java.awt.Dimension(800, 425));
+        setMaximumSize(new java.awt.Dimension(860, 425));
+        setMinimumSize(new java.awt.Dimension(860, 425));
         setName(""); // NOI18N
-        setPreferredSize(new java.awt.Dimension(800, 425));
+        setPreferredSize(new java.awt.Dimension(860, 425));
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -154,14 +158,79 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         jLabel1.setText("Seleccione Cliente");
         jLabel1.setToolTipText("");
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+        ScrollClientes.setMaximumSize(new java.awt.Dimension(192, 163));
+        ScrollClientes.setMinimumSize(new java.awt.Dimension(192, 163));
+        ScrollClientes.setPreferredSize(new java.awt.Dimension(192, 163));
+
+        ListaClientes.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        ListaClientes.setMinimumSize(new java.awt.Dimension(192, 163));
+        ListaClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ListaClientesMouseClicked(evt);
+            }
+        });
+        ListaClientes.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                ListaClientesValueChanged(evt);
+            }
+        });
+        ScrollClientes.setViewportView(ListaClientes);
 
-        jScrollPane2.setViewportView(jTree1);
+        ScrollRestaurantes.setMaximumSize(new java.awt.Dimension(151, 163));
+        ScrollRestaurantes.setMinimumSize(new java.awt.Dimension(151, 163));
+        ScrollRestaurantes.setPreferredSize(new java.awt.Dimension(151, 163));
+
+        ArbolRestaurantes.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+            public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+                ArbolRestaurantesValueChanged(evt);
+            }
+        });
+        ScrollRestaurantes.setViewportView(ArbolRestaurantes);
+
+        ScrollProductos.setMaximumSize(new java.awt.Dimension(476, 163));
+        ScrollProductos.setMinimumSize(new java.awt.Dimension(476, 163));
+        ScrollProductos.setPreferredSize(new java.awt.Dimension(476, 163));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Nombre", "Descripcion", "Tipo", "Precio", "Cantidad", "Precio Total"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.setEnabled(false);
+        jTable1.getTableHeader().setReorderingAllowed(false);
+        ScrollTabla.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setResizable(false);
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(100);
+            jTable1.getColumnModel().getColumn(1).setResizable(false);
+            jTable1.getColumnModel().getColumn(1).setPreferredWidth(200);
+            jTable1.getColumnModel().getColumn(2).setResizable(false);
+            jTable1.getColumnModel().getColumn(2).setPreferredWidth(5);
+            jTable1.getColumnModel().getColumn(3).setResizable(false);
+            jTable1.getColumnModel().getColumn(3).setPreferredWidth(5);
+            jTable1.getColumnModel().getColumn(4).setResizable(false);
+            jTable1.getColumnModel().getColumn(4).setPreferredWidth(5);
+            jTable1.getColumnModel().getColumn(5).setResizable(false);
+            jTable1.getColumnModel().getColumn(5).setPreferredWidth(5);
+        }
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Seleccione Restaurante");
@@ -171,20 +240,7 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         jLabel3.setText("Seleccione Productos");
         jLabel3.setToolTipText("");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane4.setViewportView(jTable1);
-
-        jButton1.setText("Aceptar");
+        ButtonAceptar.setText("Aceptar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -193,21 +249,21 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4)
+                    .addComponent(ScrollTabla)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))
+                            .addComponent(ScrollClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane2)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ScrollRestaurantes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ScrollProductos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(ButtonAceptar)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -221,14 +277,14 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane3)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE))
+                    .addComponent(ScrollClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ScrollRestaurantes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ScrollProductos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ScrollTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(ButtonAceptar)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -239,17 +295,37 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_formInternalFrameClosing
 
+    private void ListaClientesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_ListaClientesValueChanged
+
+    }//GEN-LAST:event_ListaClientesValueChanged
+
+    private void ArbolRestaurantesValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_ArbolRestaurantesValueChanged
+        if(evt.getNewLeadSelectionPath() == null){
+            return;
+        } 
+        DefaultMutableTreeNode x = (DefaultMutableTreeNode) evt.getNewLeadSelectionPath().getLastPathComponent();
+        if (x.getAllowsChildren() == false) {
+            PanelProductos PP = new PanelProductos();
+            PP.iniciarPanel(ventanaPrincipal.CU.getCP().buscarProductosI((Restaurante) x.getUserObject()),ventanaPrincipal.CU.getCP().buscarProductosP((Restaurante) x.getUserObject()));
+            ScrollProductos.setViewportView(PP);        
+        }
+    }//GEN-LAST:event_ArbolRestaurantesValueChanged
+
+    private void ListaClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListaClientesMouseClicked
+
+    }//GEN-LAST:event_ListaClientesMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTree ArbolRestaurantes;
+    private javax.swing.JButton ButtonAceptar;
+    private javax.swing.JList ListaClientes;
+    private javax.swing.JScrollPane ScrollClientes;
+    private javax.swing.JScrollPane ScrollProductos;
+    private javax.swing.JScrollPane ScrollRestaurantes;
+    private javax.swing.JScrollPane ScrollTabla;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JList jList1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTree jTree1;
     // End of variables declaration//GEN-END:variables
 }

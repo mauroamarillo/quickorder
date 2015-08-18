@@ -14,6 +14,7 @@ import java.util.Map;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeCellRenderer;
 
 /**
  *
@@ -40,26 +41,26 @@ public class VerInfoRestaurantes extends javax.swing.JInternalFrame {
 
     private void cargarArbol() {
         Iterator it = Categorias.entrySet().iterator();
-        HashMap r = new HashMap();        
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
             String nombreCategoria = (String) entry.getValue();
             nodoCategoria = new DefaultMutableTreeNode(nombreCategoria);
-                HashMap rest = ventanaPrincipal.CU.consultarRestaurantesPorCategoria(new Categoria(nombreCategoria));
-                Iterator it2 = rest.entrySet().iterator();
-                while(it2.hasNext()){                     
-                    Map.Entry entry2 = (Map.Entry) it2.next();
-                    //JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
-                     Restaurante R = (Restaurante) entry2.getValue();
-                     nodoRestaurante = new DefaultMutableTreeNode(R.getNickname()+" - "+ R.getNombre());
-                     nodoRestaurante.setAllowsChildren(false);
-                     nodoCategoria.add(nodoRestaurante);
-                }
+            HashMap rest = ventanaPrincipal.CU.consultarRestaurantesPorCategoria(new Categoria(nombreCategoria));
+            Iterator it2 = rest.entrySet().iterator();
+            while (it2.hasNext()) {
+                Map.Entry entry2 = (Map.Entry) it2.next();
+                //JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
+                Restaurante R = (Restaurante) entry2.getValue();
+                nodoRestaurante = new DefaultMutableTreeNode(R);
+                nodoRestaurante.setAllowsChildren(false);
+                nodoCategoria.add(nodoRestaurante);
+            }
             raiz.add(nodoCategoria);
-        }       
+        }
         DefaultTreeModel modelo = new DefaultTreeModel(raiz);
-
-        this.jTree1.setModel(modelo);
+        this.ArbolRestaurantes.setModel(modelo);
+        TreeCellRenderer renderer = new RestaurantesCellRenderer();
+        ArbolRestaurantes.setCellRenderer(renderer);
     }
 
     /**
@@ -73,7 +74,7 @@ public class VerInfoRestaurantes extends javax.swing.JInternalFrame {
 
         jFileChooser1 = new javax.swing.JFileChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTree1 = new javax.swing.JTree();
+        ArbolRestaurantes = new javax.swing.JTree();
         panelInfoRest2 = new Presentacion.PanelInfoRest();
 
         jFileChooser1.setFileFilter(new FileNameExtensionFilter("Imagenes jpg ", "jpg"));
@@ -106,15 +107,15 @@ public class VerInfoRestaurantes extends javax.swing.JInternalFrame {
         jScrollPane1.setMinimumSize(new java.awt.Dimension(180, 280));
         jScrollPane1.setPreferredSize(new java.awt.Dimension(180, 280));
 
-        jTree1.setMaximumSize(null);
-        jTree1.setMinimumSize(null);
-        jTree1.setPreferredSize(null);
-        jTree1.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+        ArbolRestaurantes.setMaximumSize(null);
+        ArbolRestaurantes.setMinimumSize(null);
+        ArbolRestaurantes.setPreferredSize(null);
+        ArbolRestaurantes.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
             public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
-                jTree1ValueChanged(evt);
+                ArbolRestaurantesValueChanged(evt);
             }
         });
-        jScrollPane1.setViewportView(jTree1);
+        jScrollPane1.setViewportView(ArbolRestaurantes);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -147,19 +148,17 @@ public class VerInfoRestaurantes extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_formInternalFrameClosing
 
-    private void jTree1ValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_jTree1ValueChanged
-      //  if(){
-       DefaultMutableTreeNode x = (DefaultMutableTreeNode) evt.getNewLeadSelectionPath().getLastPathComponent();
-      if (x.getAllowsChildren() == false){
-          panelInfoRest2.cargarInfo( ventanaPrincipal.CU.buscarRestaurantePorNick_Nombre(evt.getNewLeadSelectionPath().getLastPathComponent().toString()));
-      }// JOptionPane.showMessageDialog(this, evt.getNewLeadSelectionPath().getLastPathComponent(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
-      //  }
-    }//GEN-LAST:event_jTree1ValueChanged
+    private void ArbolRestaurantesValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_ArbolRestaurantesValueChanged
+        DefaultMutableTreeNode x = (DefaultMutableTreeNode) evt.getNewLeadSelectionPath().getLastPathComponent();
+        if (x.getAllowsChildren() == false) {
+            panelInfoRest2.cargarInfo((Restaurante) x.getUserObject());
+        }
+    }//GEN-LAST:event_ArbolRestaurantesValueChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTree ArbolRestaurantes;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTree jTree1;
     private Presentacion.PanelInfoRest panelInfoRest2;
     // End of variables declaration//GEN-END:variables
 }

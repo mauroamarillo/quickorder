@@ -34,7 +34,7 @@ public final class ControladorProductos {
     public HashMap getIndividuales() {
         return individuales;
     }
-
+    
     public ControladorProductos(ControladorUsuario C) throws SQLException, ClassNotFoundException {
         this.CU = C;
         this.PD = new ProductosD();
@@ -43,7 +43,7 @@ public final class ControladorProductos {
         asignarProductosDePromocion();
 
     }
-
+    
     private void guardarIMG(Producto P, File img) throws IOException {
         if (img != null) {
             new File("C:\\imagenes\\" + P.getRestaurante().getNickname() + "\\productos\\").mkdirs();
@@ -114,6 +114,18 @@ public final class ControladorProductos {
         }
         return resultado;
     }
+     public HashMap buscarProductosP(Restaurante R) {
+        HashMap resultado = new HashMap();
+        Iterator it = promociones.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            Promocion I = ((Promocion) entry.getValue());
+            if (I.getRestaurante().getNombre().equals(R.getNombre())) {
+                resultado.put(I.getRestaurante().getNickname() + "_" + I.getNombre(), I);
+            }
+        }
+        return resultado;
+    }
 
     public Individual buscarIndividual(String nombre, String restaurante) {
         return (Individual) individuales.get(restaurante + "_" + nombre);
@@ -170,5 +182,5 @@ public final class ControladorProductos {
             P.setProdPromos(productosDePromo);
         }
     }
-
+    
 }

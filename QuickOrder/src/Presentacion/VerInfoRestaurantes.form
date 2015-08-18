@@ -92,7 +92,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTree" name="jTree1">
+        <Component class="javax.swing.JTree" name="ArbolRestaurantes">
           <Properties>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="null"/>
@@ -105,7 +105,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="valueChanged" listener="javax.swing.event.TreeSelectionListener" parameters="javax.swing.event.TreeSelectionEvent" handler="jTree1ValueChanged"/>
+            <EventHandler event="valueChanged" listener="javax.swing.event.TreeSelectionListener" parameters="javax.swing.event.TreeSelectionEvent" handler="ArbolRestaurantesValueChanged"/>
           </Events>
         </Component>
       </SubComponents>
