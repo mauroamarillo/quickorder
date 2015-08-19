@@ -9,7 +9,7 @@ package Logica;
  *
  * @author usuario
  */
-public abstract class Usuario implements ICollectible{
+public abstract class Usuario{
     protected String nickname;
     protected String nombre;
     protected String email;

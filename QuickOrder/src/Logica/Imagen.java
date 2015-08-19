@@ -9,7 +9,7 @@ package Logica;
  *
  * @author usuario
  */
-public class Imagen implements ICollectible {
+public class Imagen {
 
     private String path;
 

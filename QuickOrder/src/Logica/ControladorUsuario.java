@@ -1,6 +1,7 @@
 package Logica;
 
 import Datos.CategoriaD;
+import Datos.PedidoD;
 import Datos.UsuarioD;
 import java.io.File;
 import java.sql.Date;
@@ -11,8 +12,11 @@ import java.util.Map;
 
 public final class ControladorUsuario {
     /*acceso a capa logica*/
+
     private final CategoriaD CategoriaDatos;
     private final UsuarioD UsuarioDatos;
+    private final PedidoD PedidoDatos;
+
     /*acceso a datos de productos*/
     private final ControladorProductos CP;
     /*Datos de usuarios, categorias guardados en el sistema*/
@@ -21,14 +25,16 @@ public final class ControladorUsuario {
     private HashMap Categorias = new HashMap();
 
     public ControladorUsuario() throws SQLException, ClassNotFoundException {
-        
+
         this.UsuarioDatos = new UsuarioD();
         this.CategoriaDatos = new CategoriaD();
-        
+        this.PedidoDatos = new PedidoD();
+
         this.Restaurantes = retornarRestaurantes();
         this.Clientes = retornarClientes();
-        
+
         this.Categorias = consultarCategorias();
+
         this.CP = new ControladorProductos(this);
 
     }
@@ -207,7 +213,7 @@ public final class ControladorUsuario {
         java.sql.ResultSet rs = UsuarioDatos.listarIMGsRestaurante(nick);
         int index = 1;
         while (rs.next()) {
-            Imagen I = new Imagen(rs.getString("path"));
+            Imagen I = new Imagen(rs.getString("imagen"));
             resultado.put(index, I);
             index++;
         }
@@ -254,6 +260,33 @@ public final class ControladorUsuario {
             Clientes = this.retornarRestaurantes();
         }
         return (Cliente) Clientes.get(nickname);
+    }
+    /*----*/
+
+    private void validarPedido(Pedido P) throws Exception {
+        if (P.getCliente() == null) {
+            throw new Exception("Cliente invalido");
+        }
+        if (P.getRestaurante() == null) {
+            throw new Exception("Restaurante invalido");
+        }
+        if (P.getProdPedidos() == null) {
+            throw new Exception("Error al generar pedido");
+        }
+        if (P.getProdPedidos().size()<1) {
+            throw new Exception("No se agregaron Productos al pedido");
+        }
+    }
+
+    public void insertarPedido(int numero, Date fecha, Estado estado, Cliente cliente, Restaurante restaurante, HashMap prodPedidos) throws SQLException, Exception {
+        Pedido P = new Pedido(numero, fecha, estado, cliente, restaurante, prodPedidos);
+        validarPedido(P);
+        P.setNumero(PedidoDatos.agregarPedido(P));
+        Iterator it = P.getProdPedidos().entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            PedidoDatos.agregarLineaDePedido(P.getNumero(), (ProdPedido) entry.getValue());
+        }
     }
 
 }

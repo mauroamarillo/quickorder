@@ -9,22 +9,42 @@ package Logica;
  *
  * @author usuario
  */
-
 import java.sql.Date;
+import java.util.HashMap;
 
-public class Pedido implements ICollectible{
+public class Pedido {
+
     private int numero;
     private Date fecha;
-    private float precio;
     private Estado estado;
-    private Lista prodPedidos;
-    
-    public Pedido(int numero, Date fecha, float precio, Estado estado, Lista prodPedidos){
+    private HashMap prodPedidos;
+    private Cliente cliente;
+
+    private Restaurante restaurante;
+
+    public Pedido(int numero, Date fecha, Estado estado, Cliente cliente, Restaurante restaurante, HashMap prodPedidos) {
         this.numero = numero;
+        this.cliente = cliente;
+        this.restaurante = restaurante;
         this.fecha = fecha;
-        this.precio = precio;
         this.estado = estado;
         this.prodPedidos = prodPedidos;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public Restaurante getRestaurante() {
+        return restaurante;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public void setRestaurante(Restaurante restaurante) {
+        this.restaurante = restaurante;
     }
 
     public int getNumero() {
@@ -44,12 +64,9 @@ public class Pedido implements ICollectible{
     }
 
     public float getPrecio() {
-        return precio;
+        return 0;
     }
 
-    public void setPrecio(float precio) {
-        this.precio = precio;
-    }
 
     public Estado getEstado() {
         return estado;
@@ -59,13 +76,12 @@ public class Pedido implements ICollectible{
         this.estado = estado;
     }
 
-    public Lista getProdPedidos() {
+    public HashMap getProdPedidos() {
         return prodPedidos;
     }
 
-    public void setProdPedidos(Lista prodPedidos) {
+    public void setProdPedidos(HashMap prodPedidos) {
         this.prodPedidos = prodPedidos;
     }
-    
-    
+
 }

@@ -7,11 +7,12 @@ package Presentacion;
 
 import Logica.Categoria;
 import Logica.Cliente;
+import Logica.Estado;
 import Logica.Individual;
+import Logica.ProdPedido;
 import Logica.Promocion;
 import Logica.Restaurante;
-import java.awt.Image;
-import java.io.File;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -19,11 +20,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
-import static javax.swing.JFileChooser.APPROVE_OPTION;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -40,19 +38,27 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
     DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Categorias");
     DefaultMutableTreeNode nodoCategoria;
     DefaultMutableTreeNode nodoRestaurante;
+    /*categorias para el arbol*/
+    HashMap Categorias;
     /*modelo para la tabla*/
     DefaultTableModel modeloTabla;
 
-    HashMap Categorias;
+    /*Lista de los productos ProdPromo*/
+    HashMap LineasPedido;
 
     public RegistroPedido(QuickOrder vp) throws SQLException {
         this.ventanaPrincipal = vp;
         initComponents();
         modeloTabla = new DefaultTableModel();
+
         this.Categorias = ventanaPrincipal.CU.getCategorias();
         ScrollProductos.setViewportView(new JPanel());
+        LineasPedido = new HashMap();
         cargarArbol();
         cargarClientes();
+        limpiarTabla();
+        ArbolRestaurantes.setEnabled(false);
+        TablaSubProductos.setModel(modeloTabla);
         this.setLocation(200, 50);
         this.show();
     }
@@ -94,16 +100,21 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
     }
 
     public void agregarProductoIndividualTabla(Individual I, int c) {
-       // if (subProductos.get(I.getRestaurante().getNickname() + "_" + I.getNombre()) != null) {
-       //     JOptionPane.showMessageDialog(null, "El producto ya esta agregado", "ERROR", JOptionPane.INFORMATION_MESSAGE);
-       // } else {
-          //  int cant = Integer.parseInt(JOptionPane.showInputDialog("Ingrese Cantidad"));
-            modeloTabla.addRow(new Object[]{I.getNombre(),I.getDescripcion(),I.getClass().getName(),I.getPrecio(), c,(I.getPrecio()*c)});
-       // }
+        LineasPedido.put(I.getNombre(), new ProdPedido(c, I));
+        modeloTabla.addRow(new Object[]{I.getNombre(), I.getDescripcion(), "Individual", I.getPrecio(), c, (I.getPrecio() * c)});
     }
 
     public void agregarProductoPromocionTabla(Promocion P, int c) {
+        LineasPedido.put(P.getNombre(), new ProdPedido(c, P));
+        modeloTabla.addRow(new Object[]{P.getNombre(), P.getDescripcion(), "Promocion", P.getPrecio(), c, (P.getPrecio() * c)});
+    }
 
+    private void limpiarTabla() {
+        modeloTabla = (DefaultTableModel) TablaSubProductos.getModel();
+        while (modeloTabla.getRowCount() > 0) {
+            modeloTabla.removeRow(0);
+        }
+        LineasPedido.clear();
     }
 
     /**
@@ -122,7 +133,7 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         ArbolRestaurantes = new javax.swing.JTree();
         ScrollProductos = new javax.swing.JScrollPane();
         ScrollTabla = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TablaSubProductos = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         ButtonAceptar = new javax.swing.JButton();
@@ -192,7 +203,7 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         ScrollProductos.setMinimumSize(new java.awt.Dimension(476, 163));
         ScrollProductos.setPreferredSize(new java.awt.Dimension(476, 163));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TablaSubProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -203,30 +214,36 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
                 "Nombre", "Descripcion", "Tipo", "Precio", "Cantidad", "Precio Total"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Float.class, java.lang.Integer.class, java.lang.Float.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setEnabled(false);
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        ScrollTabla.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(100);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(200);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(5);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(5);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setPreferredWidth(5);
-            jTable1.getColumnModel().getColumn(5).setResizable(false);
-            jTable1.getColumnModel().getColumn(5).setPreferredWidth(5);
+        TablaSubProductos.getTableHeader().setReorderingAllowed(false);
+        ScrollTabla.setViewportView(TablaSubProductos);
+        if (TablaSubProductos.getColumnModel().getColumnCount() > 0) {
+            TablaSubProductos.getColumnModel().getColumn(0).setResizable(false);
+            TablaSubProductos.getColumnModel().getColumn(0).setPreferredWidth(100);
+            TablaSubProductos.getColumnModel().getColumn(1).setResizable(false);
+            TablaSubProductos.getColumnModel().getColumn(1).setPreferredWidth(200);
+            TablaSubProductos.getColumnModel().getColumn(2).setResizable(false);
+            TablaSubProductos.getColumnModel().getColumn(2).setPreferredWidth(5);
+            TablaSubProductos.getColumnModel().getColumn(3).setResizable(false);
+            TablaSubProductos.getColumnModel().getColumn(3).setPreferredWidth(5);
+            TablaSubProductos.getColumnModel().getColumn(4).setResizable(false);
+            TablaSubProductos.getColumnModel().getColumn(4).setPreferredWidth(5);
+            TablaSubProductos.getColumnModel().getColumn(5).setResizable(false);
+            TablaSubProductos.getColumnModel().getColumn(5).setPreferredWidth(5);
         }
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -238,6 +255,11 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         jLabel3.setToolTipText("");
 
         ButtonAceptar.setText("Aceptar");
+        ButtonAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonAceptarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -293,7 +315,7 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_formInternalFrameClosing
 
     private void ListaClientesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_ListaClientesValueChanged
-
+        ArbolRestaurantes.setEnabled(true);
     }//GEN-LAST:event_ListaClientesValueChanged
 
     private void ArbolRestaurantesValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_ArbolRestaurantesValueChanged
@@ -305,12 +327,24 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
             PanelProductos PP = new PanelProductos(this);
             PP.iniciarPanel(ventanaPrincipal.CU.getCP().buscarProductosI((Restaurante) x.getUserObject()), ventanaPrincipal.CU.getCP().buscarProductosP((Restaurante) x.getUserObject()));
             ScrollProductos.setViewportView(PP);
+            limpiarTabla();
         }
     }//GEN-LAST:event_ArbolRestaurantesValueChanged
 
     private void ListaClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListaClientesMouseClicked
 
     }//GEN-LAST:event_ListaClientesMouseClicked
+
+    private void ButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAceptarActionPerformed
+        try {
+            ventanaPrincipal.CU.insertarPedido(0, new Date(10,10,1990), Estado.preparacion, ventanaPrincipal.CU.buscarCliente(title),  ventanaPrincipal.CU.buscarRestaurante(title), LineasPedido);
+        } catch (Exception ex) {
+             JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
+           
+            Logger.getLogger(RegistroPedido.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+    }//GEN-LAST:event_ButtonAceptarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTree ArbolRestaurantes;
@@ -320,9 +354,9 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane ScrollProductos;
     private javax.swing.JScrollPane ScrollRestaurantes;
     private javax.swing.JScrollPane ScrollTabla;
+    private javax.swing.JTable TablaSubProductos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

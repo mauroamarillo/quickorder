@@ -9,7 +9,7 @@ package Logica;
  *
  * @author usuario
  */
-public class Categoria implements ICollectible {
+public class Categoria{
     private String nombre;
     
     public Categoria(String nombre){

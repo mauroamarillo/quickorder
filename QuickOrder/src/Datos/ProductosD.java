@@ -38,17 +38,9 @@ public class ProductosD {
         return rs.next();
     }
 
-    private String guardarImagen(String Path) throws SQLException {
-        String Imagen = "INSERT INTO imagenes (path)"
-                + "VALUES('" + Path + "') RETURNING \"idImg\"";
-        ResultSet rs = st.executeQuery(Imagen);
-        rs.next();
-        return rs.getString("idImg");
-    }
-
     private void agregarImagenProducto(Producto P) throws SQLException {
         String query = " INSERT INTO productos_imagenes(restaurante,producto,imagen)"
-                + " VALUES('" + P.getRestaurante().getNickname() + "','" + P.getNombre() + "','" + guardarImagen(P.getImagen()) + "')";
+                + " VALUES('" + P.getRestaurante().getNickname() + "','" + P.getNombre() + "','" + P.getImagen() + "')";
         st.execute(query);
     }
 
@@ -116,14 +108,14 @@ public class ProductosD {
                 + " AND pp.nombrepromo = '" + nombre + "'";
         return st.executeQuery(query);
     }
-    public String obtenerIMGdeProducto(Producto P) throws SQLException{
-        String query = "SELECT i.path"
-                + " FROM imagenes i, productos_imagenes p"
-                + " WHERE i.\"idImg\" = p.imagen"
-                + " AND p.restaurante = '"+P.getRestaurante().getNickname()+"'"
-                + " AND p.producto = '"+P.getNombre()+"';";
-         ResultSet rs = st.executeQuery(query);
+
+    public String obtenerIMGdeProducto(Producto P) throws SQLException {
+        String query = "SELECT imagen"
+                + " FROM productos_imagenes p"
+                + " WHERE p.restaurante = '" + P.getRestaurante().getNickname() + "'"
+                + " AND p.producto = '" + P.getNombre() + "';";
+        ResultSet rs = st.executeQuery(query);
         rs.next();
-        return rs.getString("path");
+        return rs.getString("imagen");
     }
 }

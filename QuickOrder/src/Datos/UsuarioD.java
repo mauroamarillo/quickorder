@@ -48,12 +48,8 @@ public class UsuarioD {
             return;
         }
         /*si hay imagen guarda la ruta y la asocia con el cliente*/
-        String Imagen = "INSERT INTO imagenes (path)"
-                + "VALUES('" + C.getImagen() + "') RETURNING \"idImg\"";
-        ResultSet rs = st.executeQuery(Imagen);
-        rs.next();
-        Imagen = " INSERT INTO clientes_imagenes(cliente,imagen)"
-                + " VALUES('" + C.getNickname() + "','" + rs.getString("idImg") + "')";
+        String Imagen = " INSERT INTO clientes_imagenes(cliente,imagen)"
+                + " VALUES('" + C.getNickname() + "','" + C.getImagen() + "')";
         st.execute(Imagen);
     }
 
@@ -70,12 +66,8 @@ public class UsuarioD {
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
             String path = ((String) entry.getValue());
-            String Imagen = "INSERT INTO imagenes (path)"
-                    + "VALUES('" + path + "') RETURNING \"idImg\";";
-            ResultSet rs = st.executeQuery(Imagen);
-            rs.next();
-            Imagen = " INSERT INTO restaurantes_imagenes(restaurante,imagen)"
-                    + " VALUES('" + R.getNickname() + "','" + rs.getString("idImg") + "');";
+            String Imagen = " INSERT INTO restaurantes_imagenes(restaurante,imagen)"
+                    + " VALUES('" + R.getNickname() + "','" + path + "');";
             st.execute(Imagen);
         }
         /*Asocio el restaurante con sus categorias*/
@@ -95,10 +87,9 @@ public class UsuarioD {
     }
 
     public ResultSet listarIMGsRestaurante(String nick) throws SQLException {
-        String query = "SELECT \"idImg\", path "
-                + " FROM imagenes , restaurantes_imagenes"
-                + " WHERE \"idImg\" = imagen"
-                + " AND restaurante = '" + nick + "';";
+        String query = "SELECT imagen "
+                + " FROM restaurantes_imagenes"
+                + " WHERE restaurante = '" + nick + "';";
         return st.executeQuery(query);
     }
 
