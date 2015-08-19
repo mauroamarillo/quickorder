@@ -65,7 +65,8 @@ public final class ControladorUsuario {
         return resultado;
     }
 
-    public HashMap consultarRestaurantesPorCategoria(Categoria categoria) {
+    public HashMap consultarRestaurantesPorCategoria(String nomCategoria) {
+        Categoria categoria = new Categoria(nomCategoria);
         HashMap res = new HashMap();
         Iterator it = Restaurantes.entrySet().iterator();
         while (it.hasNext()) {
@@ -261,7 +262,8 @@ public final class ControladorUsuario {
         }
         return (Cliente) Clientes.get(nickname);
     }
-    /*----*/
+    
+    /*-- PEDIDOS --*/
 
     private void validarPedido(Pedido P) throws Exception {
         if (P.getCliente() == null) {

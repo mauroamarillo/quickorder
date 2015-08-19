@@ -45,6 +45,7 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
 
     /*Lista de los productos ProdPromo*/
     HashMap LineasPedido;
+    Restaurante restaurante;
 
     public RegistroPedido(QuickOrder vp) throws SQLException {
         this.ventanaPrincipal = vp;
@@ -69,7 +70,7 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
             Map.Entry entry = (Map.Entry) it.next();
             String nombreCategoria = (String) entry.getValue();
             nodoCategoria = new DefaultMutableTreeNode(nombreCategoria);
-            HashMap rest = ventanaPrincipal.CU.consultarRestaurantesPorCategoria(new Categoria(nombreCategoria));
+            HashMap rest = ventanaPrincipal.CU.consultarRestaurantesPorCategoria(nombreCategoria);
             Iterator it2 = rest.entrySet().iterator();
             while (it2.hasNext()) {
                 Map.Entry entry2 = (Map.Entry) it2.next();
@@ -324,8 +325,9 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         }
         DefaultMutableTreeNode x = (DefaultMutableTreeNode) evt.getNewLeadSelectionPath().getLastPathComponent();
         if (x.getAllowsChildren() == false) {
+            restaurante = (Restaurante) x.getUserObject();
             PanelProductos PP = new PanelProductos(this);
-            PP.iniciarPanel(ventanaPrincipal.CU.getCP().buscarProductosI((Restaurante) x.getUserObject()), ventanaPrincipal.CU.getCP().buscarProductosP((Restaurante) x.getUserObject()));
+            PP.iniciarPanel(ventanaPrincipal.CU.getCP().buscarProductosI(restaurante), ventanaPrincipal.CU.getCP().buscarProductosP((Restaurante) x.getUserObject()));
             ScrollProductos.setViewportView(PP);
             limpiarTabla();
         }
@@ -337,7 +339,7 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
 
     private void ButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAceptarActionPerformed
         try {
-            ventanaPrincipal.CU.insertarPedido(0, new Date(10,10,1990), Estado.preparacion, ventanaPrincipal.CU.buscarCliente(title),  ventanaPrincipal.CU.buscarRestaurante(title), LineasPedido);
+            ventanaPrincipal.CU.insertarPedido(0, new Date(10,10,1990), Estado.preparacion, ventanaPrincipal.CU.buscarCliente((ListaClientes.getSelectedValue().toString())),  restaurante, LineasPedido);
         } catch (Exception ex) {
              JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
            

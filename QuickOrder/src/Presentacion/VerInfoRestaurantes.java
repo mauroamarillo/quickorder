@@ -45,7 +45,7 @@ public class VerInfoRestaurantes extends javax.swing.JInternalFrame {
             Map.Entry entry = (Map.Entry) it.next();
             String nombreCategoria = (String) entry.getValue();
             nodoCategoria = new DefaultMutableTreeNode(nombreCategoria);
-            HashMap rest = ventanaPrincipal.CU.consultarRestaurantesPorCategoria(new Categoria(nombreCategoria));
+            HashMap rest = ventanaPrincipal.CU.consultarRestaurantesPorCategoria(nombreCategoria);
             Iterator it2 = rest.entrySet().iterator();
             while (it2.hasNext()) {
                 Map.Entry entry2 = (Map.Entry) it2.next();
@@ -80,7 +80,7 @@ public class VerInfoRestaurantes extends javax.swing.JInternalFrame {
         jFileChooser1.setFileFilter(new FileNameExtensionFilter("Imagenes jpg ", "jpg"));
 
         setClosable(true);
-        setTitle("Registro Producto Individual");
+        setTitle("Informacion Restaurante");
         setMaximumSize(new java.awt.Dimension(700, 470));
         setMinimumSize(new java.awt.Dimension(700, 470));
         setPreferredSize(new java.awt.Dimension(700, 470));

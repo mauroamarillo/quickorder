@@ -18,7 +18,7 @@ public class PanelImagenes extends JPanel {
 
     private int pos = 1;
     //Nos sirve para almacenar a los objetos creados
-    private final Map IMGs = new HashMap();
+    private final HashMap IMGs = new HashMap();
 
     public void AgregarImagen(int index, String nombre, String Pach_Img) {
         pos++;

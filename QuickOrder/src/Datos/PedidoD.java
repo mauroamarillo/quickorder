@@ -6,6 +6,7 @@
 package Datos;
 
 import Logica.Cliente;
+import Logica.Estado;
 import Logica.Pedido;
 import Logica.ProdPedido;
 import Logica.Restaurante;
@@ -26,8 +27,8 @@ public class PedidoD {
     }
 
     public int agregarPedido(Pedido P) throws SQLException {
-        String query = "INSERT INTO pedidos(fecha,estado,cliente)"
-                + " VALUES('" + P.getFecha() + "','" + P.getEstado() + "','" + P.getCliente().getNickname() + "') RETURNING numero";
+        String query = "INSERT INTO pedidos(fecha,estado,cliente,restaurante)"
+                + " VALUES('" + P.getFecha() + "','" + P.getEstado().ordinal()+ "','" + P.getCliente().getNickname() + "','"+P.getRestaurante().getNickname()+"') RETURNING numero";
         ResultSet rs = st.executeQuery(query);
         rs.next();
         return rs.getInt("numero");

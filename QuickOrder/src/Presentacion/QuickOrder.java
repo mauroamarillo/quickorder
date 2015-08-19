@@ -75,6 +75,7 @@ public class QuickOrder extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         Infirmacion = new javax.swing.JMenu();
         Menu_Info_Rest = new javax.swing.JMenuItem();
+        Menu_Info_Cliente = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quick Order");
@@ -162,6 +163,14 @@ public class QuickOrder extends javax.swing.JFrame {
             }
         });
         Infirmacion.add(Menu_Info_Rest);
+
+        Menu_Info_Cliente.setText("Clientes");
+        Menu_Info_Cliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Menu_Info_ClienteActionPerformed(evt);
+            }
+        });
+        Infirmacion.add(Menu_Info_Cliente);
 
         jMenuBar1.add(Infirmacion);
 
@@ -292,6 +301,21 @@ public class QuickOrder extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_Menu_Info_RestActionPerformed
 
+    private void Menu_Info_ClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Menu_Info_ClienteActionPerformed
+       if (!operando) {
+            try {
+                VerInfoClientes vic = new VerInfoClientes(this);
+                this.add(vic, BorderLayout.CENTER);
+                vic.setSelected(true);
+                operando = true;
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_Menu_Info_ClienteActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -336,6 +360,7 @@ public class QuickOrder extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu Infirmacion;
+    private javax.swing.JMenuItem Menu_Info_Cliente;
     private javax.swing.JMenuItem Menu_Info_Rest;
     private javax.swing.JMenuItem Menu_RCliente;
     private javax.swing.JMenuItem Menu_RIndividual;
