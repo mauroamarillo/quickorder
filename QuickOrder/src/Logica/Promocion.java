@@ -26,6 +26,7 @@ public class Promocion extends Producto {
         this.prodPromo = subProductos;
     }
 
+    @Override
     public float getPrecio() {
         float total = 0;
         Iterator it = prodPromo.entrySet().iterator();
@@ -34,7 +35,7 @@ public class Promocion extends Producto {
             ProdPromo PP = (ProdPromo) entry.getValue();
             total += (PP.getCantidad() * PP.getIndividual().getPrecio());
         }
-        return total;
+        return (total - ((total * descuento)/100));
     }
 
     public boolean getActiva() {

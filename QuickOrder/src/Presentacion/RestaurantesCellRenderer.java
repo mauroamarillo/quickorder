@@ -1,39 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Presentacion;
 
 import Logica.Restaurante;
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.GridLayout;
-import java.awt.Image;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeCellRenderer;
+/**/
 
-/**
- *
- * @author Jean
- */
+
+
 class RestaurantesCellRenderer implements TreeCellRenderer {
 
-    JLabel NombreRestaurante;
-    private final JPanel renderer;
     DefaultTreeCellRenderer defaultRenderer = new DefaultTreeCellRenderer();
-
-    public RestaurantesCellRenderer() {
-        renderer = new JPanel(new GridLayout(0, 1));
-        NombreRestaurante = new JLabel(" ");
-        renderer.add(NombreRestaurante);
-    }
 
     @Override
     public Component getTreeCellRendererComponent(JTree tree, Object value,
@@ -44,28 +25,20 @@ class RestaurantesCellRenderer implements TreeCellRenderer {
         if ((value != null) && (value instanceof DefaultMutableTreeNode)) {
             Object userObject = ((DefaultMutableTreeNode) value).getUserObject();
             if (userObject instanceof Restaurante) {
+                returnValue = defaultRenderer.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
                 R = (Restaurante) userObject;
-
-                
-                ImageIcon ico = new ImageIcon();
-
-                NombreRestaurante.setIcon(ico);
-                NombreRestaurante.setText(R.getNombre());
-                if (selected) {
-                    renderer.setBackground(defaultRenderer.getBackgroundSelectionColor());
-                } else {
-                    renderer.setBackground(defaultRenderer.getBackgroundNonSelectionColor());
-                }
-                renderer.setEnabled(tree.isEnabled());
-                returnValue = renderer;
+                JLabel label = (JLabel) returnValue;
+                label.setIcon(new ImageIcon(getClass().getResource("/img/icoRes.png")));
+                label.setText(R.getNickname());
             }
         }
         if (returnValue == null) {
             returnValue = defaultRenderer.getTreeCellRendererComponent(tree,
                     value, selected, expanded, leaf, row, hasFocus);
+            /*CAMBIO EL ICOMO DE LOS NODOS QUE NO SON RESTAURANTES (RAIZ Y CATGORIAS)*/
+            JLabel label = (JLabel) returnValue;
+            label.setIcon(new ImageIcon(getClass().getResource("/img/folder.png")));
         }
-        
-        
         return returnValue;
     }
 }

@@ -9,7 +9,7 @@ package Logica;
  *
  * @author usuario
  */
-public abstract class Producto{
+public abstract class Producto {
 
     protected String nombre;
     protected String descripcion;
@@ -33,7 +33,6 @@ public abstract class Producto{
 
     public float getPrecio() {
         return 0;
-        
     }
 
     public void setNombre(String nombre) {

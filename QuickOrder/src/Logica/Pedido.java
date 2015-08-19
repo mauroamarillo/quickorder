@@ -11,6 +11,8 @@ package Logica;
  */
 import java.sql.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class Pedido {
 
@@ -64,9 +66,15 @@ public class Pedido {
     }
 
     public float getPrecio() {
-        return 0;
+        float precio = 0;
+        Iterator it = prodPedidos.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            ProdPedido pp = (ProdPedido) entry.getValue();
+            precio += (pp.getCantidad() * pp.getProducto().getPrecio());
+        }
+        return precio;
     }
-
 
     public Estado getEstado() {
         return estado;
