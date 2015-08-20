@@ -101,6 +101,6 @@ public class UsuarioD {
         return st.executeQuery(query);
     }
     public String obtenerIMGCliente(String nick){
-        
+        return "";
     }
 }
