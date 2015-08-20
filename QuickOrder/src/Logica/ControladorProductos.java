@@ -72,7 +72,7 @@ public final class ControladorProductos {
         if (img != null) {
             new File("C:\\imagenes\\" + P.getRestaurante().getNickname() + "\\productos\\").mkdirs();
             File destino = new File("C:\\imagenes\\" + P.getRestaurante().getNickname() + "\\productos\\" + P.getNombre() + ".jpg");
-            FileController.copiarArchivo(img, destino);
+            HerramientaArchivos.copiarArchivo(img, destino);
         }
     }
 

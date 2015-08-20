@@ -6,8 +6,7 @@
 package Presentacion;
 
 import Logica.DataTypes.DataPromocion;
-import java.awt.Image;
-import javax.swing.ImageIcon;
+import Logica.HerramientaImagenes;
 import javax.swing.JOptionPane;
 
 /**
@@ -29,14 +28,8 @@ public class ComponenteProductoPromocion extends javax.swing.JPanel {
         this.PP = PP;
         initComponents();
         Nombre.setText(P.getNombre());
-        if (!P.getImagen().equals("sin_imagen")) {
-            Image img = new ImageIcon(P.getImagen()).getImage();
-            Image newImg;
-            newImg = img.getScaledInstance(78, 78, java.awt.Image.SCALE_AREA_AVERAGING);
-            ImageIcon ico = new ImageIcon(newImg);
-            IMG.setText("");
-            IMG.setIcon(ico);
-        }
+        IMG.setText("");
+        IMG.setIcon(HerramientaImagenes.cargarYescalar(P.getImagen(), 78, 78));
     }
 
     public DataPromocion getProducto() {

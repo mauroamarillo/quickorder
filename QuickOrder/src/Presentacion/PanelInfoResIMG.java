@@ -21,7 +21,6 @@ public final class PanelInfoResIMG extends javax.swing.JPanel {
     public PanelInfoResIMG() {
         setPreferredSize(new java.awt.Dimension(0, 0));
         initComponents();
-
     }
 
     public void cargar(HashMap imgs) {
@@ -44,8 +43,6 @@ public final class PanelInfoResIMG extends javax.swing.JPanel {
     }
 
     private void initComponents() {
-        //  setMaximumSize(new java.awt.Dimension(300, 500));
-        //setMinimumSize(new java.awt.Dimension(330, 262));
         setPreferredSize(new java.awt.Dimension(300, 0));
     }
 

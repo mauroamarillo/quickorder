@@ -1,6 +1,7 @@
 package Presentacion;
 
-import Logica.FileController;
+import Logica.HerramientaArchivos;
+import Logica.HerramientaImagenes;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
@@ -40,11 +41,7 @@ public class ComponenteImagen extends javax.swing.JPanel {
         this.nombre = nombre;
         this.index = index;
         this.jButton1.setActionCommand("key_" + index);
-        Image img = new ImageIcon(Path_Img).getImage();
-        Image newImg;
-        newImg = img.getScaledInstance(55, 55, java.awt.Image.SCALE_FAST);
-        ImageIcon ico = new ImageIcon(newImg);
-        Label_Img.setIcon(ico);
+        Label_Img.setIcon(HerramientaImagenes.cargarYescalar(Path_Img,55, 55));
         this.contenedor = contenedor;
     }
 
@@ -52,7 +49,7 @@ public class ComponenteImagen extends javax.swing.JPanel {
         File destino = new File(path + nom);
         File foto = new File(Path_Img);
         try {
-            FileController.copiarArchivo(foto, destino);
+            HerramientaArchivos.copiarArchivo(foto, destino);
             return destino.getPath();
         } catch (IOException ex) {
             Logger.getLogger(ComponenteImagen.class.getName()).log(Level.SEVERE, null, ex);
@@ -123,12 +120,8 @@ public class ComponenteImagen extends javax.swing.JPanel {
     private void Label_ImgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Label_ImgMouseClicked
 
         java.awt.Dimension D = new java.awt.Dimension(800, 600);
-        Image img = new ImageIcon(Path_Img).getImage();
-        Image newImg;
-        newImg = img.getScaledInstance(D.width, D.height, java.awt.Image.SCALE_AREA_AVERAGING);
-        ImageIcon ico = new ImageIcon(newImg);
         JLabel I = new JLabel();
-        I.setIcon(ico);
+        I.setIcon(HerramientaImagenes.cargarYescalar(Path_Img, 800, 800));
         JDialog d = new JDialog(this.contenedor.RR.ventanaPrincipal, true);
         d.setLocationByPlatform(true);
         d.setMaximumSize(D);

@@ -5,7 +5,7 @@
  */
 package Presentacion;
 
-import Logica.FileController;
+import Logica.HerramientaImagenes;
 import java.awt.Frame;
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -32,11 +32,7 @@ public final class miniaturaIMG extends JPanel {
     public void cargarIMGs(String x) {
 
         Path = x;
-        Image img = new ImageIcon(Path).getImage();
-        Image newImg;
-        newImg = img.getScaledInstance(150, 150, java.awt.Image.SCALE_FAST);
-        ImageIcon ico = new ImageIcon(newImg);
-        jLabel1.setIcon(ico);
+        jLabel1.setIcon(HerramientaImagenes.cargarYescalar(Path,150, 150));
         this.validate();
 
     }
@@ -83,20 +79,14 @@ public final class miniaturaIMG extends JPanel {
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         java.awt.Dimension D = new java.awt.Dimension(800, 600);
-        Image img = FileController.cargarImagen(Path).getImage();
-        Image newImg;
-        newImg = img.getScaledInstance(D.width, D.height, java.awt.Image.SCALE_AREA_AVERAGING);
-        ImageIcon ico = new ImageIcon(newImg);
         JLabel I = new JLabel();
-        I.setIcon(ico);
+        I.setIcon(HerramientaImagenes.cargarYescalar(Path,800, 600));
         JDialog d = new JDialog(new Frame(), true);
         d.setLocationByPlatform(true);
         d.setMaximumSize(D);
         d.setMinimumSize(D);
-        // d.setPreferredSize(new java.awt.Dimension(479, 306));
         d.add(I);
         d.setVisible(true);
-
     }//GEN-LAST:event_jLabel1MouseClicked
 
 

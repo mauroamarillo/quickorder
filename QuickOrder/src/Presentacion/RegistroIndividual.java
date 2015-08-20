@@ -6,6 +6,7 @@
 package Presentacion;
 
 import Logica.DataTypes.DataRestaurante;
+import Logica.HerramientaImagenes;
 import java.awt.Image;
 import java.io.File;
 import java.sql.SQLException;
@@ -278,13 +279,8 @@ public class RegistroIndividual extends javax.swing.JInternalFrame {
         int option = jFileChooser1.showOpenDialog(this);
         if (APPROVE_OPTION == option) {
             foto = jFileChooser1.getSelectedFile();
-            String fil = jFileChooser1.getSelectedFile().getPath();
-            Image img = new ImageIcon(fil).getImage();
-            Image newImg;
-            newImg = img.getScaledInstance(190, 190, java.awt.Image.SCALE_FAST);
-            ImageIcon ico = new ImageIcon(newImg);
             Label_Img.setText("");
-            Label_Img.setIcon(ico);
+            Label_Img.setIcon(HerramientaImagenes.cargarYescalar(foto.getPath(), 190, 190));
         }
     }//GEN-LAST:event_Label_ImgMouseClicked
 

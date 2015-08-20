@@ -114,7 +114,7 @@ public final class ControladorUsuario {
         UsuarioDatos.agregarCliente(C.getNickname(), C.getNombre(), C.getEmail(), C.getDireccion(), C.getApellido(), C.getFechaNac(), C.getImagen());
         if (img != null) {
             File destino = new File("C:\\imagenes\\" + nick + ".jpg");
-            FileController.copiarArchivo(img, destino);
+            HerramientaArchivos.copiarArchivo(img, destino);
         }
     }
 
@@ -243,8 +243,8 @@ public final class ControladorUsuario {
         HashMap resultado = new HashMap();
         java.sql.ResultSet rs = CategoriaDatos.listarCatsRestaurante(nick);
         while (rs.next()) {
-            Categoria C = new Categoria(rs.getString("nombre"));
-            resultado.put(C.getNombre(), C);
+            String C =rs.getString("nombre");
+            resultado.put(C , C);
         }
         return resultado;
     }

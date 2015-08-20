@@ -1,5 +1,6 @@
 package Presentacion;
 
+import Logica.HerramientaImagenes;
 import java.awt.Image;
 import java.io.File;
 import java.text.ParseException;
@@ -280,12 +281,7 @@ public class RegistroCliente extends javax.swing.JInternalFrame implements Inter
         int option = jFileChooser1.showOpenDialog(this);
         if (APPROVE_OPTION == option) {
             foto = jFileChooser1.getSelectedFile();
-            String fil = jFileChooser1.getSelectedFile().getPath();
-            Image img = new ImageIcon(fil).getImage();
-            Image newImg;
-            newImg = img.getScaledInstance(150, 150, java.awt.Image.SCALE_FAST);
-            ImageIcon ico = new ImageIcon(newImg);
-            Label_resultadoImg.setIcon(ico);
+            Label_resultadoImg.setIcon(HerramientaImagenes.cargarYescalar(foto.getPath(), 150, 150));
         }
     }//GEN-LAST:event_Label_resultadoImgMouseClicked
 

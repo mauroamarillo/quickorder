@@ -6,6 +6,8 @@
 package Presentacion;
 
 import Logica.DataTypes.DataCliente;
+import Logica.HerramientaImagenes;
+import java.io.IOException;
 
 /**
  *
@@ -19,15 +21,20 @@ public class PanelInfoCliente extends javax.swing.JPanel {
     public PanelInfoCliente() {
         initComponents();
     }
-    public void cargarInfo(DataCliente DC){
+
+    public void cargarInfo(DataCliente DC) throws IOException {
         Label_Nick.setText(DC.getNickname());
         Label_Apellido.setText(DC.getApellido());
         Label_Nombre.setText(DC.getNombre());
         Label_Email.setText(DC.getEmail());
         Label_Direccion.setText(DC.getDireccion());
         Label_FN.setText(DC.getFechaNac().toString());
-        Label_IMG.setText(DC.getImagen());
+        if (!DC.getImagen().equals("sin_imagen")) {
+            Label_IMG.setText("");
+            Label_IMG.setIcon(HerramientaImagenes.cargarImagen(DC.getImagen()));
+        }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

@@ -6,6 +6,7 @@
 package Presentacion;
 
 import Logica.DataTypes.DataCliente;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -152,6 +153,8 @@ public class VerInfoClientes extends javax.swing.JInternalFrame {
             try {
                 panelInfoCliente1.cargarInfo(ventanaPrincipal.CU.buscarCliente(Cliente));
             } catch (SQLException ex) {
+                Logger.getLogger(VerInfoClientes.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
                 Logger.getLogger(VerInfoClientes.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
