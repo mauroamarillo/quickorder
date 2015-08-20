@@ -5,11 +5,10 @@
  */
 package Presentacion;
 
-import Logica.Categoria;
-import Logica.Individual;
-import Logica.Promocion;
-import Logica.Restaurante;
-import java.util.HashMap;
+import Logica.DataTypes.DataIndividual;
+import Logica.DataTypes.DataPromocion;
+import Logica.DataTypes.DataRestaurante;
+import java.net.MalformedURLException;
 import java.util.Iterator;
 import java.util.Map;
 import javax.swing.DefaultListModel;
@@ -24,7 +23,7 @@ public class PanelInfoRest extends javax.swing.JPanel {
     /**
      * Creates new form PanelInfoRest
      */
-    Restaurante R;
+    DataRestaurante R;
 
     public PanelInfoRest() {
         this.R = null;
@@ -32,7 +31,7 @@ public class PanelInfoRest extends javax.swing.JPanel {
         this.setVisible(false);
     }
 
-    public void cargarInfo(Restaurante R) {
+    public void cargarInfo(DataRestaurante R) throws MalformedURLException {
         this.R = R;
         if (R != null) {
             nickname.setText(R.getNickname());
@@ -50,14 +49,14 @@ public class PanelInfoRest extends javax.swing.JPanel {
         }
     }
 
-    public void cargarproductos(Restaurante R) {
+    public void cargarproductos(DataRestaurante R) {
         DefaultListModel model = new DefaultListModel();
 
         if (R.getIndividuales() != null) {
             Iterator it = R.getIndividuales().entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry entry = (Map.Entry) it.next();
-                Individual I = ((Individual) entry.getValue());
+                DataIndividual I = ((DataIndividual) entry.getValue());
                 model.addElement(I.getNombre());
             }
         }
@@ -65,20 +64,20 @@ public class PanelInfoRest extends javax.swing.JPanel {
             Iterator it = R.getPromociones().entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry entry = (Map.Entry) it.next();
-                Promocion I = ((Promocion) entry.getValue());
-                model.addElement(I.getNombre());
+                DataPromocion P = ((DataPromocion) entry.getValue());
+                model.addElement(P.getNombre());
             }
         }
         ListaProductos.setModel(model);
     }
 
-    public void cargarcategorias(Restaurante R) {
+    public void cargarcategorias(DataRestaurante R) {
         Iterator it = R.getCategorias().entrySet().iterator();
         DefaultListModel model = new DefaultListModel();
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
-            Categoria I = ((Categoria) entry.getValue());
-            model.addElement(I.getNombre());
+            String C = ((String) entry.getValue());
+            model.addElement(C);
         }
         ListaCategorias.setModel(model);
     }

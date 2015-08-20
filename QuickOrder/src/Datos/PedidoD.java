@@ -5,11 +5,10 @@
  */
 package Datos;
 
-import Logica.Estado;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import javax.xml.crypto.Data;
 
 public class PedidoD {
 
@@ -20,7 +19,7 @@ public class PedidoD {
         this.st = es.generarSt();
     }
 
-    public int agregarPedido(Data fecha, int estado, String cliente, String restaurante) throws SQLException {
+    public int agregarPedido(Date fecha, int estado, String cliente, String restaurante) throws SQLException {
         String query = "INSERT INTO pedidos(fecha,estado,cliente,restaurante)"
                 + " VALUES('" + fecha + "','" + estado + "','" + cliente + "','" + restaurante + "') RETURNING numero";
         ResultSet rs = st.executeQuery(query);

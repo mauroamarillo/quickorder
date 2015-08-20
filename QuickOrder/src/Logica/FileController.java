@@ -6,16 +6,19 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 public abstract class FileController {
 
-    public static Icon cargarImagen(String path) throws MalformedURLException {
-        return new ImageIcon(new URL(path));
+    public static ImageIcon cargarImagen(String path) {
+        try {
+            return new ImageIcon(new URL(path));
+        } catch (java.net.MalformedURLException e) {
+            System.out.println("Error al cargar la URL: " + e);
+        }
+        return null;
     }
 
     public static void copiarArchivo(File source, File dest) throws IOException {

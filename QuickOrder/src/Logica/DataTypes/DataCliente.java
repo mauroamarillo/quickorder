@@ -46,13 +46,15 @@ public class DataCliente {
         this.apellido = C.getApellido();
         this.fechaNac = C.getFechaNac();
         this.imagen = C.getImagen();
-        /*cambia los objetos pedido por datatypes DataPedido*/
-        Iterator it = C.getPedidos().entrySet().iterator();
         this.pedidos = new HashMap();
-        while (it.hasNext()) {
-            Map.Entry entry = (Map.Entry) it.next();
-            Pedido p = (Pedido) entry.getValue();
-            pedidos.put(p.getNumero(), new DataPedido(p));
+        /*cambia los objetos pedido por datatypes DataPedido*/
+        if (C.getPedidos() != null) {
+            Iterator it = C.getPedidos().entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry entry = (Map.Entry) it.next();
+                Pedido p = (Pedido) entry.getValue();
+                pedidos.put(p.getNumero(), p.getDataType());
+            }
         }
     }
 

@@ -100,5 +100,7 @@ public class UsuarioD {
                 + " WHERE u.nickname = c.\"nicknameC\";";
         return st.executeQuery(query);
     }
-
+    public String obtenerIMGCliente(String nick){
+        
+    }
 }

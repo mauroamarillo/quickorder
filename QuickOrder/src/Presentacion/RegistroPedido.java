@@ -5,13 +5,12 @@
  */
 package Presentacion;
 
-import Logica.Categoria;
-import Logica.Cliente;
+import Logica.DataTypes.DataCliente;
+import Logica.DataTypes.DataProdPedido;
+import Logica.DataTypes.DataProducto;
+import Logica.DataTypes.DataPromocion;
+import Logica.DataTypes.DataRestaurante;
 import Logica.Estado;
-import Logica.Individual;
-import Logica.ProdPedido;
-import Logica.Promocion;
-import Logica.Restaurante;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -42,72 +41,71 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
     HashMap Categorias;
     /*modelo para la tabla*/
     DefaultTableModel modeloTabla;
-
-    /*Lista de los productos ProdPromo*/
+    /*Lista de los productos con los DataProdPedido*/
     HashMap LineasPedido;
-    Restaurante restaurante;
+
+    String restaurante;
 
     public RegistroPedido(QuickOrder vp) throws SQLException {
         this.ventanaPrincipal = vp;
         initComponents();
         modeloTabla = new DefaultTableModel();
-
-        this.Categorias = ventanaPrincipal.CU.getCategorias();
-        ScrollProductos.setViewportView(new JPanel());
-        LineasPedido = new HashMap();
-        cargarArbol();
-        cargarClientes();
-        limpiarTabla();
-        ArbolRestaurantes.setEnabled(false);
-        TablaSubProductos.setModel(modeloTabla);
+        this.Categorias = ventanaPrincipal.CU.getCategorias();  // guardo una lista de STRINGs con las categorias del sistema
+        ScrollProductos.setViewportView(new JPanel());          // al scroll de productos lo dejo con un panel en blanco
+        LineasPedido = new HashMap();                           // inicio las lineas de pedido 
+        cargarArbol();              // lleno el arbol
+        cargarClientes();           // cargo los clientes
+        limpiarTabla();             // dejo la tabla sin registros
+        ArbolRestaurantes.setEnabled(false);        // el arbol no esta activo hasta que se elige un cliente
+        TablaSubProductos.setModel(modeloTabla);    //seteo el modelo de la tabla
         this.setLocation(200, 50);
         this.show();
     }
 
     private void cargarArbol() {
+        /*Guardo las categorias en la lista de categorias*/
         Iterator it = Categorias.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
             String nombreCategoria = (String) entry.getValue();
-            nodoCategoria = new DefaultMutableTreeNode(nombreCategoria);
-            HashMap rest = ventanaPrincipal.CU.consultarRestaurantesPorCategoria(nombreCategoria);
+            nodoCategoria = new DefaultMutableTreeNode(nombreCategoria);    // creo un nodo con el nombreCategoria
+            HashMap rest = ventanaPrincipal.CU.consultarRestaurantesPorCategoria(nombreCategoria);  // Obtengo los una lista de DATATYPEs de restaurantes 
             Iterator it2 = rest.entrySet().iterator();
             while (it2.hasNext()) {
                 Map.Entry entry2 = (Map.Entry) it2.next();
-                Restaurante R = (Restaurante) entry2.getValue();
-                nodoRestaurante = new DefaultMutableTreeNode(R);
-                nodoRestaurante.setAllowsChildren(false);
-                nodoCategoria.add(nodoRestaurante);
+                DataRestaurante R = (DataRestaurante) entry2.getValue();
+                nodoRestaurante = new DefaultMutableTreeNode(R);        // creo un nodo por cada datatype obtenido
+                nodoRestaurante.setAllowsChildren(false);               // estos nodos no pueden tener nodos anidados, esto lo uso despues para saber cual nodo es de un restaurante y cual no
+                nodoCategoria.add(nodoRestaurante);                     // agrego cada nodo restaurante al nodo de la categoria que encontre
             }
-            raiz.add(nodoCategoria);
+            raiz.add(nodoCategoria);                                    // agrego cada categoria al nodo raiz
         }
-        DefaultTreeModel modelo = new DefaultTreeModel(raiz);
-        this.ArbolRestaurantes.setModel(modelo);
-        TreeCellRenderer renderer = new RestaurantesCellRenderer();
-        ArbolRestaurantes.setCellRenderer(renderer);
+        DefaultTreeModel modelo = new DefaultTreeModel(raiz);           // creo un modelo para el arbol y le asigno el nodo raiz con todos sus hijos
+        this.ArbolRestaurantes.setModel(modelo);                        // seteo al modelo al arbol
+        TreeCellRenderer renderer = new RestaurantesCellRenderer();     // creo un TreeCellRenderer del tipo arbol (ver clase: RestaurantesCellRenderer)
+        ArbolRestaurantes.setCellRenderer(renderer);                    // asigno el RestaurantesCellRenderer
     }
 
     private void cargarClientes() throws SQLException {
         DefaultListModel model = new DefaultListModel();
-        HashMap clientes = ventanaPrincipal.CU.retornarClientes();
+        HashMap clientes = ventanaPrincipal.CU.getDataClientes();
 
         Iterator it = clientes.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
-            Cliente C = ((Cliente) entry.getValue());
+            DataCliente C = ((DataCliente) entry.getValue());
             model.addElement(C.getNickname());
         }
         ListaClientes.setModel(model);
     }
 
-    public void agregarProductoIndividualTabla(Individual I, int c) {
-        LineasPedido.put(I.getNombre(), new ProdPedido(c, I));
-        modeloTabla.addRow(new Object[]{I.getNombre(), I.getDescripcion(), "Individual", I.getPrecio(), c, (I.getPrecio() * c)});
-    }
-
-    public void agregarProductoPromocionTabla(Promocion P, int c) {
-        LineasPedido.put(P.getNombre(), new ProdPedido(c, P));
-        modeloTabla.addRow(new Object[]{P.getNombre(), P.getDescripcion(), "Promocion", P.getPrecio(), c, (P.getPrecio() * c)});
+    public void agregarProductoTabla(DataProducto DP, int c) {
+        LineasPedido.put(DP.getNombre(), new DataProdPedido(c, DP));
+        String tipo = "Individual";
+        if (DP instanceof DataPromocion) {
+            tipo = "Promocion";
+        }
+        modeloTabla.addRow(new Object[]{DP.getNombre(), DP.getDescripcion(), tipo, DP.getPrecio(), c, (DP.getPrecio() * c)});
     }
 
     private void limpiarTabla() {
@@ -325,9 +323,10 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         }
         DefaultMutableTreeNode x = (DefaultMutableTreeNode) evt.getNewLeadSelectionPath().getLastPathComponent();
         if (x.getAllowsChildren() == false) {
-            restaurante = (Restaurante) x.getUserObject();
+            DataRestaurante DR = (DataRestaurante) x.getUserObject();
             PanelProductos PP = new PanelProductos(this);
-            PP.iniciarPanel(ventanaPrincipal.CU.getCP().buscarProductosI(restaurante), ventanaPrincipal.CU.getCP().buscarProductosP((Restaurante) x.getUserObject()));
+            restaurante = DR.getNickname();
+            PP.iniciarPanel(ventanaPrincipal.CU.getCP().buscarProductos(restaurante));
             ScrollProductos.setViewportView(PP);
             limpiarTabla();
         }
@@ -339,13 +338,13 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
 
     private void ButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAceptarActionPerformed
         try {
-            ventanaPrincipal.CU.insertarPedido(0, new Date(10,10,1990), Estado.preparacion, ventanaPrincipal.CU.buscarCliente((ListaClientes.getSelectedValue().toString())),  restaurante, LineasPedido);
+            ventanaPrincipal.CU.insertarPedido(new Date(10, 10, 1990), Estado.preparacion, ListaClientes.getSelectedValue().toString(), restaurante, LineasPedido);
         } catch (Exception ex) {
-             JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
-           
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
+
             Logger.getLogger(RegistroPedido.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
+
     }//GEN-LAST:event_ButtonAceptarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

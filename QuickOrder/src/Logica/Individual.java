@@ -5,6 +5,8 @@
  */
 package Logica;
 
+import Logica.DataTypes.DataIndividual;
+
 /**
  *
  * @author usuario
@@ -16,6 +18,10 @@ public class Individual extends Producto {
     public Individual(String nombre, String descripcion, float precio, String imagen, Restaurante restaurante) {
         super(nombre, descripcion, imagen, restaurante);
         this.precio = precio;
+    }
+    @Override
+    public DataIndividual getDataType() {
+        return new DataIndividual(nombre, descripcion, this.getPrecio(), imagen, restaurante.getNickname());
     }
 
     @Override

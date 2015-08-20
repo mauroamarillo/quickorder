@@ -6,6 +6,7 @@
 package Logica.DataTypes;
 
 import Logica.Individual;
+import Logica.Producto;
 
 /**
  *
@@ -13,26 +14,12 @@ import Logica.Individual;
  */
 public class DataIndividual extends DataProducto{
 
-    private final String nombre;
-    private final String descripcion;
-    private final float precio;
-    private final String imagen;
-    private final String restaurante;
-
     public DataIndividual(String nombre, String descripcion, float precio, String imagen, String restaurante) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.precio = precio;
-        this.imagen = imagen;
-        this.restaurante = restaurante;
+        super(nombre, descripcion, precio, imagen, restaurante);
     }
 
     public DataIndividual(Individual I) {
-        this.nombre = I.getNombre();
-        this.descripcion = I.getDescripcion();
-        this.precio = I.getPrecio();
-        this.imagen = I.getImagen();
-        this.restaurante = I.getRestaurante().getNickname();
+        super(I);
     }
 
     public String getNombre() {

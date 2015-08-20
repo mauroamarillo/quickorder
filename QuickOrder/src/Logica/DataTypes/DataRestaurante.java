@@ -6,7 +6,6 @@
 package Logica.DataTypes;
 
 import Logica.Categoria;
-import Logica.Imagen;
 import Logica.Individual;
 import Logica.Promocion;
 import Logica.Restaurante;
@@ -73,8 +72,8 @@ public class DataRestaurante {
         this.imagenes = new HashMap();
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
-            Imagen I = (Imagen) entry.getValue();
-            this.imagenes.put(entry.getKey(), I.getPath());
+            String I = (String) entry.getValue();
+            this.imagenes.put(entry.getKey(), I);
         }
     }
 

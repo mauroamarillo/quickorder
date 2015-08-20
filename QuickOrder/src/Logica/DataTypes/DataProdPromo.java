@@ -6,12 +6,11 @@
 package Logica.DataTypes;
 
 import Logica.ProdPromo;
-
 /**
  *
  * @author Jean
  */
-class DataProdPromo {
+public class DataProdPromo {
 
     private final int cantidad;
     private final DataIndividual individual;
@@ -33,5 +32,5 @@ class DataProdPromo {
     public DataIndividual getIndividual() {
         return individual;
     }
-    
+
 }

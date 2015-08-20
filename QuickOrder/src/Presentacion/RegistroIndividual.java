@@ -5,7 +5,7 @@
  */
 package Presentacion;
 
-import Logica.Restaurante;
+import Logica.DataTypes.DataRestaurante;
 import java.awt.Image;
 import java.io.File;
 import java.sql.SQLException;
@@ -42,13 +42,13 @@ public class RegistroIndividual extends javax.swing.JInternalFrame {
     }
 
     private void cargarRestaurantes() throws SQLException {
-        HashMap OBJs = ventanaPrincipal.CU.getRestaurantes();
+        HashMap OBJs = ventanaPrincipal.CU.getDataRestaurantes();
         Iterator it = OBJs.entrySet().iterator();
         DefaultListModel model = new DefaultListModel();
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
-            Restaurante R = ((Restaurante) entry.getValue());
-            model.addElement(R.getNickname());
+            DataRestaurante R = ((DataRestaurante) entry.getValue());
+            model.addElement(R.getNickname() + " - " + R.getNombre());
         }
         jList2.setModel(model);
     }
@@ -264,7 +264,7 @@ public class RegistroIndividual extends javax.swing.JInternalFrame {
 
     private void Button_AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_AceptarActionPerformed
         try {
-            ventanaPrincipal.CU.getCP().insertarIndividual(Text_Nombre.getText(), Text_Descripcion.getText(), Text_Precio.getText(), foto, ventanaPrincipal.CU.buscarRestaurante((String) jList2.getSelectedValue()));
+            ventanaPrincipal.CU.getCP().insertarIndividual(Text_Nombre.getText(), Text_Descripcion.getText(), Text_Precio.getText(), foto, (String) jList2.getSelectedValue());
             JOptionPane.showMessageDialog(null, "Producto Ingresado", "Exito!", JOptionPane.DEFAULT_OPTION);
             ventanaPrincipal.setOperando(false);
             this.dispose();
@@ -298,7 +298,7 @@ public class RegistroIndividual extends javax.swing.JInternalFrame {
         DefaultListModel model = new DefaultListModel();
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
-            Restaurante R = ((Restaurante) entry.getValue());
+            DataRestaurante R = ((DataRestaurante) entry.getValue());
             model.addElement(R.getNickname() + " - " + R.getNombre());
         }
         jList2.setModel(model);

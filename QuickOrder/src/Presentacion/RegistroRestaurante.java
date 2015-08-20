@@ -53,7 +53,7 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
 
     private void disponerCategorias() {
         /*pido las categorias al ControladorUsuario*/
-        Map categorias;
+        HashMap categorias;
         try {
             categorias = ventanaPrincipal.CU.consultarCategorias();
             Iterator it = categorias.entrySet().iterator();

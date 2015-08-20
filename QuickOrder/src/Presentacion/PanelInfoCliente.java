@@ -5,6 +5,8 @@
  */
 package Presentacion;
 
+import Logica.DataTypes.DataCliente;
+
 /**
  *
  * @author Jean
@@ -17,7 +19,15 @@ public class PanelInfoCliente extends javax.swing.JPanel {
     public PanelInfoCliente() {
         initComponents();
     }
-
+    public void cargarInfo(DataCliente DC){
+        Label_Nick.setText(DC.getNickname());
+        Label_Apellido.setText(DC.getApellido());
+        Label_Nombre.setText(DC.getNombre());
+        Label_Email.setText(DC.getEmail());
+        Label_Direccion.setText(DC.getDireccion());
+        Label_FN.setText(DC.getFechaNac().toString());
+        Label_IMG.setText(DC.getImagen());
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,7 +42,7 @@ public class PanelInfoCliente extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        Label_IMG = new javax.swing.JLabel();
         Label_Nick = new javax.swing.JLabel();
         Label_Nombre = new javax.swing.JLabel();
         Label_Apellido = new javax.swing.JLabel();
@@ -56,9 +66,9 @@ public class PanelInfoCliente extends javax.swing.JPanel {
 
         jLabel5.setText("Email:");
 
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("SIN IMAGEN");
-        jLabel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        Label_IMG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Label_IMG.setText("SIN IMAGEN");
+        Label_IMG.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         Label_Nick.setFont(new java.awt.Font("Cambria Math", 0, 24)); // NOI18N
         Label_Nick.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -120,7 +130,7 @@ public class PanelInfoCliente extends javax.swing.JPanel {
                                 .addGap(34, 34, 34)
                                 .addComponent(Label_Apellido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Label_IMG, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -134,7 +144,7 @@ public class PanelInfoCliente extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Label_IMG, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(Label_Nick, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -171,6 +181,7 @@ public class PanelInfoCliente extends javax.swing.JPanel {
     private javax.swing.JLabel Label_Direccion;
     private javax.swing.JLabel Label_Email;
     private javax.swing.JLabel Label_FN;
+    private javax.swing.JLabel Label_IMG;
     private javax.swing.JLabel Label_Nick;
     private javax.swing.JLabel Label_Nombre;
     private javax.swing.JLabel jLabel1;
@@ -179,7 +190,6 @@ public class PanelInfoCliente extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

@@ -5,6 +5,7 @@
  */
 package Logica;
 
+import Logica.DataTypes.DataPromocion;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -27,6 +28,18 @@ public class Promocion extends Producto {
     }
 
     @Override
+    public DataPromocion getDataType() {
+        HashMap dataProd = new HashMap();
+        Iterator it = prodPromo.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            ProdPromo pp = (ProdPromo) entry.getValue();
+            dataProd.put(pp.getIndividual().getRestaurante().getNickname() + "_" + pp.getIndividual().getNombre(), pp.getDataType());
+        }
+        return new DataPromocion(descuento, activa, dataProd, nombre, descripcion, this.getPrecio(), imagen, restaurante.getNickname());
+    }
+
+    @Override
     public float getPrecio() {
         float total = 0;
         Iterator it = prodPromo.entrySet().iterator();
@@ -35,7 +48,7 @@ public class Promocion extends Producto {
             ProdPromo PP = (ProdPromo) entry.getValue();
             total += (PP.getCantidad() * PP.getIndividual().getPrecio());
         }
-        return (total - ((total * descuento)/100));
+        return (total - ((total * descuento) / 100));
     }
 
     public boolean getActiva() {

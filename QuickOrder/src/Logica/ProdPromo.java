@@ -5,6 +5,8 @@
  */
 package Logica;
 
+import Logica.DataTypes.DataProdPromo;
+
 /**
  *
  * @author usuario
@@ -16,6 +18,9 @@ public class ProdPromo{
     public ProdPromo(int cantidad, Individual ind){
         this.cantidad = cantidad;
         this.individual = ind;
+    }
+    public DataProdPromo getDataType() {
+        return new DataProdPromo(cantidad,individual.getDataType());
     }
 
     public int getCantidad() {

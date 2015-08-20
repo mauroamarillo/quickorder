@@ -5,9 +5,9 @@
  */
 package Presentacion;
 
-import Logica.Individual;
-import Logica.ProdPromo;
-import Logica.Restaurante;
+import Logica.DataTypes.DataIndividual;
+import Logica.DataTypes.DataProdPromo;
+import Logica.DataTypes.DataRestaurante;
 import java.awt.Image;
 import java.io.File;
 import java.sql.SQLException;
@@ -35,6 +35,7 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
     DefaultTableModel modelo;
     File foto;
     HashMap subProductos = new HashMap();
+    String restaurante = new String();
 
     public RegistroPromocion(QuickOrder vp) {
         this.ventanaPrincipal = vp;
@@ -54,24 +55,24 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
     }
 
     private void cargarRestaurantes() throws SQLException {
-        HashMap OBJs = ventanaPrincipal.CU.getRestaurantes();
+        HashMap OBJs = ventanaPrincipal.CU.getDataRestaurantes();
         Iterator it = OBJs.entrySet().iterator();
         DefaultListModel model = new DefaultListModel();
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
-            Restaurante R = ((Restaurante) entry.getValue());
+            DataRestaurante R = ((DataRestaurante) entry.getValue());
             model.addElement(R.getNickname());
         }
         ListaRestaurante.setModel(model);
     }
 
-    private void cargarProductos(Restaurante R) {
+    private void cargarProductos(String R) {
         HashMap OBJs = ventanaPrincipal.CU.getCP().buscarProductosI(R);
         Iterator it = OBJs.entrySet().iterator();
         DefaultListModel model = new DefaultListModel();
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
-            Individual I = ((Individual) entry.getValue());
+            DataIndividual I = ((DataIndividual) entry.getValue());
             model.addElement(I.getNombre());
         }
         ListaSubProducto.setModel(model);
@@ -96,14 +97,14 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
         }
     }
 
-    private void agregarLineaProducto(Individual I) {
-        if (subProductos.get(I.getRestaurante().getNickname() + "_" + I.getNombre()) != null) {
+    private void agregarLineaProducto(DataIndividual I) {
+        if (subProductos.get(I.getRestaurante() + "_" + I.getNombre()) != null) {
             JOptionPane.showMessageDialog(null, "El producto ya esta agregado", "ERROR", JOptionPane.INFORMATION_MESSAGE);
         } else {
             try {
                 int cant = Integer.parseInt(JOptionPane.showInputDialog("Ingrese Cantidad"));
                 modelo.addRow(new Object[]{I.getNombre(), cant});
-                subProductos.put(I.getRestaurante().getNickname() + "_" + I.getNombre(), new ProdPromo(cant, I));
+                subProductos.put(I.getRestaurante() + "_" + I.getNombre(), new DataProdPromo(cant, I));
             } catch (NumberFormatException nfe) {
                 JOptionPane.showMessageDialog(null, "Cantidad invalida", "ENTRADA INCORRECTA", JOptionPane.ERROR_MESSAGE);
             }
@@ -426,7 +427,7 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
     private void Button_AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_AceptarActionPerformed
         try {
             if (foto != null) {
-                ventanaPrincipal.CU.getCP().insertarPromocion(Text_Nombre.getText(), Text_Descripcion.getText(), foto, true, Float.parseFloat(Text_Descuento.getText()), ventanaPrincipal.CU.buscarRestaurante(ListaRestaurante.getSelectedValue().toString()), subProductos);
+                ventanaPrincipal.CU.getCP().insertarPromocion(Text_Nombre.getText(), Text_Descripcion.getText(), foto, true, Float.parseFloat(Text_Descuento.getText()), ListaRestaurante.getSelectedValue().toString(), subProductos);
                 JOptionPane.showMessageDialog(null, "Producto Ingresado", "Exito!", JOptionPane.DEFAULT_OPTION);
                 ventanaPrincipal.setOperando(false);
             } else {
@@ -462,7 +463,7 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
         DefaultListModel model = new DefaultListModel();
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
-            Restaurante R = ((Restaurante) entry.getValue());
+            DataRestaurante R = ((DataRestaurante) entry.getValue());
             model.addElement(R.getNickname());
         }
         ListaRestaurante.setModel(model);
@@ -479,11 +480,8 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
     private void ListaRestauranteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListaRestauranteMouseClicked
         JList list = (JList) evt.getSource();
         if (evt.getClickCount() == 2) {
-            try {
-                cargarProductos(ventanaPrincipal.CU.buscarRestaurante((String) list.getSelectedValue()));
-            } catch (SQLException ex) {
-                Logger.getLogger(RegistroPromocion.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            restaurante = (String) list.getSelectedValue();
+            cargarProductos(restaurante);
             limpiarTabla();
         }
     }//GEN-LAST:event_ListaRestauranteMouseClicked
@@ -491,7 +489,7 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
     private void ListaSubProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListaSubProductoMouseClicked
         JList list = (JList) evt.getSource();
         if (evt.getClickCount() == 2) {
-            agregarLineaProducto(ventanaPrincipal.CU.getCP().buscarIndividual((String) list.getSelectedValue(), (String) ListaRestaurante.getSelectedValue()));
+            agregarLineaProducto(ventanaPrincipal.CU.getCP().buscarDataIndividual(restaurante, (String) list.getSelectedValue()));
         }
     }//GEN-LAST:event_ListaSubProductoMouseClicked
 

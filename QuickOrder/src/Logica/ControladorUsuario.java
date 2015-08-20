@@ -3,6 +3,10 @@ package Logica;
 import Datos.CategoriaD;
 import Datos.PedidoD;
 import Datos.UsuarioD;
+import Logica.DataTypes.DataCliente;
+import Logica.DataTypes.DataPedido;
+import Logica.DataTypes.DataProdPedido;
+import Logica.DataTypes.DataRestaurante;
 import java.io.File;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -39,6 +43,28 @@ public final class ControladorUsuario {
 
     }
 
+    public HashMap getDataClientes() {
+        HashMap resultado = new HashMap();
+        Iterator it = Clientes.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            Cliente C = (Cliente) entry.getValue();
+            resultado.put(C.getNickname(), C.getDataType());
+        }
+        return resultado;
+    }
+
+    public HashMap getDataRestaurantes() {
+        HashMap resultado = new HashMap();
+        Iterator it = Restaurantes.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            Restaurante R = (Restaurante) entry.getValue();
+            resultado.put(R.getNickname(), R.getDataType());
+        }
+        return resultado;
+    }
+
     public ControladorProductos getCP() {
         return CP;
     }
@@ -73,22 +99,10 @@ public final class ControladorUsuario {
             Map.Entry entry = (Map.Entry) it.next();
             Restaurante R = ((Restaurante) entry.getValue());
             if (R.getCategorias().containsKey(categoria.getNombre())) {
-                res.put(R.getNickname(), R);
+                res.put(R.getNickname(), new DataRestaurante(R));
             }
         }
         return res;
-    }
-
-    public Restaurante buscarRestaurantePorNick_Nombre(String n_n) {
-        Iterator it = Restaurantes.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry entry = (Map.Entry) it.next();
-            Restaurante R = ((Restaurante) entry.getValue());
-            if ((R.getNickname() + " - " + R.getNombre()).equals(n_n)) {
-                return R;
-            }
-        }
-        return null;
     }
 
     public void insertarCliente(String nick, String email, String dir, String nombre, String apellido, Date fecha, File img) throws SQLException, Exception {
@@ -99,7 +113,7 @@ public final class ControladorUsuario {
             C = new Cliente(nick, nombre, email, dir, apellido, fecha, "sin_imagen", new HashMap());
         }
         validarDatosC(C);
-        UsuarioDatos.agregarCliente(C);
+        UsuarioDatos.agregarCliente(C.getNickname(), C.getNombre(), C.getEmail(), C.getDireccion(), C.getApellido(), C.getFechaNac(), C.getImagen());
         if (img != null) {
             File destino = new File("C:\\imagenes\\" + nick + ".jpg");
             FileController.copiarArchivo(img, destino);
@@ -109,7 +123,16 @@ public final class ControladorUsuario {
     public void insertarRestaurante(String nick, String email, String dir, String nombre, HashMap IMGs, int cat[]) throws SQLException, Exception {
         Restaurante R = new Restaurante(nick, nombre, email, dir, null, null, null, null);
         validarDatosR(R, cat);
-        UsuarioDatos.agregarRestaurante(R, IMGs, cat);
+        UsuarioDatos.agregarRestaurante(nick, nombre, email, dir);
+        for (int x = 0; x < cat.length; x++) {
+            UsuarioDatos.agregarCategoriaARestaurante(nick, x);
+        }
+        Iterator it = IMGs.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            String path = (String) entry.getValue();
+            UsuarioDatos.agregarImgRestaurante(nick, path);
+        }
         this.Restaurantes = retornarRestaurantes();
     }
 
@@ -171,18 +194,6 @@ public final class ControladorUsuario {
             Cliente C = new Cliente(rs.getString("nickname"), rs.getString("nombre"), rs.getString("email"), rs.getString("direccion"), rs.getString("apellido"), rs.getDate("fechaN"), "sin_imagen", null);
             resultado.put(C.getNickname(), C);
         }
-        /* Iterator it = resultado.entrySet().iterator();
-         while (it.hasNext()) {
-         Map.Entry entry = (Map.Entry) it.next();
-         Restaurante R = ((Restaurante) entry.getValue());
-         R.setImagenes(retornarIMGsRestaurantes(R.getNickname()));
-         }
-         it = resultado.entrySet().iterator();
-         while (it.hasNext()) {
-         Map.Entry entry = (Map.Entry) it.next();
-         Restaurante R = ((Restaurante) entry.getValue());
-         R.setCategorias(retornarCategoriasRestaurantes(R.getNickname()));
-         }*/
         return resultado;
 
     }
@@ -214,8 +225,7 @@ public final class ControladorUsuario {
         java.sql.ResultSet rs = UsuarioDatos.listarIMGsRestaurante(nick);
         int index = 1;
         while (rs.next()) {
-            Imagen I = new Imagen(rs.getString("imagen"));
-            resultado.put(index, I);
+            resultado.put(index, rs.getString("imagen"));
             index++;
         }
         return resultado;
@@ -238,7 +248,7 @@ public final class ControladorUsuario {
             Map.Entry entry = (Map.Entry) it.next();
             Restaurante R = ((Restaurante) entry.getValue());
             if (R.getNickname().contains(filtro)) {
-                res.put(R.getNickname(), R);
+                res.put(R.getNickname(), R.getDataType());
             }
         }
         return res;
@@ -249,22 +259,43 @@ public final class ControladorUsuario {
      Primero vemos si el usuario que buscamos esta entre los datos que 
      el sistema ya tiene y si no lo encontramos, buscamos en la base de datos
      */
-    public Restaurante buscarRestaurante(String nickname) throws SQLException {
+    public DataRestaurante buscarRestaurante(String nickname) throws SQLException {
+        if ((Restaurante) Restaurantes.get(nickname) == null) {
+            Restaurantes = this.retornarRestaurantes();
+        }
+        Restaurante R = (Restaurante) Restaurantes.get(nickname);
+        if (R == null) {
+            return null;
+        }
+        return new DataRestaurante(R);
+    }
+
+    public DataCliente buscarCliente(String nickname) throws SQLException {
+        if ((Cliente) Clientes.get(nickname) == null) {
+            Clientes = this.retornarRestaurantes();
+        }
+        Cliente C = (Cliente) Clientes.get(nickname);
+        if (C == null) {
+            return null;
+        }
+        return new DataCliente(C);
+    }
+
+    public Restaurante _buscarRestaurante(String nickname) throws SQLException {
         if ((Restaurante) Restaurantes.get(nickname) == null) {
             Restaurantes = this.retornarRestaurantes();
         }
         return (Restaurante) Restaurantes.get(nickname);
     }
 
-    public Cliente buscarCliente(String nickname) throws SQLException {
+    public Cliente _buscarCliente(String nickname) throws SQLException {
         if ((Cliente) Clientes.get(nickname) == null) {
             Clientes = this.retornarRestaurantes();
         }
         return (Cliente) Clientes.get(nickname);
     }
-    
-    /*-- PEDIDOS --*/
 
+    /*-- PEDIDOS --*/
     private void validarPedido(Pedido P) throws Exception {
         if (P.getCliente() == null) {
             throw new Exception("Cliente invalido");
@@ -275,19 +306,20 @@ public final class ControladorUsuario {
         if (P.getProdPedidos() == null) {
             throw new Exception("Error al generar pedido");
         }
-        if (P.getProdPedidos().size()<1) {
+        if (P.getProdPedidos().size() < 1) {
             throw new Exception("No se agregaron Productos al pedido");
         }
     }
 
-    public void insertarPedido(int numero, Date fecha, Estado estado, Cliente cliente, Restaurante restaurante, HashMap prodPedidos) throws SQLException, Exception {
-        Pedido P = new Pedido(numero, fecha, estado, cliente, restaurante, prodPedidos);
+    public void insertarPedido(Date fecha, Estado estado, String cliente, String restaurante, HashMap dataProdPedidos) throws SQLException, Exception {
+        Pedido P = new Pedido(0, fecha, estado, this._buscarCliente(cliente), this._buscarRestaurante(restaurante), dataProdPedidos);
         validarPedido(P);
-        P.setNumero(PedidoDatos.agregarPedido(P));
+        int numero = (PedidoDatos.agregarPedido(fecha, estado.ordinal(), cliente, restaurante));
         Iterator it = P.getProdPedidos().entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
-            PedidoDatos.agregarLineaDePedido(P.getNumero(), (ProdPedido) entry.getValue());
+            DataProdPedido DPP = (DataProdPedido) entry.getValue();
+            PedidoDatos.agregarLineaDePedido(numero, DPP.getProducto().getRestaurante(), DPP.getProducto().getNombre(), DPP.getCantidad());
         }
     }
 

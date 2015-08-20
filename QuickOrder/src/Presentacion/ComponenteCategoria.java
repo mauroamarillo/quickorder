@@ -17,11 +17,10 @@ public class ComponenteCategoria extends javax.swing.JPanel {
      *
      */
     private final int index;
-    private final String nombre;
+    
     public ComponenteCategoria(int index,String nombre) {
        initComponents();
         this.index = index;
-        this.nombre = nombre;
         valor.setText(this.index+" - "+nombre);
         this.valor.setActionCommand("key_" + index);
     }

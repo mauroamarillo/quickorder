@@ -9,6 +9,7 @@ package Logica;
  *
  * @author usuario
  */
+import Logica.DataTypes.DataPedido;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -31,6 +32,17 @@ public class Pedido {
         this.fecha = fecha;
         this.estado = estado;
         this.prodPedidos = prodPedidos;
+    }
+
+    public DataPedido getDataType() {
+        HashMap dataProdPedidos = new HashMap();
+        Iterator it = prodPedidos.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            ProdPedido pp = (ProdPedido) entry.getValue();
+            dataProdPedidos.put(pp.getProducto().getNombre(), pp.getDataType());
+        }
+        return new DataPedido(numero, fecha, estado, dataProdPedidos, cliente.getDataType(), restaurante.getDataType());
     }
 
     public Cliente getCliente() {

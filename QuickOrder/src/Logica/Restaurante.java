@@ -5,7 +5,12 @@
  */
 package Logica;
 
+import Logica.DataTypes.DataIndividual;
+import Logica.DataTypes.DataPromocion;
+import Logica.DataTypes.DataRestaurante;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  *
@@ -24,6 +29,41 @@ public class Restaurante extends Usuario {
         this.individuales = individuales;
         this.promociones = promociones;
         this.imagenes = imagenes;
+    }
+
+    public DataRestaurante getDataType() {
+
+        HashMap dataCategorias = new HashMap();
+        Iterator it = categorias.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            String c = (String) entry.getValue();
+            dataCategorias.put(c, c);
+        }
+        HashMap dataIndividuales = new HashMap();
+        it = individuales.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            Individual I = (Individual) entry.getValue();
+            dataIndividuales.put(nickname + "_" + I.getNombre(), new DataIndividual(I));
+        }
+        HashMap dataPromociones = new HashMap();
+        it = promociones.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            Promocion P = (Promocion) entry.getValue();
+            dataPromociones.put(nickname + "_" + P.getNombre(), new DataPromocion(P));
+        }
+        HashMap imgs = new HashMap();
+        it = imagenes.entrySet().iterator();
+        int x = 1;
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            String I = (String) entry.getValue();
+            imgs.put(x, I);
+            x++;
+        }
+        return new DataRestaurante(nickname, nombre, email, direccion, dataCategorias, dataIndividuales, dataPromociones, imgs);
     }
 
     public HashMap getImagenes() {

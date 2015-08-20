@@ -5,6 +5,8 @@
  */
 package Logica;
 
+import Logica.DataTypes.DataProdPedido;
+
 /**
  *
  * @author usuario
@@ -17,6 +19,10 @@ public class ProdPedido {
     public ProdPedido(int cantidad, Producto producto) {
         this.cantidad = cantidad;
         this.producto = producto;
+    }
+
+    public DataProdPedido getDataType() {
+        return new DataProdPedido(cantidad, producto.getDataType());
     }
 
     public int getCantidad() {

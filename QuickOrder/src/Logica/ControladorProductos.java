@@ -6,6 +6,8 @@
 package Logica;
 
 import Datos.ProductosD;
+import Logica.DataTypes.DataIndividual;
+import Logica.DataTypes.DataPromocion;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -22,19 +24,11 @@ public final class ControladorProductos {
 
     private final ControladorUsuario CU;
 
-    private ProductosD PD;
+    private final ProductosD PD;
 
     private HashMap individuales;
     private HashMap promociones;
 
-    public HashMap getPromociones() {
-        return promociones;
-    }
-
-    public HashMap getIndividuales() {
-        return individuales;
-    }
-    
     public ControladorProductos(ControladorUsuario C) throws SQLException, ClassNotFoundException {
         this.CU = C;
         this.PD = new ProductosD();
@@ -43,7 +37,37 @@ public final class ControladorProductos {
         asignarProductosDePromocion();
 
     }
-    
+
+    public HashMap getDataPromociones() {
+        HashMap DataPromociones = new HashMap();
+        Iterator it = promociones.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            Promocion P = (Promocion) entry.getValue();
+            DataPromociones.put(P.getRestaurante() + "_" + P.getNombre(), new DataPromocion(P));
+        }
+        return DataPromociones;
+    }
+
+    public HashMap getDataIndividuales() {
+        HashMap DataIndividuales = new HashMap();
+        Iterator it = individuales.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            Individual I = (Individual) entry.getValue();
+            DataIndividuales.put(I.getRestaurante() + "_" + I.getNombre(), new DataIndividual(I));
+        }
+        return DataIndividuales;
+    }
+
+    public HashMap getPromociones() {
+        return promociones;
+    }
+
+    public HashMap getIndividuales() {
+        return individuales;
+    }
+
     private void guardarIMG(Producto P, File img) throws IOException {
         if (img != null) {
             new File("C:\\imagenes\\" + P.getRestaurante().getNickname() + "\\productos\\").mkdirs();
@@ -52,19 +76,16 @@ public final class ControladorProductos {
         }
     }
 
-    public void insertarIndividual(String nombre, String descripcion, String precio, File img, Restaurante restaurante) throws Exception, ParseException {
+    public void insertarIndividual(String nombre, String descripcion, String precio, File img, String restaurante) throws Exception, ParseException {
         float pre = Float.parseFloat(precio);
         Individual P;
-        if (restaurante == null) {
-            throw new Exception("Asignar Restaurante");
-        }
         if (img != null) {
-            P = new Individual(nombre, descripcion, pre, "C:\\imagenes\\" + restaurante.getNickname() + "\\productos\\" + nombre + ".jpg", restaurante);
+            P = new Individual(nombre, descripcion, pre, "C:\\imagenes\\" + restaurante + "\\productos\\" + nombre + ".jpg", CU._buscarRestaurante(restaurante));
         } else {
-            P = new Individual(nombre, descripcion, pre, "sin_imagen", restaurante);
+            P = new Individual(nombre, descripcion, pre, "sin_imagen", CU._buscarRestaurante(restaurante));
         }
         validarProducto(P);
-        PD.agregarIndividual(P);
+        PD.agregarIndividual(P.getRestaurante().getNickname(), P.getNombre(), P.getPrecio(), P.getDescripcion(), P.getImagen());
         guardarIMG(P, img);
         this.individuales = retornarIndividuales();
     }
@@ -85,7 +106,7 @@ public final class ControladorProductos {
         HashMap resultado = new HashMap();
         java.sql.ResultSet rs = PD.listarIndividuales();
         while (rs.next()) {
-            Restaurante R = CU.buscarRestaurante(rs.getString("restaurante"));
+            Restaurante R = CU._buscarRestaurante(rs.getString("restaurante"));
             Individual I = new Individual(rs.getString("nombre"), rs.getString("descripcion"), rs.getFloat("precio"), "sin imagen", R);
             R.getIndividuales().put(I.getRestaurante().getNickname() + "_" + I.getNombre(), I);
             resultado.put(I.getRestaurante().getNickname() + "_" + I.getNombre(), I);
@@ -95,33 +116,41 @@ public final class ControladorProductos {
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
             Individual I = ((Individual) entry.getValue());
-            if (PD.obtenerIMGdeProducto(I) != null) {
-                I.setImagen(PD.obtenerIMGdeProducto(I));
+            if (PD.obtenerIMGdeProducto(I.getRestaurante().getNombre(), I.getNombre()) != null) {
+                I.setImagen(PD.obtenerIMGdeProducto(I.getRestaurante().getNombre(), I.getNombre()));
             }
         }
         return resultado;
     }
+    /* Buscar todos los productos del restaurante 'R' */
 
-    public HashMap buscarProductosI(Restaurante R) {
+    public HashMap buscarProductos(String R) {
+        HashMap resultado = buscarProductosI(R);
+        resultado.putAll(buscarProductosP(R));
+        return resultado;
+    }
+
+    public HashMap buscarProductosI(String R) {
         HashMap resultado = new HashMap();
         Iterator it = individuales.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
             Individual I = ((Individual) entry.getValue());
-            if (I.getRestaurante().getNombre().equals(R.getNombre())) {
-                resultado.put(I.getRestaurante().getNickname() + "_" + I.getNombre(), I);
+            if (I.getRestaurante().getNombre().equals(R)) {
+                resultado.put(I.getRestaurante().getNickname() + "_" + I.getNombre(), new DataIndividual(I));
             }
         }
         return resultado;
     }
-     public HashMap buscarProductosP(Restaurante R) {
+
+    public HashMap buscarProductosP(String R) {
         HashMap resultado = new HashMap();
         Iterator it = promociones.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
-            Promocion I = ((Promocion) entry.getValue());
-            if (I.getRestaurante().getNombre().equals(R.getNombre())) {
-                resultado.put(I.getRestaurante().getNickname() + "_" + I.getNombre(), I);
+            Promocion P = ((Promocion) entry.getValue());
+            if (P.getRestaurante().getNombre().equals(R)) {
+                resultado.put(P.getRestaurante().getNickname() + "_" + P.getNombre(), new DataPromocion(P));
             }
         }
         return resultado;
@@ -131,18 +160,29 @@ public final class ControladorProductos {
         return (Individual) individuales.get(restaurante + "_" + nombre);
     }
 
-    public void insertarPromocion(String nombre, String descripcion, File img, boolean activa, float descuento, Restaurante restaurante, HashMap subProductos) throws SQLException, Exception {
-        Promocion P;//= new Promocion(nombre, descripcion, img, activa, descuento, restaurante, subProductos);
+    public DataIndividual buscarDataIndividual(String nombre, String restaurante) {
+        return new DataIndividual((Individual) individuales.get(restaurante + "_" + nombre));
+    }
+    /* NOMBRE, DESCRIPCION,IMAGEN,ACTIVADESCUENTO,*/
+
+    public void insertarPromocion(String nombre, String descripcion, File img, boolean activa, float descuento, String restaurante, HashMap subProductos) throws SQLException, Exception {
+        Promocion P;
         if (restaurante == null) {
             throw new Exception("Asignar Restaurante");
         }
         if (img != null) {
-            P = new Promocion(nombre, descripcion, "C:\\imagenes\\" + restaurante.getNickname() + "\\productos\\" + nombre + ".jpg", activa, descuento, restaurante, subProductos);
+            P = new Promocion(nombre, descripcion, "C:\\imagenes\\" + CU._buscarRestaurante(restaurante).getNickname() + "\\productos\\" + nombre + ".jpg", activa, descuento, CU._buscarRestaurante(restaurante), null);
         } else {
-            P = new Promocion(nombre, descripcion, "sin_imagen", activa, descuento, restaurante, subProductos);
+            P = new Promocion(nombre, descripcion, "sin_imagen", activa, descuento, CU._buscarRestaurante(restaurante), null);
         }
         validarProducto(P);
-        PD.agregarPromocion(P);
+        PD.agregarPromocion(P.getRestaurante().getNombre(), P.getNombre(), P.getDescuento(), P.getDescripcion(), P.getImagen(), P.getActiva());
+        Iterator it = subProductos.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            ProdPromo pp = (ProdPromo) entry.getValue();
+            PD.vincularPromocionProducto(pp.getIndividual().getRestaurante().getNickname(), P.getNombre(), pp.getIndividual().getNombre(), pp.getCantidad());
+        }
         guardarIMG(P, img);
         this.promociones = retornarPromociones();
         asignarProductosDePromocion();
@@ -152,7 +192,7 @@ public final class ControladorProductos {
         HashMap resultado = new HashMap();
         java.sql.ResultSet rs = PD.listarPromociones();
         while (rs.next()) {
-            Restaurante R = CU.buscarRestaurante(rs.getString("restaurante"));
+            Restaurante R = CU._buscarRestaurante(rs.getString("restaurante"));
             Promocion P = new Promocion(rs.getString("nombre"), rs.getString("descripcion"), "sin imagen", rs.getBoolean("activa"), rs.getFloat("descuento"), R, null);
             R.getPromociones().put(P.getRestaurante().getNickname() + "_" + P.getNombre(), P);
             resultado.put(P.getRestaurante().getNickname() + "_" + P.getNombre(), P);
@@ -161,8 +201,8 @@ public final class ControladorProductos {
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
             Promocion P = ((Promocion) entry.getValue());
-            if (PD.obtenerIMGdeProducto(P) != null) {
-                P.setImagen(PD.obtenerIMGdeProducto(P));
+            if (PD.obtenerIMGdeProducto(P.getRestaurante().getNickname(), P.getNombre()) != null) {
+                P.setImagen(PD.obtenerIMGdeProducto(P.getRestaurante().getNickname(), P.getNombre()));
             }
         }
         return resultado;
@@ -182,5 +222,5 @@ public final class ControladorProductos {
             P.setProdPromos(productosDePromo);
         }
     }
-    
+
 }

@@ -250,7 +250,6 @@ public class QuickOrder extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
                 Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
-
             } catch (PropertyVetoException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
                 Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
@@ -260,13 +259,15 @@ public class QuickOrder extends javax.swing.JFrame {
 
     private void RegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrosActionPerformed
         if (!operando) {
-            GenerarPedido genPedido = new GenerarPedido(this);
-            this.add(genPedido, BorderLayout.CENTER);
             try {
-                genPedido.setSelected(true);
+                RegistroPedido RP = new RegistroPedido(this);
+                this.add(RP, BorderLayout.CENTER);
+                RP.setSelected(true);
                 operando = true;
             } catch (PropertyVetoException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
                 Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -302,7 +303,7 @@ public class QuickOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_Menu_Info_RestActionPerformed
 
     private void Menu_Info_ClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Menu_Info_ClienteActionPerformed
-       if (!operando) {
+        if (!operando) {
             try {
                 VerInfoClientes vic = new VerInfoClientes(this);
                 this.add(vic, BorderLayout.CENTER);

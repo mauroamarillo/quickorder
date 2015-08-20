@@ -5,6 +5,8 @@
  */
 package Logica;
 
+import Logica.DataTypes.DataProducto;
+
 /**
  *
  * @author usuario
@@ -21,6 +23,10 @@ public abstract class Producto {
         this.descripcion = descripcion;
         this.imagen = imagen;
         this.restaurante = restaurante;
+    }
+
+    public DataProducto getDataType() {
+        return new DataProducto(nombre, descripcion, this.getPrecio(), imagen, restaurante.getNickname());
     }
 
     public String getNombre() {

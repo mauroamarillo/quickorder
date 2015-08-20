@@ -5,12 +5,14 @@
  */
 package Presentacion;
 
-import Logica.Categoria;
-import Logica.Restaurante;
+import Logica.DataTypes.DataRestaurante;
+import java.net.MalformedURLException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -40,27 +42,27 @@ public class VerInfoRestaurantes extends javax.swing.JInternalFrame {
     }
 
     private void cargarArbol() {
+        /*Guardo las categorias en la lista de categorias*/
         Iterator it = Categorias.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
             String nombreCategoria = (String) entry.getValue();
-            nodoCategoria = new DefaultMutableTreeNode(nombreCategoria);
-            HashMap rest = ventanaPrincipal.CU.consultarRestaurantesPorCategoria(nombreCategoria);
+            nodoCategoria = new DefaultMutableTreeNode(nombreCategoria);    // creo un nodo con el nombreCategoria
+            HashMap rest = ventanaPrincipal.CU.consultarRestaurantesPorCategoria(nombreCategoria);  // Obtengo los una lista de DATATYPEs de restaurantes 
             Iterator it2 = rest.entrySet().iterator();
             while (it2.hasNext()) {
                 Map.Entry entry2 = (Map.Entry) it2.next();
-                //JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
-                Restaurante R = (Restaurante) entry2.getValue();
-                nodoRestaurante = new DefaultMutableTreeNode(R);
-                nodoRestaurante.setAllowsChildren(false);
-                nodoCategoria.add(nodoRestaurante);
+                DataRestaurante R = (DataRestaurante) entry2.getValue();
+                nodoRestaurante = new DefaultMutableTreeNode(R);        // creo un nodo por cada datatype obtenido
+                nodoRestaurante.setAllowsChildren(false);               // estos nodos no pueden tener nodos anidados, esto lo uso despues para saber cual nodo es de un restaurante y cual no
+                nodoCategoria.add(nodoRestaurante);                     // agrego cada nodo restaurante al nodo de la categoria que encontre
             }
-            raiz.add(nodoCategoria);
+            raiz.add(nodoCategoria);                                    // agrego cada categoria al nodo raiz
         }
-        DefaultTreeModel modelo = new DefaultTreeModel(raiz);
-        this.ArbolRestaurantes.setModel(modelo);
-        TreeCellRenderer renderer = new RestaurantesCellRenderer();
-        ArbolRestaurantes.setCellRenderer(renderer);
+        DefaultTreeModel modelo = new DefaultTreeModel(raiz);           // creo un modelo para el arbol y le asigno el nodo raiz con todos sus hijos
+        this.ArbolRestaurantes.setModel(modelo);                        // seteo al modelo al arbol
+        TreeCellRenderer renderer = new RestaurantesCellRenderer();     // creo un TreeCellRenderer del tipo arbol (ver clase: RestaurantesCellRenderer)
+        ArbolRestaurantes.setCellRenderer(renderer);                    // asigno el RestaurantesCellRenderer
     }
 
     /**
@@ -151,7 +153,11 @@ public class VerInfoRestaurantes extends javax.swing.JInternalFrame {
     private void ArbolRestaurantesValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_ArbolRestaurantesValueChanged
         DefaultMutableTreeNode x = (DefaultMutableTreeNode) evt.getNewLeadSelectionPath().getLastPathComponent();
         if (x.getAllowsChildren() == false) {
-            panelInfoRest2.cargarInfo((Restaurante) x.getUserObject());
+            try {
+                panelInfoRest2.cargarInfo((DataRestaurante) x.getUserObject());
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(VerInfoRestaurantes.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_ArbolRestaurantesValueChanged
 

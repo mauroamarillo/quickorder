@@ -5,12 +5,9 @@
  */
 package Presentacion;
 
-import Logica.Promocion;
-import java.awt.Frame;
+import Logica.DataTypes.DataPromocion;
 import java.awt.Image;
 import javax.swing.ImageIcon;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,12 +19,12 @@ public class ComponenteProductoPromocion extends javax.swing.JPanel {
     /**
      * Creates new form ComponenteProducto
      */
-    private final Promocion P;
+    private final DataPromocion P;
     private int cantidad = 1;
 
     private PanelProductos PP;
 
-    public ComponenteProductoPromocion(Promocion Pr, PanelProductos PP) {
+    public ComponenteProductoPromocion(DataPromocion Pr, PanelProductos PP) {
         this.P = Pr;
         this.PP = PP;
         initComponents();
@@ -42,7 +39,7 @@ public class ComponenteProductoPromocion extends javax.swing.JPanel {
         }
     }
 
-    public Promocion getProducto() {
+    public DataPromocion getProducto() {
         return P;
     }
 
@@ -99,7 +96,7 @@ public class ComponenteProductoPromocion extends javax.swing.JPanel {
         try {
             cantidad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese Cantidad"));
             this.setVisible(false);
-            PP.agregarProductoPaLista(this, cantidad);
+            PP.agregarProductoaLista(this, P, cantidad);
         } catch (NumberFormatException nfe) {
             JOptionPane.showMessageDialog(null, "Cantidad invalida", "ENTRADA INCORRECTA", JOptionPane.ERROR_MESSAGE);
         }

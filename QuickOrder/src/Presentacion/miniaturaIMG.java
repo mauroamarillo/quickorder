@@ -5,8 +5,13 @@
  */
 package Presentacion;
 
+import Logica.FileController;
 import java.awt.Frame;
 import java.awt.Image;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -26,13 +31,12 @@ public final class miniaturaIMG extends JPanel {
     public miniaturaIMG() {
 
         initComponents();
-        // cargarIMGs();
     }
 
-    public void cargarIMGs(String x) {
+    public void cargarIMGs(String x) throws MalformedURLException {
 
         Path = x;
-        Image img = new ImageIcon(Path).getImage();
+        Image img = new ImageIcon(new URL(Path)).getImage();
         Image newImg;
         newImg = img.getScaledInstance(150, 150, java.awt.Image.SCALE_FAST);
         ImageIcon ico = new ImageIcon(newImg);
@@ -83,7 +87,7 @@ public final class miniaturaIMG extends JPanel {
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         java.awt.Dimension D = new java.awt.Dimension(800, 600);
-        Image img = new ImageIcon(Path).getImage();
+        Image img = FileController.cargarImagen(Path).getImage();
         Image newImg;
         newImg = img.getScaledInstance(D.width, D.height, java.awt.Image.SCALE_AREA_AVERAGING);
         ImageIcon ico = new ImageIcon(newImg);
@@ -96,6 +100,7 @@ public final class miniaturaIMG extends JPanel {
         // d.setPreferredSize(new java.awt.Dimension(479, 306));
         d.add(I);
         d.setVisible(true);
+
     }//GEN-LAST:event_jLabel1MouseClicked
 
 
