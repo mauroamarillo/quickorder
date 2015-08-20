@@ -9,7 +9,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeCellRenderer;
 /*
- 天 CELLRENDERER QUE CAMBIA COMO SE VE EL ARBOL DE RESTAURANTES　天　
+ 天 CELLRENDERER QUE CAMBIA COMO SE VE EL ARBOL DE RESTAURANTES　天 　
  */
 
 class RestaurantesCellRenderer implements TreeCellRenderer {
@@ -30,7 +30,7 @@ class RestaurantesCellRenderer implements TreeCellRenderer {
                 R = (Restaurante) userObject;                                           // guardo el objeto restaurante del nodo
                 JLabel label = (JLabel) returnValue;                                    // tomo el componente de retorno y lo casteo como label
                 label.setIcon(new ImageIcon(getClass().getResource("/img/icoRes.png")));// le asigno un icono de restaurante
-                label.setText(R.getNickname());                                         // y le seteo el texto con el Nick del restaurante
+                label.setText(R.getNombre());                                         // y le seteo el texto con el Nick del restaurante
             }
         }
         if (returnValue == null) {

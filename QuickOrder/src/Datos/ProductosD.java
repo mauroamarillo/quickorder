@@ -94,7 +94,7 @@ public class ProductosD {
 
     public ResultSet listarProductosDePromocion(String restaurante, String nombre) throws SQLException {
         String query = " SELECT p.restaurante, p.nombre, p.descripcion, i.precio, pp.cantidad"
-                + " FROM productos p,individuales i,productos_promociones pp "
+                + " FROM productos p,individuales i,promociones_productos pp "
                 + " WHERE p.restaurante = i.restaurante"
                 + " AND p.nombre = i.nombre"
                 + " AND i.restaurante = pp.restaurante"
@@ -110,7 +110,10 @@ public class ProductosD {
                 + " WHERE p.restaurante = '" + P.getRestaurante().getNickname() + "'"
                 + " AND p.producto = '" + P.getNombre() + "';";
         ResultSet rs = st.executeQuery(query);
-        rs.next();
+        if(rs.next()){
+        
         return rs.getString("imagen");
+        }
+        return "sin_imagen";
     }
 }

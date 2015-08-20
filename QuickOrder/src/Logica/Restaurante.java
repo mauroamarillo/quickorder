@@ -12,51 +12,50 @@ import java.util.HashMap;
  * @author usuario
  */
 public class Restaurante extends Usuario {
+
     private HashMap categorias;
     private HashMap individuales;
     private HashMap promociones;
     private HashMap imagenes;
 
-    public HashMap getImagenes() {
-        return imagenes;
-    }
- 
-    public Restaurante(String nickname, String nombre, String email, String direccion, HashMap categorias, HashMap individuales, HashMap promociones, HashMap imagenes){
-        super(nickname,nombre,email,direccion);
+    public Restaurante(String nickname, String nombre, String email, String direccion, HashMap categorias, HashMap individuales, HashMap promociones, HashMap imagenes) {
+        super(nickname, nombre, email, direccion);
         this.categorias = categorias;
         this.individuales = individuales;
         this.promociones = promociones;
         this.imagenes = imagenes;
     }
 
-   
-    
-    public HashMap getCategorias(){
+    public HashMap getImagenes() {
+        return imagenes;
+    }
+
+    public HashMap getCategorias() {
         return categorias;
     }
-    
-    public HashMap getIndividuales(){
+
+    public HashMap getIndividuales() {
         return individuales;
     }
-    
-    public HashMap getPromociones(){
+
+    public HashMap getPromociones() {
         return promociones;
     }
-    
-    public void setCategorias(HashMap categorias){
+
+    public void setCategorias(HashMap categorias) {
         this.categorias = categorias;
     }
-    
-    public void setIndividuales(HashMap individuales){
+
+    public void setIndividuales(HashMap individuales) {
         this.individuales = individuales;
     }
-    
-    public void setPromociones(HashMap promociones){
+
+    public void setPromociones(HashMap promociones) {
         this.promociones = promociones;
     }
-    
-    public void setImagenes(HashMap imagenes){
+
+    public void setImagenes(HashMap imagenes) {
         this.imagenes = imagenes;
     }
-    
+
 }
