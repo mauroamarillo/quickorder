@@ -11,7 +11,7 @@ import Logica.Individual;
  *
  * @author Jean
  */
-public class DataIndividual {
+public class DataIndividual extends DataProducto{
 
     private final String nombre;
     private final String descripcion;
@@ -34,4 +34,25 @@ public class DataIndividual {
         this.imagen = I.getImagen();
         this.restaurante = I.getRestaurante().getNickname();
     }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public float getPrecio() {
+        return precio;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public String getRestaurante() {
+        return restaurante;
+    }
+    
 }

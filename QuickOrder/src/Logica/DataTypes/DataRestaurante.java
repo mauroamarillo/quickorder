@@ -5,8 +5,14 @@
  */
 package Logica.DataTypes;
 
+import Logica.Categoria;
+import Logica.Imagen;
+import Logica.Individual;
+import Logica.Promocion;
 import Logica.Restaurante;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  *
@@ -40,10 +46,68 @@ public class DataRestaurante {
         this.nombre = R.getNombre();
         this.email = R.getEmail();
         this.direccion = R.getDireccion();
-        this.categorias = R.getCategorias();
-        this.individuales = R.getIndividuales();
-        this.promociones = R.getPromociones();
-        this.imagenes = R.getImagenes();
+
+        Iterator it = R.getCategorias().entrySet().iterator();
+        this.categorias = new HashMap();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            Categoria C = (Categoria) entry.getValue();
+            this.categorias.put(C.getNombre(), C.getNombre());
+        }
+
+        it = R.getIndividuales().entrySet().iterator();
+        this.individuales = new HashMap();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            Individual I = (Individual) entry.getValue();
+            this.individuales.put(I.getRestaurante().getNickname() + "_" + I.getNombre(), new DataIndividual(I));
+        }
+        it = R.getPromociones().entrySet().iterator();
+        this.promociones = new HashMap();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            Promocion P = (Promocion) entry.getValue();
+            this.promociones.put(P.getRestaurante().getNickname() + "_" + P.getNombre(), new DataPromocion(P));
+        }
+        it = R.getImagenes().entrySet().iterator();
+        this.imagenes = new HashMap();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            Imagen I = (Imagen) entry.getValue();
+            this.imagenes.put(entry.getKey(), I.getPath());
+        }
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public HashMap getCategorias() {
+        return categorias;
+    }
+
+    public HashMap getIndividuales() {
+        return individuales;
+    }
+
+    public HashMap getPromociones() {
+        return promociones;
+    }
+
+    public HashMap getImagenes() {
+        return imagenes;
     }
 
 }

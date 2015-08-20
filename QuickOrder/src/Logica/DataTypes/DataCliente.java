@@ -6,8 +6,11 @@
 package Logica.DataTypes;
 
 import Logica.Cliente;
+import Logica.Pedido;
 import java.sql.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  *
@@ -19,7 +22,6 @@ public class DataCliente {
     private final String nombre;
     private final String email;
     private final String direccion;
-
     private final String apellido;
     private final Date fechaNac;
     private final String imagen;
@@ -44,7 +46,46 @@ public class DataCliente {
         this.apellido = C.getApellido();
         this.fechaNac = C.getFechaNac();
         this.imagen = C.getImagen();
-        this.pedidos = C.getPedidos();
+        /*cambia los objetos pedido por datatypes DataPedido*/
+        Iterator it = C.getPedidos().entrySet().iterator();
+        this.pedidos = new HashMap();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            Pedido p = (Pedido) entry.getValue();
+            pedidos.put(p.getNumero(), new DataPedido(p));
+        }
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public Date getFechaNac() {
+        return fechaNac;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public HashMap getPedidos() {
+        return pedidos;
     }
 
 }
