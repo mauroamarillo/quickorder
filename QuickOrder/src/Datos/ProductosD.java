@@ -1,15 +1,8 @@
 package Datos;
 
-import Logica.Individual;
-import Logica.ProdPromo;
-import Logica.Producto;
-import Logica.Promocion;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  *
@@ -33,23 +26,23 @@ public class ProductosD {
         return rs.next();
     }
 
-    private void agregarImagenProducto(Producto P) throws SQLException {
+    private void agregarImagenProducto(String restaurante, String producto, String imagen) throws SQLException {
         String query = " INSERT INTO productos_imagenes(restaurante,producto,imagen)"
-                + " VALUES('" + P.getRestaurante().getNickname() + "','" + P.getNombre() + "','" + P.getImagen() + "')";
+                + " VALUES('" + restaurante + "','" + producto + "','" + imagen + "')";
         st.execute(query);
     }
 
-    private void agregarProducto(Producto P) throws SQLException {
+    private void agregarProducto(String restaurante, String producto, String descripcion, String imagen) throws SQLException {
         String query = " INSERT INTO productos(restaurante,nombre,descripcion) "
-                + " VALUES ('" + P.getRestaurante().getNickname() + "','" + P.getNombre() + "','" + P.getDescripcion() + "');";
+                + " VALUES ('" + restaurante + "','" + producto + "','" + descripcion + "');";
         st.execute(query);
-        agregarImagenProducto(P);
+        agregarImagenProducto(restaurante, producto, imagen);
     }
 
-    public void agregarIndividual(Individual I) throws SQLException {
-        agregarProducto(I);
+    public void agregarIndividual(String restaurante, String producto, float precio, String descripcion, String imagen) throws SQLException {
+        agregarProducto(restaurante, producto, descripcion, imagen);
         String query = " INSERT INTO individuales(restaurante,nombre,precio) "
-                + " VALUES ('" + I.getRestaurante().getNickname() + "','" + I.getNombre() + "'," + I.getPrecio() + ");";
+                + " VALUES ('" + restaurante + "','" + producto + "'," + precio + ");";
         st.execute(query);
     }
 
@@ -61,26 +54,20 @@ public class ProductosD {
         return st.executeQuery(query);
     }
 
-    public void agregarPromocion(Promocion P) throws SQLException {
-        agregarProducto(P);
+    public void agregarPromocion(String restaurante, String producto, float descuento, String descripcion, String imagen, boolean act) throws SQLException {
+        agregarProducto(restaurante, producto, descripcion, imagen);
         String activa = "false";
-        if (P.getActiva()) {
+        if (act) {
             activa = "true";
         }
         String query = " INSERT INTO promociones(restaurante,nombre,activa,descuento) "
-                + " VALUES ('" + P.getRestaurante().getNickname() + "','" + P.getNombre() + "'," + activa + "," + P.getDescuento() + ");";
+                + " VALUES ('" + restaurante + "','" + producto + "'," + activa + "," + descuento + ");";
         st.execute(query);
-        Iterator it = P.getProdPromos().entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry entry = (Map.Entry) it.next();
-            ProdPromo I = ((ProdPromo) entry.getValue());
-            vincularPromocionProducto(P, I);
-        }
     }
 
-    public void vincularPromocionProducto(Promocion Promo, ProdPromo Prod) throws SQLException {
+    public void vincularPromocionProducto(String restaurante, String nombrePromo, String nombreProd, int cantidad) throws SQLException {
         String query = " INSERT INTO productos_promociones(restaurante,nombrepromo,nombreprod,cantidad) "
-                + " VALUES ('" + Promo.getRestaurante().getNickname() + "','" + Promo.getNombre() + "','" + Prod.getIndividual().getNombre() + "'," + Prod.getCantidad() + ");";
+                + " VALUES ('" + restaurante + "','" + nombrePromo + "','" + nombreProd + "'," + cantidad + ");";
         st.execute(query);
     }
 
@@ -104,15 +91,14 @@ public class ProductosD {
         return st.executeQuery(query);
     }
 
-    public String obtenerIMGdeProducto(Producto P) throws SQLException {
+    public String obtenerIMGdeProducto(String restaurante, String nombre) throws SQLException {
         String query = "SELECT imagen"
                 + " FROM productos_imagenes p"
-                + " WHERE p.restaurante = '" + P.getRestaurante().getNickname() + "'"
-                + " AND p.producto = '" + P.getNombre() + "';";
+                + " WHERE p.restaurante = '" + restaurante + "'"
+                + " AND p.producto = '" + nombre + "';";
         ResultSet rs = st.executeQuery(query);
-        if(rs.next()){
-        
-        return rs.getString("imagen");
+        if (rs.next()) {
+            return rs.getString("imagen");
         }
         return "sin_imagen";
     }

@@ -7,6 +7,7 @@ package Datos;
 
 import Logica.Cliente;
 import Logica.Restaurante;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -35,48 +36,48 @@ public class UsuarioD {
         return rs.next();
     }
 
-    public void agregarCliente(Cliente C) throws SQLException {
-        /*Registro al Usuario como cliente*/
+    private void agregarUsuario(String nick, String nombre, String email, String direccion) throws SQLException {
         String Usuario = "INSERT INTO usuarios(nickname,nombre,email,direccion) "
-                + " VALUES('" + C.getNickname() + "','" + C.getNombre() + "','" + C.getEmail() + "','" + C.getDireccion() + "');";
-        String Cliente = "INSERT INTO clientes(\"nicknameC\",\"apellido\",\"fechaN\") "
-                + " VALUES('" + C.getNickname() + "','" + C.getApellido() + "','" + C.getFechaNac() + "');";
+                + " VALUES('" + nick + "','" + nombre + "','" + email + "','" + direccion + "');";
         st.execute(Usuario);
+    }
+
+    public void agregarCliente(String nick, String nombre, String email, String direccion, String apellido, Date fechaN, String imagen) throws SQLException {
+        agregarUsuario(nick, nombre, email, direccion);
+        /*Registro al Usuario como cliente*/
+        String Cliente = "INSERT INTO clientes(\"nicknameC\",\"apellido\",\"fechaN\") "
+                + " VALUES('" + nick + "','" + apellido + "','" + fechaN + "');";
+
         st.execute(Cliente);
         /*Si no se le asigno una imagen retorno*/
-        if (C.getImagen().equals("sin_imagen")) {
+        if (imagen.equals("sin_imagen")) {
             return;
         }
         /*si hay imagen guarda la ruta y la asocia con el cliente*/
-        String Imagen = " INSERT INTO clientes_imagenes(cliente,imagen)"
-                + " VALUES('" + C.getNickname() + "','" + C.getImagen() + "')";
+        String Img = " INSERT INTO clientes_imagenes(cliente,imagen)"
+                + " VALUES('" + nick + "','" + imagen + "')";
+        st.execute(Img);
+    }
+
+    public void agregarRestaurante(String nick, String nombre, String email, String direccion) throws SQLException {
+        agregarUsuario(nick, nombre, email, direccion);
+        String Restaurante = "INSERT INTO restaurantes(\"nicknameR\") "
+                + " VALUES('" + nick + "');";
+        st.execute(Restaurante);
+
+    }
+
+    public void agregarImgRestaurante(String nick, String path) throws SQLException {
+        String Imagen = " INSERT INTO restaurantes_imagenes(restaurante,imagen)"
+                + " VALUES('" + nick + "','" + path + "');";
         st.execute(Imagen);
     }
 
-    public int agregarRestaurante(Restaurante R, HashMap IMGs, int cat[]) throws SQLException {
-        /*Guardo los datos del restaurante*/
-        String Usuario = "INSERT INTO usuarios(nickname,nombre,email,direccion) "
-                + " VALUES('" + R.getNickname() + "','" + R.getNombre() + "','" + R.getEmail() + "','" + R.getDireccion() + "');";
-        String Restaurante = "INSERT INTO restaurantes(\"nicknameR\") "
-                + " VALUES('" + R.getNickname() + "');";
-        st.execute(Usuario);
-        st.execute(Restaurante);
-        /*Guardo las imagenes y las asocio con el restaurante*/
-        Iterator it = IMGs.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry entry = (Map.Entry) it.next();
-            String path = ((String) entry.getValue());
-            String Imagen = " INSERT INTO restaurantes_imagenes(restaurante,imagen)"
-                    + " VALUES('" + R.getNickname() + "','" + path + "');";
-            st.execute(Imagen);
-        }
-        /*Asocio el restaurante con sus categorias*/
-        for (int x = 0; x < cat.length; x++) {
-            String categoria = "INSERT INTO restaurantes_categorias(restaurante,categoria) "
-                    + "VALUES('" + R.getNickname() + "','" + cat[x] + "');";
-            st.execute(categoria);
-        }
-        return 0;
+    public void agregarCategoriaARestaurante(String nick, int cat) throws SQLException {
+        String categoria = "INSERT INTO restaurantes_categorias(restaurante,categoria) "
+                + "VALUES('" + nick + "','" + cat + "');";
+        st.execute(categoria);
+
     }
 
     public ResultSet listarRestaurantes() throws SQLException {

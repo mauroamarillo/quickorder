@@ -5,17 +5,11 @@
  */
 package Datos;
 
-import Logica.Cliente;
 import Logica.Estado;
-import Logica.Pedido;
-import Logica.ProdPedido;
-import Logica.Restaurante;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import javax.xml.crypto.Data;
 
 public class PedidoD {
 
@@ -26,17 +20,17 @@ public class PedidoD {
         this.st = es.generarSt();
     }
 
-    public int agregarPedido(Pedido P) throws SQLException {
+    public int agregarPedido(Data fecha, int estado, String cliente, String restaurante) throws SQLException {
         String query = "INSERT INTO pedidos(fecha,estado,cliente,restaurante)"
-                + " VALUES('" + P.getFecha() + "','" + P.getEstado().ordinal()+ "','" + P.getCliente().getNickname() + "','"+P.getRestaurante().getNickname()+"') RETURNING numero";
+                + " VALUES('" + fecha + "','" + estado + "','" + cliente + "','" + restaurante + "') RETURNING numero";
         ResultSet rs = st.executeQuery(query);
         rs.next();
         return rs.getInt("numero");
     }
 
-    public void agregarLineaDePedido(int numero,ProdPedido PP) throws SQLException {
+    public void agregarLineaDePedido(int numero, String restaurante, String producto, int cantidad) throws SQLException {
         String query = "INSERT INTO pedidos_producto(pedido,restaurante,producto,cantidad)"
-                + " VALUES(" + numero + ",'" +PP.getProducto().getRestaurante().getNickname() + "','" + PP.getProducto().getNombre()+ "'," + PP.getCantidad()+ ")";
+                + " VALUES(" + numero + ",'" + restaurante + "','" + producto + "'," + cantidad + ")";
         st.execute(query);
     }
 }
