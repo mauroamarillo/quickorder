@@ -8,10 +8,6 @@ package Presentacion;
 import Logica.FileController;
 import java.awt.Frame;
 import java.awt.Image;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -33,10 +29,10 @@ public final class miniaturaIMG extends JPanel {
         initComponents();
     }
 
-    public void cargarIMGs(String x) throws MalformedURLException {
+    public void cargarIMGs(String x) {
 
         Path = x;
-        Image img = new ImageIcon(new URL(Path)).getImage();
+        Image img = new ImageIcon(Path).getImage();
         Image newImg;
         newImg = img.getScaledInstance(150, 150, java.awt.Image.SCALE_FAST);
         ImageIcon ico = new ImageIcon(newImg);

@@ -5,7 +5,6 @@
  */
 package Presentacion;
 
-import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -25,7 +24,7 @@ public final class PanelInfoResIMG extends javax.swing.JPanel {
 
     }
 
-    public void cargar(HashMap imgs) throws MalformedURLException {
+    public void cargar(HashMap imgs) {
         Iterator it = imgs.entrySet().iterator();
         int x = 0;
         while (it.hasNext()) {

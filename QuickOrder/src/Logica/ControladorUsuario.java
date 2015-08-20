@@ -36,9 +36,7 @@ public final class ControladorUsuario {
 
         this.Restaurantes = retornarRestaurantes();
         this.Clientes = retornarClientes();
-
         this.Categorias = consultarCategorias();
-
         this.CP = new ControladorProductos(this);
 
     }
@@ -194,7 +192,17 @@ public final class ControladorUsuario {
             Cliente C = new Cliente(rs.getString("nickname"), rs.getString("nombre"), rs.getString("email"), rs.getString("direccion"), rs.getString("apellido"), rs.getDate("fechaN"), "sin_imagen", null);
             resultado.put(C.getNickname(), C);
         }
+        Iterator it = resultado.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            Cliente C = ((Cliente) entry.getValue());
+            C.setImagen(retornarIMGCliente(C.getNickname()));
+        }
         return resultado;
+    }
+
+    private String retornarIMGCliente(String nick) throws SQLException {
+        return UsuarioDatos.obtenerIMGCliente(nick);
 
     }
 

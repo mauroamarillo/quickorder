@@ -100,7 +100,15 @@ public class UsuarioD {
                 + " WHERE u.nickname = c.\"nicknameC\";";
         return st.executeQuery(query);
     }
-    public String obtenerIMGCliente(String nick){
-        return "";
+
+    public String obtenerIMGCliente(String nick) throws SQLException {
+        String query = "SELECT imagen"
+                + " FROM clientes_imagenes"
+                + " WHERE cliente = '" + nick + "';";
+        ResultSet rs = st.executeQuery(query);
+        if (rs.next()) {
+            return rs.getString("imagen");
+        }
+        return "sin__imagen";
     }
 }
