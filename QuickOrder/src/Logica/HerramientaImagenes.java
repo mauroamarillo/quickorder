@@ -33,7 +33,7 @@ public abstract class HerramientaImagenes {
     public static ImageIcon escalarIcono(ImageIcon ico, int w, int h) {
         Image img = ico.getImage();
         Image newImg;
-        newImg = img.getScaledInstance(w, h, java.awt.Image.SCALE_AREA_AVERAGING);
+        newImg = img.getScaledInstance(w, h, java.awt.Image.SCALE_FAST);
         return new ImageIcon(newImg);
     }
 

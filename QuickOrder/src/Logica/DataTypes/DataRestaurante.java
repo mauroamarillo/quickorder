@@ -50,8 +50,8 @@ public class DataRestaurante {
         this.categorias = new HashMap();
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
-            Categoria C = (Categoria) entry.getValue();
-            this.categorias.put(C.getNombre(), C.getNombre());
+            String C = (String) entry.getValue();
+            this.categorias.put(C, C);
         }
 
         it = R.getIndividuales().entrySet().iterator();
