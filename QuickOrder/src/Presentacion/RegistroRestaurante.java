@@ -62,7 +62,7 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
                 PC.AgregarCategoria(((int) entry.getKey()), ((String) entry.getValue()));
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);            
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(RegistroRestaurante.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -300,8 +300,7 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
         if (APPROVE_OPTION == option) {
             cantImg++;
             String path = jFileChooser1.getSelectedFile().getPath();
-            String nombre = jFileChooser1.getSelectedFile().getName();
-            PI.AgregarImagen(cantImg, nombre, path);
+            PI.AgregarImagen(cantImg, path);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

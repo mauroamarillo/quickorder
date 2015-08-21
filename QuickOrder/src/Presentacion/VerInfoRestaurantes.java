@@ -151,12 +151,14 @@ public class VerInfoRestaurantes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_formInternalFrameClosing
 
     private void ArbolRestaurantesValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_ArbolRestaurantesValueChanged
-        DefaultMutableTreeNode x = (DefaultMutableTreeNode) evt.getNewLeadSelectionPath().getLastPathComponent();
-        if (x.getAllowsChildren() == false) {
-            try {
-                panelInfoRest2.cargarInfo((DataRestaurante) x.getUserObject());
-            } catch (MalformedURLException ex) {
-                Logger.getLogger(VerInfoRestaurantes.class.getName()).log(Level.SEVERE, null, ex);
+        if (evt.getNewLeadSelectionPath() != null) {
+            DefaultMutableTreeNode x = (DefaultMutableTreeNode) evt.getNewLeadSelectionPath().getLastPathComponent();
+            if (x.getAllowsChildren() == false) {
+                try {
+                    panelInfoRest2.cargarInfo((DataRestaurante) x.getUserObject());
+                } catch (MalformedURLException ex) {
+                    Logger.getLogger(VerInfoRestaurantes.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }//GEN-LAST:event_ArbolRestaurantesValueChanged

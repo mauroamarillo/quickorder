@@ -51,7 +51,6 @@ public class PanelInfoRest extends javax.swing.JPanel {
 
     public void cargarproductos(DataRestaurante R) {
         DefaultListModel model = new DefaultListModel();
-
         if (R.getIndividuales() != null) {
             Iterator it = R.getIndividuales().entrySet().iterator();
             while (it.hasNext()) {

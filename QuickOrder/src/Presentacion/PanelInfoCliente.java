@@ -6,8 +6,13 @@
 package Presentacion;
 
 import Logica.DataTypes.DataCliente;
+import Logica.DataTypes.DataPedido;
 import Logica.HerramientaImagenes;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,8 +23,15 @@ public class PanelInfoCliente extends javax.swing.JPanel {
     /**
      * Creates new form PanelInfoCliente
      */
+    DefaultTableModel modeloTabla;
+    HashMap dataPedidos;
+
     public PanelInfoCliente() {
         initComponents();
+        modeloTabla = (DefaultTableModel) TablaPedidos.getModel();
+        TablaPedidos.setModel(modeloTabla);
+        limpiarTabla();
+        dataPedidos = new HashMap();
     }
 
     public void cargarInfo(DataCliente DC) throws IOException {
@@ -32,6 +44,27 @@ public class PanelInfoCliente extends javax.swing.JPanel {
         if (!DC.getImagen().equals("sin_imagen")) {
             Label_IMG.setText("");
             Label_IMG.setIcon(HerramientaImagenes.cargarImagen(DC.getImagen()));
+        }
+
+        dataPedidos = DC.getPedidos();
+        limpiarTabla();
+        cargarTablaPedidos();
+
+    }
+
+    public void cargarTablaPedidos() {
+        Iterator it = dataPedidos.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            DataPedido DP = (DataPedido) entry.getValue();
+            modeloTabla.addRow(new Object[]{DP.getRestaurante(), DP.getFecha().toString()});
+        }
+    }
+
+    private void limpiarTabla() {
+        modeloTabla = (DefaultTableModel) TablaPedidos.getModel();
+        while (modeloTabla.getRowCount() > 0) {
+            modeloTabla.removeRow(0);
         }
     }
 
@@ -57,7 +90,7 @@ public class PanelInfoCliente extends javax.swing.JPanel {
         Label_Email = new javax.swing.JLabel();
         Label_FN = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TablaPedidos = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(450, 418));
@@ -91,18 +124,31 @@ public class PanelInfoCliente extends javax.swing.JPanel {
 
         Label_FN.setText("  ");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TablaPedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Restaurante", "Fecha"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(TablaPedidos);
+        if (TablaPedidos.getColumnModel().getColumnCount() > 0) {
+            TablaPedidos.getColumnModel().getColumn(0).setResizable(false);
+            TablaPedidos.getColumnModel().getColumn(1).setResizable(false);
+            TablaPedidos.getColumnModel().getColumn(1).setPreferredWidth(10);
+        }
 
         jLabel6.setText("Pedidos:");
 
@@ -191,6 +237,7 @@ public class PanelInfoCliente extends javax.swing.JPanel {
     private javax.swing.JLabel Label_IMG;
     private javax.swing.JLabel Label_Nick;
     private javax.swing.JLabel Label_Nombre;
+    private javax.swing.JTable TablaPedidos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -198,6 +245,5 @@ public class PanelInfoCliente extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

@@ -20,11 +20,11 @@ public class PanelImagenes extends JPanel {
     //Nos sirve para almacenar a los objetos creados
     private final HashMap IMGs = new HashMap();
 
-    public void AgregarImagen(int index, String nombre, String Pach_Img) {
+    public void AgregarImagen(int index, String Pach_Img) {
         pos++;
         int x = pos * 100;
         this.setPreferredSize(new Dimension(170, x));
-        ComponenteImagen CI = new ComponenteImagen(index, nombre, Pach_Img, this);
+        ComponenteImagen CI = new ComponenteImagen(index, Pach_Img, this);
         this.add(CI);
         this.validate();
         this.IMGs.put("key_" + index, CI);
@@ -39,7 +39,7 @@ public class PanelImagenes extends JPanel {
             new File(path).mkdirs();
             Map.Entry entry = (Map.Entry) it.next();
             ComponenteImagen CI = ((ComponenteImagen) entry.getValue());
-            r.put(x, CI.GuardarImagen(path, x + ".jpg"));
+            r.put(x, CI.getPath_Img());
             x++;
         }
         return r;

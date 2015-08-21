@@ -35,14 +35,15 @@ public class Pedido {
     }
 
     public DataPedido getDataType() {
-        HashMap dataProdPedidos = new HashMap();
+        HashMap dataProdPedidos;
+        dataProdPedidos = new HashMap();
         Iterator it = prodPedidos.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
             ProdPedido pp = (ProdPedido) entry.getValue();
             dataProdPedidos.put(pp.getProducto().getNombre(), pp.getDataType());
         }
-        return new DataPedido(numero, fecha, estado, dataProdPedidos, cliente.getDataType(), restaurante.getDataType());
+        return new DataPedido(numero, fecha, estado, dataProdPedidos, cliente.getNickname(), restaurante.getNickname());
     }
 
     public Cliente getCliente() {

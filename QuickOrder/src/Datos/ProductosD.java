@@ -66,7 +66,7 @@ public class ProductosD {
     }
 
     public void vincularPromocionProducto(String restaurante, String nombrePromo, String nombreProd, int cantidad) throws SQLException {
-        String query = " INSERT INTO productos_promociones(restaurante,nombrepromo,nombreprod,cantidad) "
+        String query = " INSERT INTO promociones_productos(restaurante,nombrepromo,nombreprod,cantidad) "
                 + " VALUES ('" + restaurante + "','" + nombrePromo + "','" + nombreProd + "'," + cantidad + ");";
         st.execute(query);
     }

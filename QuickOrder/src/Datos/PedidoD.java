@@ -32,4 +32,30 @@ public class PedidoD {
                 + " VALUES(" + numero + ",'" + restaurante + "','" + producto + "'," + cantidad + ")";
         st.execute(query);
     }
+
+    public ResultSet listarPedidos() throws SQLException {
+        String query = " SELECT * "
+                + " FROM pedidos";
+        return st.executeQuery(query);
+    }
+     public ResultSet listarLineasDePedidos(int numero) throws SQLException {
+        String query = " SELECT * "
+                + " FROM pedidos_producto "
+                + " WHERE pedido = "+numero;
+        return st.executeQuery(query);
+    }
+    public ResultSet listarPedidosDeCliente(String nick) throws SQLException {
+        String query = " SELECT * "
+                + " FROM pedidos"
+                + " WHERE cliente='" + nick + "'";
+        return st.executeQuery(query);
+    }
+    public ResultSet listarLinasDePedidosDeCliente(String nick) throws SQLException {
+        String query = " SELECT pp.pedido, pp.restaurante,pp.producto,pp.cantidad "
+                + " FROM pedidos p, pedidos_producto pp"
+                + " WHERE p.numero = pp.pedido"
+                + " AND p.cliente='" + nick + "'";
+        return st.executeQuery(query);
+    }
+    
 }

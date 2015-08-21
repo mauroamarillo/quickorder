@@ -324,9 +324,12 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         DefaultMutableTreeNode x = (DefaultMutableTreeNode) evt.getNewLeadSelectionPath().getLastPathComponent();
         if (x.getAllowsChildren() == false) {
             DataRestaurante DR = (DataRestaurante) x.getUserObject();
-            PanelProductos PP = new PanelProductos(this);
             restaurante = DR.getNickname();
-            PP.iniciarPanel(ventanaPrincipal.CU.getCP().buscarProductos(restaurante));
+            PanelProductos PP = new PanelProductos(this);
+            HashMap ListaDataProductos = new HashMap();
+            ListaDataProductos.putAll(DR.getIndividuales());
+            ListaDataProductos.putAll(DR.getPromociones());
+            PP.iniciarPanel(ListaDataProductos);
             ScrollProductos.setViewportView(PP);
             limpiarTabla();
         }

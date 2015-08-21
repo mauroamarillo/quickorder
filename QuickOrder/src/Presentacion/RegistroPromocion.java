@@ -66,8 +66,8 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
         ListaRestaurante.setModel(model);
     }
 
-    private void cargarProductos(String R) {
-        HashMap OBJs = ventanaPrincipal.CU.getCP().buscarProductosI(R);
+    private void cargarProductos(String R) throws SQLException {
+        HashMap OBJs = ventanaPrincipal.CU.buscarRestaurante(R).getIndividuales();
         Iterator it = OBJs.entrySet().iterator();
         DefaultListModel model = new DefaultListModel();
         while (it.hasNext()) {
@@ -426,13 +426,10 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
 
     private void Button_AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_AceptarActionPerformed
         try {
-            if (foto != null) {
-                ventanaPrincipal.CU.getCP().insertarPromocion(Text_Nombre.getText(), Text_Descripcion.getText(), foto, true, Float.parseFloat(Text_Descuento.getText()), ListaRestaurante.getSelectedValue().toString(), subProductos);
-                JOptionPane.showMessageDialog(null, "Producto Ingresado", "Exito!", JOptionPane.DEFAULT_OPTION);
-                ventanaPrincipal.setOperando(false);
-            } else {
-                throw new Exception("Asignar Imagen");
-            }
+            float desc = Float.parseFloat(Text_Descuento.getText());
+            ventanaPrincipal.CU.getCP().insertarPromocion(Text_Nombre.getText(), Text_Descripcion.getText(), foto, true, desc, ListaRestaurante.getSelectedValue().toString(), subProductos);
+            JOptionPane.showMessageDialog(null, "Producto Ingresado", "Exito!", JOptionPane.DEFAULT_OPTION);
+            ventanaPrincipal.setOperando(false);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(RegistroPromocion.class.getName()).log(Level.SEVERE, null, ex);
@@ -481,7 +478,12 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
         JList list = (JList) evt.getSource();
         if (evt.getClickCount() == 2) {
             restaurante = (String) list.getSelectedValue();
-            cargarProductos(restaurante);
+            try {
+                cargarProductos(restaurante);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(RegistroPromocion.class.getName()).log(Level.SEVERE, null, ex);
+            }
             limpiarTabla();
         }
     }//GEN-LAST:event_ListaRestauranteMouseClicked
@@ -489,7 +491,8 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
     private void ListaSubProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListaSubProductoMouseClicked
         JList list = (JList) evt.getSource();
         if (evt.getClickCount() == 2) {
-            agregarLineaProducto(ventanaPrincipal.CU.getCP().buscarDataIndividual(restaurante, (String) list.getSelectedValue()));
+            DataIndividual DI = ventanaPrincipal.CU.getCP().buscarDataIndividual((String) list.getSelectedValue(), restaurante);
+            agregarLineaProducto(DI);
         }
     }//GEN-LAST:event_ListaSubProductoMouseClicked
 

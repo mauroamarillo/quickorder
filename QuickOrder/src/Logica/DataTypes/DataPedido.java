@@ -23,10 +23,10 @@ public class DataPedido {
     private final Date fecha;
     private final Estado estado;
     private final HashMap prodPedidos;
-    private final DataCliente cliente;
-    private final DataRestaurante restaurante;
+    private final String cliente;
+    private final String restaurante;
 
-    public DataPedido(int numero, Date fecha, Estado estado, HashMap prodPedidos, DataCliente cliente, DataRestaurante restaurante) {
+    public DataPedido(int numero, Date fecha, Estado estado, HashMap prodPedidos, String cliente, String restaurante) {
         this.numero = numero;
         this.fecha = fecha;
         this.estado = estado;
@@ -39,8 +39,8 @@ public class DataPedido {
         this.numero = P.getNumero();
         this.fecha = P.getFecha();
         this.estado = P.getEstado();
-        this.cliente = new DataCliente(P.getCliente());
-        this.restaurante = new DataRestaurante(P.getRestaurante());
+        this.cliente = P.getCliente().getNickname();
+        this.restaurante = P.getRestaurante().getNickname();
         /*por cada objeto producto de pedido se  crea un datatype*/
         Iterator it = P.getProdPedidos().entrySet().iterator();
         this.prodPedidos = new HashMap();
@@ -68,11 +68,11 @@ public class DataPedido {
         return prodPedidos;
     }
 
-    public DataCliente getCliente() {
+    public String getCliente() {
         return cliente;
     }
 
-    public DataRestaurante getRestaurante() {
+    public String getRestaurante() {
         return restaurante;
     }
 

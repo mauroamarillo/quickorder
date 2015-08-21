@@ -32,8 +32,8 @@ public class VerInfoClientes extends javax.swing.JInternalFrame {
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         this.setVisible(true);
     }
-
-     private void cargarClientes() throws SQLException {
+    
+    private void cargarClientes() throws SQLException {
         HashMap OBJs = ventanaPrincipal.CU.getDataClientes();
         Iterator it = OBJs.entrySet().iterator();
         DefaultListModel model = new DefaultListModel();
@@ -43,8 +43,7 @@ public class VerInfoClientes extends javax.swing.JInternalFrame {
         }
         ListaClientes.setModel(model);
     }
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -152,6 +151,7 @@ public class VerInfoClientes extends javax.swing.JInternalFrame {
             String Cliente = (String) list.getSelectedValue();
             try {
                 panelInfoCliente1.cargarInfo(ventanaPrincipal.CU.buscarCliente(Cliente));
+               // panelInfoCliente1.cargarTablaPedidos(ventanaPrincipal.CU.getDataPedidos(Cliente));
             } catch (SQLException ex) {
                 Logger.getLogger(VerInfoClientes.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {

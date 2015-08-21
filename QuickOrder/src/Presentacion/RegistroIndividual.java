@@ -7,7 +7,6 @@ package Presentacion;
 
 import Logica.DataTypes.DataRestaurante;
 import Logica.HerramientaImagenes;
-import java.awt.Image;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -16,7 +15,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import static javax.swing.JFileChooser.APPROVE_OPTION;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -36,10 +34,11 @@ public class RegistroIndividual extends javax.swing.JInternalFrame {
         cargarRestaurantes();
         //ESTE CAMPO SOLO PUEDE SER NUMERICO
         Text_Precio.setDocument(new LimitadorCaracteres());
+        
         this.setLocation(220, 80);
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         this.setVisible(true);
-
+Text_Nombre.requestFocus();
     }
 
     private void cargarRestaurantes() throws SQLException {
@@ -245,6 +244,8 @@ public class RegistroIndividual extends javax.swing.JInternalFrame {
                     .addComponent(Button_Cancelar))
                 .addGap(28, 28, 28))
         );
+
+        Text_Nombre.requestFocus();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

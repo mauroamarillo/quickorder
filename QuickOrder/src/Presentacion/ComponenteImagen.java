@@ -24,7 +24,6 @@ public class ComponenteImagen extends javax.swing.JPanel {
 
     private final PanelImagenes contenedor;
     private final String Path_Img;
-    private final String nombre;
     private final int index;
 
     /**
@@ -35,26 +34,17 @@ public class ComponenteImagen extends javax.swing.JPanel {
      * @param Path_Img
      * @param contenedor
      */
-    public ComponenteImagen(int index, String nombre, String Path_Img, PanelImagenes contenedor) {
+    public ComponenteImagen(int index, String Path_Img, PanelImagenes contenedor) {
         initComponents();
         this.Path_Img = Path_Img;
-        this.nombre = nombre;
         this.index = index;
         this.jButton1.setActionCommand("key_" + index);
-        Label_Img.setIcon(HerramientaImagenes.cargarYescalar(Path_Img,55, 55));
+        Label_Img.setIcon(HerramientaImagenes.cargarYescalar(Path_Img, 55, 55));
         this.contenedor = contenedor;
     }
 
-    public String GuardarImagen(String path, String nom) {
-        File destino = new File(path + nom);
-        File foto = new File(Path_Img);
-        try {
-            HerramientaArchivos.copiarArchivo(foto, destino);
-            return destino.getPath();
-        } catch (IOException ex) {
-            Logger.getLogger(ComponenteImagen.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
+    public String getPath_Img() {
+        return Path_Img;
     }
 
     /**
