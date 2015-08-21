@@ -3,6 +3,7 @@ package Datos;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -93,13 +94,14 @@ public class ProductosD {
 
     public String obtenerIMGdeProducto(String restaurante, String nombre) throws SQLException {
         String query = "SELECT imagen"
-                + " FROM productos_imagenes p"
-                + " WHERE p.restaurante = '" + restaurante + "'"
-                + " AND p.producto = '" + nombre + "';";
+                + " FROM productos_imagenes"
+                + " WHERE restaurante = '" + restaurante + "'"
+                + " AND producto = '" + nombre + "'";
         ResultSet rs = st.executeQuery(query);
         if (rs.next()) {
             return rs.getString("imagen");
         }
+
         return "sin_imagen";
     }
 }

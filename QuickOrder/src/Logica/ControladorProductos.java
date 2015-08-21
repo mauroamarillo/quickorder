@@ -102,7 +102,7 @@ public final class ControladorProductos {
         float pre = Float.parseFloat(precio);
         Individual P;
         if (img != null) {
-            P = new Individual(nombre, descripcion, pre, "C:\\imagenes\\" + restaurante + "\\productos\\" + nombre + ".jpg", CU._buscarRestauranten_n(restaurante));
+            P = new Individual(nombre, descripcion, pre, "C:\\imagenes\\" + CU._buscarRestauranten_n(restaurante).getNickname() + "\\productos\\" + nombre + ".jpg", CU._buscarRestauranten_n(restaurante));
         } else {
             P = new Individual(nombre, descripcion, pre, "sin_imagen", CU._buscarRestauranten_n(restaurante));
         }
@@ -129,7 +129,7 @@ public final class ControladorProductos {
         java.sql.ResultSet rs = PD.listarIndividuales();
         while (rs.next()) {
             Restaurante R = CU._buscarRestaurante(rs.getString("restaurante"));
-            Individual I = new Individual(rs.getString("nombre"), rs.getString("descripcion"), rs.getFloat("precio"), "sin imagen", R);
+            Individual I = new Individual(rs.getString("nombre"), rs.getString("descripcion"), rs.getFloat("precio"), "sin_imagen", R);
             R.getIndividuales().put(I.getRestaurante().getNickname() + "_" + I.getNombre(), I);
             resultado.put(I.getRestaurante().getNickname() + "_" + I.getNombre(), I);
 
@@ -138,9 +138,7 @@ public final class ControladorProductos {
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
             Individual I = ((Individual) entry.getValue());
-            if (PD.obtenerIMGdeProducto(I.getRestaurante().getNombre(), I.getNombre()) != null) {
-                I.setImagen(PD.obtenerIMGdeProducto(I.getRestaurante().getNombre(), I.getNombre()));
-            }
+            I.setImagen(PD.obtenerIMGdeProducto(I.getRestaurante().getNickname(), I.getNombre()));
         }
         return resultado;
     }
@@ -235,9 +233,7 @@ public final class ControladorProductos {
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
             Promocion P = ((Promocion) entry.getValue());
-            if (PD.obtenerIMGdeProducto(P.getRestaurante().getNickname(), P.getNombre()) != null) {
-                P.setImagen(PD.obtenerIMGdeProducto(P.getRestaurante().getNickname(), P.getNombre()));
-            }
+            P.setImagen(PD.obtenerIMGdeProducto(P.getRestaurante().getNickname(), P.getNombre()));
         }
         return resultado;
     }
