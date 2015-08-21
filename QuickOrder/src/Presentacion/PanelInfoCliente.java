@@ -46,7 +46,6 @@ public class PanelInfoCliente extends javax.swing.JPanel {
         dataPedidos = DC.getPedidos();
         limpiarTabla();
         cargarTablaPedidos();
-
     }
 
     public void cargarTablaPedidos() {

@@ -8,6 +8,7 @@ package Logica;
 import Datos.ProductosD;
 import Logica.DataTypes.DataIndividual;
 import Logica.DataTypes.DataProdPromo;
+import Logica.DataTypes.DataProducto;
 import Logica.DataTypes.DataPromocion;
 import java.io.File;
 import java.io.IOException;
@@ -59,6 +60,26 @@ public final class ControladorProductos {
             DataIndividuales.put(I.getRestaurante() + "_" + I.getNombre(), new DataIndividual(I));
         }
         return DataIndividuales;
+    }
+
+    public DataProducto BuscarDataXRestaurante_Producto(String R_P) {
+        Iterator it = individuales.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            Individual DI = (Individual) entry.getValue();
+            if (R_P.equals(DI.getRestaurante().getNickname() + "_" + DI.getNombre())) {
+                return DI.getDataType();
+            }
+        }
+        it = promociones.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            Promocion DP = (Promocion) entry.getValue();
+            if (R_P.equals(DP.getRestaurante().getNickname() + "_" + DP.getNombre())) {
+                return DP.getDataType();
+            }
+        }
+        return null;//new DataPromocion(10,true,new HashMap(),"caca","Pichi",15,"sad","lala");
     }
 
     public HashMap getPromociones() {
@@ -178,7 +199,7 @@ public final class ControladorProductos {
         Promocion P;
 
         if (CU._buscarRestaurante(restaurante) == null || restaurante == null || restaurante.isEmpty()) {
-             throw new Exception("Asignar Restaurante");
+            throw new Exception("Asignar Restaurante");
         }
         if (img != null) {
             P = new Promocion(nombre, descripcion, "C:\\imagenes\\" + CU._buscarRestaurante(restaurante).getNickname() + "\\productos\\" + nombre + ".jpg", activa, descuento, CU._buscarRestaurante(restaurante), null);

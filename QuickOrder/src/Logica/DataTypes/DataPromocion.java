@@ -41,6 +41,10 @@ public class DataPromocion extends DataProducto {
         }
     }
 
+    public HashMap getDataProdPromo() {
+        return dataProdPromo;
+    }
+
     public String getNombre() {
         return nombre;
     }

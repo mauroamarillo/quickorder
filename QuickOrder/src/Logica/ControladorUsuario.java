@@ -4,6 +4,7 @@ import Datos.CategoriaD;
 import Datos.PedidoD;
 import Datos.UsuarioD;
 import Logica.DataTypes.DataCliente;
+import Logica.DataTypes.DataPedido;
 import Logica.DataTypes.DataProdPedido;
 import Logica.DataTypes.DataRestaurante;
 import java.io.File;
@@ -80,6 +81,8 @@ public final class ControladorUsuario {
         return Categorias;
     }
 
+
+    /*obtener pedidos de un cliente especifico*/
     public HashMap getDataPedidos(String nick) throws SQLException {
         HashMap resultado = new HashMap();
         Cliente C = this._buscarCliente(nick);
@@ -88,6 +91,41 @@ public final class ControladorUsuario {
             Map.Entry entry = (Map.Entry) it.next();
             Pedido P = (Pedido) entry.getValue();
             resultado.put(P.getNumero(), P.getDataType());
+        }
+        return resultado;
+    }
+
+    /*Obtener todos los pedidos registrados*/
+    public HashMap getDataPedidos() throws SQLException {
+        HashMap resultado = new HashMap();
+        Iterator it = this.getClientes().entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            Cliente C = (Cliente) entry.getValue();
+            resultado.putAll(getDataPedidos(C.getNickname()));
+        }
+        return resultado;
+    }
+    /*obtener pedidos de un producto*/
+
+    public HashMap getDataPedidosProducto(String R, String P) throws SQLException {
+        HashMap resultado = new HashMap();
+        HashMap aux = getDataPedidos();
+        Iterator it = aux.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            DataPedido DP = (DataPedido) entry.getValue();
+            if (DP.getRestaurante().equals(R)) {
+                Iterator it2 = DP.getProdPedidos().entrySet().iterator();
+                while (it2.hasNext()) {
+                    Map.Entry entry2 = (Map.Entry) it2.next();
+                    DataProdPedido DPP = (DataProdPedido) entry2.getValue();
+                    if (DPP.getProducto().getNombre().equals(P)) {
+                        resultado.put(DP.getNumero(), DP);
+                        break;
+                    }
+                }
+            }
         }
         return resultado;
     }
