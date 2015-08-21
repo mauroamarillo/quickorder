@@ -6,13 +6,9 @@
 package Logica;
 
 import java.awt.Image;
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -38,6 +34,9 @@ public abstract class HerramientaImagenes {
     }
 
     public static ImageIcon cargarImagen(String path) {
+        if (path.equals("sin_imagen")) {
+            return new ImageIcon("src/img/sin_img.jpg");
+        }
         try {
             URL intlLogoURL = new URL(path);
             InputStream in = intlLogoURL.openStream();
@@ -47,7 +46,7 @@ public abstract class HerramientaImagenes {
                 InputStream in = new FileInputStream(new File(path)); // こころ　
                 return new ImageIcon(ImageIO.read(in));
             } catch (Exception ee) {
-                return new ImageIcon("C:\\imagenes\\shumagger.jpg");
+                return new ImageIcon("src/img/NoImgDisp.png");
             }
         }
     }

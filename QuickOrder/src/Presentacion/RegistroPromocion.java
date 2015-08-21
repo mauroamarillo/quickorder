@@ -431,9 +431,10 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Producto Ingresado", "Exito!", JOptionPane.DEFAULT_OPTION);
             ventanaPrincipal.setOperando(false);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getLocalizedMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(RegistroPromocion.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }//GEN-LAST:event_Button_AceptarActionPerformed
 
     private void Label_ImgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Label_ImgMouseClicked

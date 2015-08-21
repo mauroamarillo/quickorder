@@ -41,11 +41,8 @@ public class PanelInfoCliente extends javax.swing.JPanel {
         Label_Email.setText(DC.getEmail());
         Label_Direccion.setText(DC.getDireccion());
         Label_FN.setText(DC.getFechaNac().toString());
-        if (!DC.getImagen().equals("sin_imagen")) {
-            Label_IMG.setText("");
-            Label_IMG.setIcon(HerramientaImagenes.cargarImagen(DC.getImagen()));
-        }
-
+        Label_IMG.setText("");
+        Label_IMG.setIcon(HerramientaImagenes.cargarYescalar(DC.getImagen(), 125, 125));
         dataPedidos = DC.getPedidos();
         limpiarTabla();
         cargarTablaPedidos();

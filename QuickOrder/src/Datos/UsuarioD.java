@@ -109,6 +109,6 @@ public class UsuarioD {
         if (rs.next()) {
             return rs.getString("imagen");
         }
-        return "sin__imagen";
+        return "sin_imagen";
     }
 }

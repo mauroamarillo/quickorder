@@ -176,8 +176,9 @@ public final class ControladorProductos {
     /* NOMBRE, DESCRIPCION,IMAGEN,ACTIVADESCUENTO,*/
     public void insertarPromocion(String nombre, String descripcion, File img, boolean activa, float descuento, String restaurante, HashMap subProductos) throws SQLException, Exception {
         Promocion P;
-        if (CU._buscarRestaurante(restaurante) == null) {
-            throw new Exception("Asignar Restaurante");
+
+        if (CU._buscarRestaurante(restaurante) == null || restaurante == null || restaurante.isEmpty()) {
+             throw new Exception("Asignar Restaurante");
         }
         if (img != null) {
             P = new Promocion(nombre, descripcion, "C:\\imagenes\\" + CU._buscarRestaurante(restaurante).getNickname() + "\\productos\\" + nombre + ".jpg", activa, descuento, CU._buscarRestaurante(restaurante), null);

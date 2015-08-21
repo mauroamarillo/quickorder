@@ -220,7 +220,6 @@ public final class ControladorUsuario {
 
     private String retornarIMGCliente(String nick) throws SQLException {
         return UsuarioDatos.obtenerIMGCliente(nick);
-
     }
 
     public HashMap retornarRestaurantes() throws SQLException {
