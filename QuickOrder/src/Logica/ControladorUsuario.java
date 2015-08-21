@@ -426,9 +426,9 @@ public final class ControladorUsuario {
                     ProdPedido PP;
                     Individual PI = CP.buscarIndividual(rs2.getString("producto"), rs2.getString("restaurante"));
                     if (PI != null) {
-                        PP = new ProdPedido(rs2.getInt("pedido"), PI);
+                        PP = new ProdPedido(rs2.getInt("cantidad"), PI);
                     } else {
-                        PP = new ProdPedido(rs2.getInt("pedido"), CP.buscarPromocion(rs2.getString("producto"), rs2.getString("restaurante")));
+                        PP = new ProdPedido(rs2.getInt("cantidad"), CP.buscarPromocion(rs2.getString("producto"), rs2.getString("restaurante")));
                     }
                     Lineas.put(PP.getProducto().getNombre(), PP);
                 }

@@ -29,6 +29,9 @@ public class ProdPedido {
         return cantidad;
     }
 
+    public float getPrecio(){
+        return cantidad * producto.getPrecio();
+    }
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }

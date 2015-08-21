@@ -84,7 +84,7 @@ public class Pedido {
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
             ProdPedido pp = (ProdPedido) entry.getValue();
-            precio += (pp.getCantidad() * pp.getProducto().getPrecio());
+            precio += pp.getPrecio();
         }
         return precio;
     }
