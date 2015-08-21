@@ -39,6 +39,16 @@ public class PanelProductos extends JPanel {
 
     }
 
+    public void reagregarProducto(Object P) {
+        if (P instanceof DataIndividual) {
+            DataIndividual DI = (DataIndividual) P;
+            AgregarProductoIndividual(DI);
+        } else {
+            DataPromocion DP = (DataPromocion) P;
+            AgregarProductoPromocion(DP);
+        }
+    }
+
     public void AgregarProductoIndividual(DataIndividual I) {
         cant++;
         int x = cant * 52;

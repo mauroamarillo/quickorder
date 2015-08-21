@@ -2,6 +2,7 @@ package Presentacion;
 
 import Logica.ControladorUsuario;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.beans.PropertyVetoException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -45,7 +46,6 @@ public class QuickOrder extends javax.swing.JFrame {
         }
         this.CU = new ControladorUsuario();
         initComponents();
-        setResizable(false);
         setLocationRelativeTo(null);
 
     }
@@ -64,7 +64,6 @@ public class QuickOrder extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
         Registros = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         Menu_RCliente = new javax.swing.JMenuItem();
@@ -80,20 +79,8 @@ public class QuickOrder extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quick Order");
+        setBackground(new java.awt.Color(204, 255, 255));
         setMinimumSize(new java.awt.Dimension(1200, 700));
-
-        jMenu1.setText("Inicio");
-        jMenu1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu1ActionPerformed(evt);
-            }
-        });
-        jMenu1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jMenu1KeyPressed(evt);
-            }
-        });
-        jMenuBar1.add(jMenu1);
 
         Registros.setText("Registros");
         Registros.addActionListener(new java.awt.event.ActionListener() {
@@ -126,6 +113,7 @@ public class QuickOrder extends javax.swing.JFrame {
 
         jMenu5.setText("Registrar Producto");
 
+        Menu_RIndividual.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
         Menu_RIndividual.setText("Individual");
         Menu_RIndividual.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,6 +122,7 @@ public class QuickOrder extends javax.swing.JFrame {
         });
         jMenu5.add(Menu_RIndividual);
 
+        Menu_RPromocion.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         Menu_RPromocion.setText("Promocion");
         Menu_RPromocion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -203,6 +192,9 @@ public class QuickOrder extends javax.swing.JFrame {
         if (!operando) {
             RegistroCliente registroCliente = new RegistroCliente(this);
             this.add(registroCliente, BorderLayout.CENTER);
+            Dimension desktopSize = this.getContentPane().getSize();
+            Dimension FrameSize = registroCliente.getSize();
+            registroCliente.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
             try {
                 registroCliente.setSelected(true);
                 operando = true;
@@ -216,6 +208,10 @@ public class QuickOrder extends javax.swing.JFrame {
         if (!operando) {
             RegistroRestaurante registroRestaurante = new RegistroRestaurante(this);
             this.add(registroRestaurante, BorderLayout.CENTER);
+            Dimension desktopSize = this.getContentPane().getSize();
+            Dimension FrameSize = registroRestaurante.getSize();
+            registroRestaurante.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+
             try {
                 registroRestaurante.setSelected(true);
                 operando = true;
@@ -225,19 +221,14 @@ public class QuickOrder extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_Menu_RRestauranteActionPerformed
 
-    private void jMenu1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jMenu1KeyPressed
-
-    }//GEN-LAST:event_jMenu1KeyPressed
-
-    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
-
-    }//GEN-LAST:event_jMenu1ActionPerformed
-
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         if (!operando) {
             try {
                 RegistroPedido registroPedido = new RegistroPedido(this);
                 this.add(registroPedido, BorderLayout.CENTER);
+                Dimension desktopSize = this.getContentPane().getSize();
+                Dimension FrameSize = registroPedido.getSize();
+                registroPedido.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
                 registroPedido.setSelected(true);
                 operando = true;
             } catch (PropertyVetoException ex) {
@@ -253,8 +244,11 @@ public class QuickOrder extends javax.swing.JFrame {
             RegistroIndividual registroIndividual = null;
             try {
                 registroIndividual = new RegistroIndividual(this);
-                this.add(registroIndividual, BorderLayout.CENTER);
+                this.getContentPane().add(registroIndividual, BorderLayout.CENTER);
                 registroIndividual.setSelected(true);
+                Dimension desktopSize = this.getContentPane().getSize();
+                Dimension FrameSize = registroIndividual.getSize();
+                registroIndividual.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
                 operando = true;
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
@@ -271,6 +265,9 @@ public class QuickOrder extends javax.swing.JFrame {
             try {
                 RegistroPedido RP = new RegistroPedido(this);
                 this.add(RP, BorderLayout.CENTER);
+                Dimension desktopSize = this.getContentPane().getSize();
+                Dimension FrameSize = RP.getSize();
+                RP.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
                 RP.setSelected(true);
                 operando = true;
             } catch (PropertyVetoException ex) {
@@ -287,6 +284,10 @@ public class QuickOrder extends javax.swing.JFrame {
         if (!operando) {
             RegistroPromocion registroPromocion = new RegistroPromocion(this);
             this.add(registroPromocion, BorderLayout.CENTER);
+            Dimension desktopSize = this.getContentPane().getSize();
+            Dimension FrameSize = registroPromocion.getSize();
+            registroPromocion.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+
             try {
                 registroPromocion.setSelected(true);
                 operando = true;
@@ -301,6 +302,9 @@ public class QuickOrder extends javax.swing.JFrame {
             try {
                 VerInfoRestaurantes vir = new VerInfoRestaurantes(this);
                 this.add(vir, BorderLayout.CENTER);
+                Dimension desktopSize = this.getContentPane().getSize();
+                Dimension FrameSize = vir.getSize();
+                vir.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
                 vir.setSelected(true);
                 operando = true;
             } catch (PropertyVetoException ex) {
@@ -316,6 +320,9 @@ public class QuickOrder extends javax.swing.JFrame {
             try {
                 VerInfoClientes vic = new VerInfoClientes(this);
                 this.add(vic, BorderLayout.CENTER);
+                Dimension desktopSize = this.getContentPane().getSize();
+                Dimension FrameSize = vic.getSize();
+                vic.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
                 vic.setSelected(true);
                 operando = true;
             } catch (PropertyVetoException ex) {
@@ -331,6 +338,9 @@ public class QuickOrder extends javax.swing.JFrame {
             try {
                 VerInfoProducto vip = new VerInfoProducto(this);
                 this.add(vip, BorderLayout.CENTER);
+                Dimension desktopSize = this.getContentPane().getSize();
+                Dimension FrameSize = vip.getSize();
+                vip.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
                 vip.setSelected(true);
                 operando = true;
             } catch (PropertyVetoException ex) {
@@ -392,7 +402,6 @@ public class QuickOrder extends javax.swing.JFrame {
     private javax.swing.JMenuItem Menu_RPromocion;
     private javax.swing.JMenuItem Menu_RRestaurante;
     private javax.swing.JMenu Registros;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;

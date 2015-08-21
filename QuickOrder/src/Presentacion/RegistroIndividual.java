@@ -35,7 +35,7 @@ public class RegistroIndividual extends javax.swing.JInternalFrame {
         //ESTE CAMPO SOLO PUEDE SER NUMERICO
         Text_Precio.setDocument(new LimitadorCaracteres());
         
-        this.setLocation(220, 80);
+      //  this.setLocation(220, 80);
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         this.setVisible(true);
 Text_Nombre.requestFocus();
@@ -80,6 +80,7 @@ Text_Nombre.requestFocus();
         Button_Cancelar = new javax.swing.JButton();
 
         jFileChooser1.setFileFilter(new FileNameExtensionFilter("Imagenes jpg ", "jpg"));
+        jFileChooser1.setCurrentDirectory(new java.io.File("C:\\Users\\Jean\\Pictures"));
 
         setClosable(true);
         setTitle("Registro Producto Individual");

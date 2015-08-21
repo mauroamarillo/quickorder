@@ -148,6 +148,7 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
         jLabel9 = new javax.swing.JLabel();
 
         jFileChooser1.setFileFilter(new FileNameExtensionFilter("Imagenes jpg ", "jpg"));
+        jFileChooser1.setCurrentDirectory(new java.io.File("C:\\Users\\Jean\\Pictures"));
 
         menuEliminar.setText("Quitar Producto");
         menuEliminar.addActionListener(new java.awt.event.ActionListener() {

@@ -33,6 +33,8 @@ import javax.swing.tree.TreeCellRenderer;
 public class RegistroPedido extends javax.swing.JInternalFrame {
 
     QuickOrder ventanaPrincipal;
+    PanelProductos PP;
+
     /*nodos Para el arbol*/
     DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Categorias");
     DefaultMutableTreeNode nodoCategoria;
@@ -43,7 +45,6 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
     DefaultTableModel modeloTabla;
     /*Lista de los productos con los DataProdPedido*/
     HashMap LineasPedido;
-
     String restaurante;
 
     public RegistroPedido(QuickOrder vp) throws SQLException {
@@ -108,6 +109,18 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         modeloTabla.addRow(new Object[]{DP.getNombre(), DP.getDescripcion(), tipo, DP.getPrecio(), c, (DP.getPrecio() * c)});
     }
 
+    private void borrarLineaProducto() {
+        int selectedRow = TablaSubProductos.getSelectedRow();
+        if (selectedRow > -1) {
+            DefaultTableModel tm = (DefaultTableModel) TablaSubProductos.getModel();
+            String nom = String.valueOf(tm.getValueAt(TablaSubProductos.getSelectedRow(), 0));
+            DataProdPedido DP = (DataProdPedido) LineasPedido.get(nom);
+            PP.reagregarProducto(DP.getProducto());
+            LineasPedido.remove(nom);
+            modeloTabla.removeRow(selectedRow);
+        }
+    }
+
     private void limpiarTabla() {
         modeloTabla = (DefaultTableModel) TablaSubProductos.getModel();
         while (modeloTabla.getRowCount() > 0) {
@@ -125,6 +138,8 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        MenuTabla = new javax.swing.JPopupMenu();
+        MenuTablaEliminar = new javax.swing.JMenuItem();
         jLabel1 = new javax.swing.JLabel();
         ScrollClientes = new javax.swing.JScrollPane();
         ListaClientes = new javax.swing.JList();
@@ -136,6 +151,14 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         ButtonAceptar = new javax.swing.JButton();
+
+        MenuTablaEliminar.setText("Quitar Linea");
+        MenuTablaEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuTablaEliminarActionPerformed(evt);
+            }
+        });
+        MenuTabla.add(MenuTablaEliminar);
 
         setClosable(true);
         setTitle("Registro Pedido");
@@ -228,6 +251,7 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        TablaSubProductos.setComponentPopupMenu(MenuTabla);
         TablaSubProductos.getTableHeader().setReorderingAllowed(false);
         ScrollTabla.setViewportView(TablaSubProductos);
         if (TablaSubProductos.getColumnModel().getColumnCount() > 0) {
@@ -325,7 +349,7 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         if (x.getAllowsChildren() == false) {
             DataRestaurante DR = (DataRestaurante) x.getUserObject();
             restaurante = DR.getNickname();
-            PanelProductos PP = new PanelProductos(this);
+            PP = new PanelProductos(this);
             HashMap ListaDataProductos = new HashMap();
             ListaDataProductos.putAll(DR.getIndividuales());
             ListaDataProductos.putAll(DR.getPromociones());
@@ -353,10 +377,16 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_ButtonAceptarActionPerformed
 
+    private void MenuTablaEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuTablaEliminarActionPerformed
+        borrarLineaProducto();
+    }//GEN-LAST:event_MenuTablaEliminarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTree ArbolRestaurantes;
     private javax.swing.JButton ButtonAceptar;
     private javax.swing.JList ListaClientes;
+    private javax.swing.JPopupMenu MenuTabla;
+    private javax.swing.JMenuItem MenuTablaEliminar;
     private javax.swing.JScrollPane ScrollClientes;
     private javax.swing.JScrollPane ScrollProductos;
     private javax.swing.JScrollPane ScrollRestaurantes;
