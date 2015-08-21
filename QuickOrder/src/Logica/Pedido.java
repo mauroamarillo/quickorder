@@ -43,7 +43,7 @@ public class Pedido {
             ProdPedido pp = (ProdPedido) entry.getValue();
             dataProdPedidos.put(pp.getProducto().getNombre(), pp.getDataType());
         }
-        return new DataPedido(numero, fecha, estado, dataProdPedidos, cliente.getNickname(), restaurante.getNickname());
+        return new DataPedido(numero, fecha, estado, dataProdPedidos, cliente.getNickname(), restaurante.getNickname(), getPrecio());
     }
 
     public Cliente getCliente() {

@@ -113,7 +113,7 @@ public class PanelInfoProducto extends javax.swing.JPanel {
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
             DataPedido DP = (DataPedido) entry.getValue();
-            modeloTablaPedidos.addRow(new Object[]{DP.getCliente(), DP.getFecha(), 12});
+            modeloTablaPedidos.addRow(new Object[]{DP.getCliente(), DP.getFecha(), DP.getPrecio()});
         }
     }
 

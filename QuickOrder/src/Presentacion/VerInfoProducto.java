@@ -104,7 +104,7 @@ public class VerInfoProducto extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(ListaClientes);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Producto Cliente");
+        jLabel1.setText("Seleccione Producto ");
 
         jLabel2.setText("Filtro: ");
 
@@ -160,6 +160,8 @@ public class VerInfoProducto extends javax.swing.JInternalFrame {
             try {
                 panelInfoProducto1.cargarInfo(ventanaPrincipal.CU.getCP().BuscarDataXRestaurante_Producto(Restaurante_Producto));
             } catch (IOException ex) {
+                Logger.getLogger(VerInfoProducto.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
                 Logger.getLogger(VerInfoProducto.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

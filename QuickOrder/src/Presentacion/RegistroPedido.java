@@ -342,6 +342,9 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
     private void ButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAceptarActionPerformed
         try {
             ventanaPrincipal.CU.insertarPedido(new Date(10, 10, 1990), Estado.preparacion, ListaClientes.getSelectedValue().toString(), restaurante, LineasPedido);
+            JOptionPane.showMessageDialog(this, "Pedido registrado", "- EXITO -", JOptionPane.DEFAULT_OPTION);
+            ventanaPrincipal.setOperando(false);
+            this.dispose();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
 

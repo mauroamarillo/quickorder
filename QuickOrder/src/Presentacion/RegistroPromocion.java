@@ -428,8 +428,9 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
         try {
             float desc = Float.parseFloat(Text_Descuento.getText());
             ventanaPrincipal.CU.getCP().insertarPromocion(Text_Nombre.getText(), Text_Descripcion.getText(), foto, true, desc, ListaRestaurante.getSelectedValue().toString(), subProductos);
-            JOptionPane.showMessageDialog(null, "Producto Ingresado", "Exito!", JOptionPane.DEFAULT_OPTION);
+            JOptionPane.showMessageDialog(this, "Promocion Resgistrada", "- EXITO -", JOptionPane.DEFAULT_OPTION);
             ventanaPrincipal.setOperando(false);
+            this.dispose();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getLocalizedMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(RegistroPromocion.class.getName()).log(Level.SEVERE, null, ex);
