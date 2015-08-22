@@ -153,7 +153,6 @@ public class VerInfoPedido extends javax.swing.JInternalFrame {
             int x = Integer.parseInt(parts[0]);
             try {
                 panelInfoPedido1.cargarInfo(((DataPedido) OBJs.get(x)));
-                //JOptionPane.showMessageDialog(null, ((DataPedido) OBJs.get(x)).getCliente(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
             } catch (IOException ex) {
                 Logger.getLogger(VerInfoPedido.class.getName()).log(Level.SEVERE, null, ex);
             }

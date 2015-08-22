@@ -1,5 +1,6 @@
 package Presentacion;
 
+import Logica.ControladorUsuario;
 import Logica.DataTypes.DataCliente;
 import Logica.DataTypes.DataPedido;
 import Logica.DataTypes.DataProdPedido;
@@ -13,6 +14,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class PanelInfoPedido extends javax.swing.JPanel {
@@ -30,6 +32,17 @@ public class PanelInfoPedido extends javax.swing.JPanel {
         limpiarTabla();
         dataLineasProd = new HashMap();
         ocultarTodo();
+    }
+
+    public PanelInfoPedido(DataPedido DC) throws IOException {
+        initComponents();
+        modeloTabla = (DefaultTableModel) TablaProd.getModel();
+        TablaProd.setModel(modeloTabla);
+        limpiarTabla();
+        dataLineasProd = new HashMap();
+        cargarInfo(DC);
+        ComboEstado.setEnabled(false);
+        jButton1.setVisible(false);
     }
 
     public void ocultarTodo() {
@@ -246,12 +259,19 @@ public class PanelInfoPedido extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            this.VIP.ventanaPrincipal.CU.cancelarPedido(pedido);
-            this.VIP.cargarPedidos();
-            ocultarTodo();
-        } catch (SQLException ex) {
-            Logger.getLogger(PanelInfoPedido.class.getName()).log(Level.SEVERE, null, ex);
+
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(this, "Seguro quiere de cancelar pedido? ", "Confirmar Cancelacion", dialogButton);
+        if (dialogResult == 0) {
+            try {
+                this.VIP.ventanaPrincipal.CU.cancelarPedido(pedido);
+                this.VIP.cargarPedidos();
+                ocultarTodo();
+                JOptionPane.showMessageDialog(this, "Pedido Cancelado", "- EXITO -", JOptionPane.DEFAULT_OPTION);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(PanelInfoPedido.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

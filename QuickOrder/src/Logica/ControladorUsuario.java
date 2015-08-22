@@ -128,7 +128,11 @@ public final class ControladorUsuario {
         }
         return resultado;
     }
-
+    /*obtener pedido por numero*/
+     public DataPedido getDataPedido(int numero) throws SQLException{
+         return (DataPedido)getDataPedidos().get(numero);
+     }
+    
     public HashMap consultarCategorias() throws SQLException {
         HashMap resultado = new HashMap();
         java.sql.ResultSet rs;
@@ -384,7 +388,7 @@ public final class ControladorUsuario {
         }
     }
 
-    public void insertarPedido(Date fecha, Estado estado, String cliente, String restaurante, HashMap dataProdPedidos) throws SQLException, Exception {
+    public int insertarPedido(Date fecha, Estado estado, String cliente, String restaurante, HashMap dataProdPedidos) throws SQLException, Exception {
         Pedido P = new Pedido(0, fecha, estado, this._buscarCliente(cliente), this._buscarRestaurante(restaurante), dataProdPedidos);
         validarPedido(P);
         int numero = (PedidoDatos.agregarPedido(fecha, estado.ordinal(), cliente, restaurante));
@@ -395,6 +399,7 @@ public final class ControladorUsuario {
             PedidoDatos.agregarLineaDePedido(numero, DPP.getProducto().getRestaurante(), DPP.getProducto().getNombre(), DPP.getCantidad());
         }
         asignarPedidosAClientes();
+        return numero;
     }
 
     private void asignarPedidosAClientes() throws SQLException {

@@ -11,6 +11,7 @@ import Logica.DataTypes.DataProducto;
 import Logica.DataTypes.DataPromocion;
 import Logica.DataTypes.DataRestaurante;
 import Logica.Estado;
+import java.awt.Frame;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -19,6 +20,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -365,13 +367,20 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
 
     private void ButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAceptarActionPerformed
         try {
-            ventanaPrincipal.CU.insertarPedido(new Date(10, 10, 1990), Estado.preparacion, ListaClientes.getSelectedValue().toString(), restaurante, LineasPedido);
-            JOptionPane.showMessageDialog(this, "Pedido registrado", "- EXITO -", JOptionPane.DEFAULT_OPTION);
+            int numero = ventanaPrincipal.CU.insertarPedido(new Date(10, 10, 1990), Estado.preparacion, ListaClientes.getSelectedValue().toString(), restaurante, LineasPedido);
+            //JOptionPane.showMessageDialog(this, "Pedido registrado", "- EXITO -", JOptionPane.DEFAULT_OPTION);
+            PanelInfoPedido pip = new PanelInfoPedido(ventanaPrincipal.CU.getDataPedido(numero));
+            JDialog JD = new JDialog(new Frame(), true);
+            JD.setTitle("Datos del Pedido resultante");
+            JD.add(pip);
+            JD.setLocationRelativeTo(this);
+            JD.setResizable(false);
+            JD.pack();
+            JD.setVisible(true);
             ventanaPrincipal.setOperando(false);
             this.dispose();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
-
             Logger.getLogger(RegistroPedido.class.getName()).log(Level.SEVERE, null, ex);
         }
 
