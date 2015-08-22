@@ -13,7 +13,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import javax.swing.JOptionPane;
 
 public final class ControladorUsuario {
     /*acceso a capa logica*/
@@ -400,7 +399,7 @@ public final class ControladorUsuario {
 
     private void asignarPedidosAClientes() throws SQLException {
         Iterator it = Clientes.entrySet().iterator();
-        //Asigno el pedido a cada producto
+        //Asigno a cada cliente sus pedidos
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
             Cliente C = (Cliente) entry.getValue();
@@ -411,7 +410,7 @@ public final class ControladorUsuario {
                 C.getPedidos().put(P.getNumero(), P);
             }
         }
-        //asigno cada linea de producto al pedido
+        //asigno cada linea de producto a cada pedido
         it = Clientes.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
@@ -438,4 +437,8 @@ public final class ControladorUsuario {
 
     }
 
+    public void cancelarPedido(int numero) throws SQLException {
+        PedidoDatos.eliminarPedido(numero);
+        asignarPedidosAClientes();
+    }
 }

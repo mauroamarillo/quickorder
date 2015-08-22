@@ -1,13 +1,11 @@
 package Presentacion;
 
 import Logica.HerramientaImagenes;
-import java.awt.Image;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 import static javax.swing.JFileChooser.APPROVE_OPTION;
 import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameEvent;
@@ -370,6 +368,7 @@ public class RegistroCliente extends javax.swing.JInternalFrame implements Inter
 
     @Override
     public void internalFrameDeactivated(InternalFrameEvent e) {
+
         // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

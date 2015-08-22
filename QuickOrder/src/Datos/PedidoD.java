@@ -38,18 +38,21 @@ public class PedidoD {
                 + " FROM pedidos";
         return st.executeQuery(query);
     }
-     public ResultSet listarLineasDePedidos(int numero) throws SQLException {
+
+    public ResultSet listarLineasDePedidos(int numero) throws SQLException {
         String query = " SELECT * "
                 + " FROM pedidos_producto "
-                + " WHERE pedido = "+numero;
+                + " WHERE pedido = " + numero;
         return st.executeQuery(query);
     }
+
     public ResultSet listarPedidosDeCliente(String nick) throws SQLException {
         String query = " SELECT * "
                 + " FROM pedidos"
                 + " WHERE cliente='" + nick + "'";
         return st.executeQuery(query);
     }
+
     public ResultSet listarLinasDePedidosDeCliente(String nick) throws SQLException {
         String query = " SELECT pp.pedido, pp.restaurante,pp.producto,pp.cantidad "
                 + " FROM pedidos p, pedidos_producto pp"
@@ -57,5 +60,14 @@ public class PedidoD {
                 + " AND p.cliente='" + nick + "'";
         return st.executeQuery(query);
     }
-    
+
+    public void eliminarPedido(int numero) throws SQLException {
+        String query = "DELETE FROM pedidos_producto"
+                + " WHERE pedido = " + numero;
+        st.execute(query);
+        query = "DELETE FROM pedidos"
+                + " WHERE numero = " + numero;
+        st.execute(query);
+    }
+
 }
