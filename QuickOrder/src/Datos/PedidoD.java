@@ -62,10 +62,16 @@ public class PedidoD {
     }
 
     public void eliminarPedido(int numero) throws SQLException {
-        String query = "DELETE FROM pedidos_producto"
-                + " WHERE pedido = " + numero;
+        String query = "DELETE FROM pedidos_producto "
+                + "WHERE pedido = " + numero;
         st.execute(query);
         query = "DELETE FROM pedidos"
+                + " WHERE numero = " + numero;
+        st.execute(query);
+    }
+
+    public void modificarEstado(int numero, int estado) throws SQLException {
+        String query = "UPDATE pedidos SET estado = " + estado
                 + " WHERE numero = " + numero;
         st.execute(query);
     }

@@ -46,7 +46,7 @@ public class QuickOrder extends javax.swing.JFrame {
         }
         this.CU = new ControladorUsuario();
         initComponents();
-       // setContentPane(new FondoVentanaPrincipal("/img/back.png"));
+        //setContentPane(new FondoVentanaPrincipal("/img/back.png"));
         setLocationRelativeTo(null);
 
     }

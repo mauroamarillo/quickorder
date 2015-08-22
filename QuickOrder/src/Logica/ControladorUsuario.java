@@ -129,10 +129,11 @@ public final class ControladorUsuario {
         return resultado;
     }
     /*obtener pedido por numero*/
-     public DataPedido getDataPedido(int numero) throws SQLException{
-         return (DataPedido)getDataPedidos().get(numero);
-     }
-    
+
+    public DataPedido getDataPedido(int numero) throws SQLException {
+        return (DataPedido) getDataPedidos().get(numero);
+    }
+
     public HashMap consultarCategorias() throws SQLException {
         HashMap resultado = new HashMap();
         java.sql.ResultSet rs;
@@ -444,6 +445,11 @@ public final class ControladorUsuario {
 
     public void cancelarPedido(int numero) throws SQLException {
         PedidoDatos.eliminarPedido(numero);
+        asignarPedidosAClientes();
+    }
+
+    public void cambiarEstadoPedido(int numero, int estado) throws SQLException {
+        PedidoDatos.modificarEstado(numero, estado);
         asignarPedidosAClientes();
     }
 }
