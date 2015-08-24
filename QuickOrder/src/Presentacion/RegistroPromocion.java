@@ -457,7 +457,7 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
             ventanaPrincipal.setOperando(false);
             this.dispose();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getLocalizedMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getLocalizedMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(RegistroPromocion.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -508,7 +508,7 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
             try {
                 cargarProductos(restaurante, Text_Filtro_Producto.getText());
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE);
                 Logger.getLogger(RegistroPromocion.class.getName()).log(Level.SEVERE, null, ex);
             }
             limpiarTabla();
@@ -547,7 +547,7 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
         try {
             cargarProductos(restaurante, Text_Filtro_Producto.getText());
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(RegistroPromocion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Text_Filtro_ProductoKeyReleased

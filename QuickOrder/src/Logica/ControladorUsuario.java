@@ -194,6 +194,11 @@ public final class ControladorUsuario {
         }
         this.Restaurantes = retornarRestaurantes();
     }
+    
+    public void insertarCategoria(String nombre) throws SQLException{
+        CategoriaDatos.agregarCategoria(nombre);
+        this.Categorias = consultarCategorias();
+    }
 
     private void validarDatosC(Cliente C) throws SQLException, Exception {
 
@@ -453,6 +458,14 @@ public final class ControladorUsuario {
 
     public void cambiarEstadoPedido(int numero, int estado) throws SQLException {
         PedidoDatos.modificarEstado(numero, estado);
+        asignarPedidosAClientes();
+    }
+    
+    public void actualizarDatos() throws SQLException{
+        this.Restaurantes = retornarRestaurantes();
+        CP.actualizarDatos();
+        this.Clientes = retornarClientes();
+        this.Categorias = consultarCategorias();
         asignarPedidosAClientes();
     }
 }

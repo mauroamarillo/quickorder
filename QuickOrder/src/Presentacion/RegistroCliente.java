@@ -301,7 +301,7 @@ public class RegistroCliente extends javax.swing.JInternalFrame implements Inter
             ventanaPrincipal.setOperando(false);
             this.dispose();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(RegistroCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Button_RegistrarActionPerformed

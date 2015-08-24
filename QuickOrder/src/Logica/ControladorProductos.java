@@ -252,5 +252,9 @@ public final class ControladorProductos {
             P.setProdPromos(productosDePromo);
         }
     }
-
+    
+    void actualizarDatos() throws SQLException {
+        this.individuales = retornarIndividuales();
+        this.promociones = retornarPromociones();
+    }
 }

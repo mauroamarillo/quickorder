@@ -1,10 +1,12 @@
 package Presentacion;
 
 import Logica.ControladorUsuario;
+import Logica.Extra;
 import Logica.HerramientaImagenes;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.beans.PropertyVetoException;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.logging.Level;
@@ -31,6 +33,8 @@ public class QuickOrder extends javax.swing.JFrame {
 
     private boolean operando = false;
     ControladorUsuario CU;
+    Extra e;
+    
     /*
      codigo para ver si anda bien esto
      */
@@ -39,19 +43,20 @@ public class QuickOrder extends javax.swing.JFrame {
         try {
             javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (ClassNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedLookAndFeelException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.CU = new ControladorUsuario();
+        this.e = new Extra(CU);
 
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -81,11 +86,14 @@ public class QuickOrder extends javax.swing.JFrame {
         Menu_RIndividual = new javax.swing.JMenuItem();
         Menu_RPromocion = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
+        Menu_RCategoria = new javax.swing.JMenuItem();
         Infirmacion = new javax.swing.JMenu();
         Menu_Info_Rest = new javax.swing.JMenuItem();
         Menu_Info_Cliente = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        Menu_Extra = new javax.swing.JMenu();
+        Menu_DatosPrueba = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quick Order");
@@ -152,6 +160,14 @@ public class QuickOrder extends javax.swing.JFrame {
         });
         Registros.add(jMenuItem4);
 
+        Menu_RCategoria.setText("Registrar Categoria");
+        Menu_RCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Menu_RCategoriaActionPerformed(evt);
+            }
+        });
+        Registros.add(Menu_RCategoria);
+
         jMenuBar1.add(Registros);
 
         Infirmacion.setText("Información");
@@ -189,6 +205,18 @@ public class QuickOrder extends javax.swing.JFrame {
         Infirmacion.add(jMenuItem2);
 
         jMenuBar1.add(Infirmacion);
+
+        Menu_Extra.setText("Extra");
+
+        Menu_DatosPrueba.setText("Cargar datos de prueba");
+        Menu_DatosPrueba.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Menu_DatosPruebaActionPerformed(evt);
+            }
+        });
+        Menu_Extra.add(Menu_DatosPrueba);
+
+        jMenuBar1.add(Menu_Extra);
 
         setJMenuBar(jMenuBar1);
 
@@ -271,10 +299,10 @@ public class QuickOrder extends javax.swing.JFrame {
                 registroIndividual.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
                 operando = true;
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE);
                 Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
             } catch (PropertyVetoException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE);
                 Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -291,7 +319,7 @@ public class QuickOrder extends javax.swing.JFrame {
                 RP.setSelected(true);
                 operando = true;
             } catch (PropertyVetoException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE);
                 Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
@@ -389,6 +417,34 @@ public class QuickOrder extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void Menu_DatosPruebaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Menu_DatosPruebaActionPerformed
+        int o = JOptionPane.showConfirmDialog(this, "Cargar los datos de prueba borrará todos los datos que se encuentran actualmente en el sistema.\nSeguro que desea continuar?", "Advertencia!", JOptionPane.YES_NO_OPTION);
+        if (o == JOptionPane.YES_OPTION) {
+            try {
+                e.cargarDatosPrueba();
+                JOptionPane.showMessageDialog(this, "Los datos de preuba fueron agregados exitosamente.", "Exito!", JOptionPane.DEFAULT_OPTION);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else {
+           JOptionPane.showMessageDialog(this, "Operacion cancelada", "Operacion cancelada", JOptionPane.DEFAULT_OPTION);
+        }
+    }//GEN-LAST:event_Menu_DatosPruebaActionPerformed
+
+    private void Menu_RCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Menu_RCategoriaActionPerformed
+        try {
+            CU.insertarCategoria(JOptionPane.showInputDialog("Ingrese el nombre de la categoria:"));
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_Menu_RCategoriaActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -420,10 +476,10 @@ public class QuickOrder extends javax.swing.JFrame {
                 try {
                     new QuickOrder().setVisible(true);
                 } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE);
                     Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ClassNotFoundException ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE);
                     Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -433,8 +489,11 @@ public class QuickOrder extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu Infirmacion;
+    private javax.swing.JMenuItem Menu_DatosPrueba;
+    private javax.swing.JMenu Menu_Extra;
     private javax.swing.JMenuItem Menu_Info_Cliente;
     private javax.swing.JMenuItem Menu_Info_Rest;
+    private javax.swing.JMenuItem Menu_RCategoria;
     private javax.swing.JMenuItem Menu_RCliente;
     private javax.swing.JMenuItem Menu_RIndividual;
     private javax.swing.JMenuItem Menu_RPromocion;

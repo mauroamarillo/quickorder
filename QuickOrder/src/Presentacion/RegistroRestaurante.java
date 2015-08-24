@@ -62,10 +62,9 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
                 PC.AgregarCategoria(((int) entry.getKey()), ((String) entry.getValue()));
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(RegistroRestaurante.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     public javax.swing.JTextField getTTT() {
@@ -98,6 +97,7 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
         Scroll_Categorias = new javax.swing.JScrollPane();
         Scroll_Imagenes = new javax.swing.JScrollPane();
         jButton1 = new javax.swing.JButton();
+        Button_NCategoria = new javax.swing.JButton();
 
         jFileChooser1.setCurrentDirectory(new java.io.File("C:\\Users\\Jean\\Pictures"));
         jFileChooser1.setFileFilter(new FileNameExtensionFilter("JPG Images", "jpg"));
@@ -179,6 +179,13 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
             }
         });
 
+        Button_NCategoria.setText("Nueva categoria");
+        Button_NCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_NCategoriaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -196,13 +203,14 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(Button_Cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(Label_Nickname)
                                     .addComponent(Label_Nombre)
                                     .addComponent(Label_Email)
                                     .addComponent(Label_Direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(Label_Categorias)
-                                    .addComponent(Scroll_Categorias, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(Scroll_Categorias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(Button_NCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(Text_Nickname)
@@ -247,13 +255,16 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
                     .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(Scroll_Categorias, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Scroll_Imagenes, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(Scroll_Imagenes, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(Scroll_Categorias, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Button_NCategoria)))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Button_Registrar)
                     .addComponent(Button_Cancelar))
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
@@ -284,7 +295,7 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
             ventanaPrincipal.setOperando(false);
             this.dispose();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(RegistroRestaurante.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Button_RegistrarActionPerformed
@@ -304,6 +315,16 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void Button_NCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_NCategoriaActionPerformed
+        try {
+            ventanaPrincipal.CU.insertarCategoria(JOptionPane.showInputDialog("Ingrese el nombre de la categoria:"));
+            disponerCategorias();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_Button_NCategoriaActionPerformed
+
     @Override
     public void internalFrameClosing(InternalFrameEvent e) {
         ventanaPrincipal.setOperando(false);
@@ -312,6 +333,7 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Button_Cancelar;
+    private javax.swing.JButton Button_NCategoria;
     private javax.swing.JButton Button_Registrar;
     private javax.swing.JLabel Label_Categorias;
     private javax.swing.JLabel Label_Direccion;
