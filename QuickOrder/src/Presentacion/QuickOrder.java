@@ -1,6 +1,7 @@
 package Presentacion;
 
 import Logica.ControladorUsuario;
+import Logica.HerramientaImagenes;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.beans.PropertyVetoException;
@@ -54,14 +55,7 @@ public class QuickOrder extends javax.swing.JFrame {
 
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        ((JPanel) getContentPane()).setOpaque(false);
-        ImageIcon II = new ImageIcon(this.getClass().getResource("/img/NoImgDisp.png"));
-        JLabel JL = new JLabel();
-        JL.setIcon(II);
-        this.getLayeredPane().add(JL, JLayeredPane.FRAME_CONTENT_LAYER);
-        JL.setBounds(0, 0, getWidth(), getHeight());
-        //setContentPane(new FondoVentanaPrincipal("/img/back.png"));
-        setLocationRelativeTo(null);
+         setLocationRelativeTo(null);
 
     }
 
