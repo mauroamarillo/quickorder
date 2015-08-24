@@ -33,6 +33,11 @@ public abstract class HerramientaImagenes {
         return new ImageIcon(newImg);
     }
 
+    /**
+     *
+     * @param path
+     * @return
+     */
     public static ImageIcon cargarImagen(String path) {
         if (path.equals("sin_imagen")) {
             return new ImageIcon("src/img/sin_img.jpg");
