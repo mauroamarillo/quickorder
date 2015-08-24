@@ -5,6 +5,7 @@
  */
 package Presentacion;
 
+import Logica.ControladorUsuario;
 import Logica.DataTypes.DataCliente;
 import Logica.DataTypes.DataIndividual;
 import Logica.DataTypes.DataPedido;
@@ -15,11 +16,16 @@ import Logica.DataTypes.DataPromocion;
 import Logica.HerramientaImagenes;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Frame;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -33,10 +39,10 @@ public class PanelInfoProducto extends javax.swing.JPanel {
      */
     DefaultTableModel modeloTablaProductos;
     DefaultTableModel modeloTablaPedidos;
-    VerInfoProducto VIP;
+    ControladorUsuario CU;
+    String restaurante;
 
-    public PanelInfoProducto(VerInfoProducto vif) {
-        VIP = vif;
+    public PanelInfoProducto(VerInfoProducto vip) {
         initComponents();
         modeloTablaProductos = (DefaultTableModel) TablaIndividuales.getModel();
         modeloTablaPedidos = (DefaultTableModel) TablaPedidos.getModel();
@@ -45,6 +51,10 @@ public class PanelInfoProducto extends javax.swing.JPanel {
         limpiarTablaProductos();
         limpiarTablaPedidos();
         panelEnBlanco();
+    }
+
+    public void setCU(ControladorUsuario CU) {
+        this.CU = CU;
     }
 
     public void panelEnBlanco() {
@@ -59,7 +69,7 @@ public class PanelInfoProducto extends javax.swing.JPanel {
         }
     }
 
-    public void cargarInfo(DataProducto DP) throws IOException, SQLException {
+    public void cargarInfo(DataProducto DP, HashMap DPed) throws IOException, SQLException {
         if (DP == null) {
             panelEnBlanco();
             return;
@@ -73,8 +83,9 @@ public class PanelInfoProducto extends javax.swing.JPanel {
         String precio = String.valueOf(DP.getPrecio());
         Label_Precio.setText(precio);
         Label_IMG.setIcon(HerramientaImagenes.cargarYescalar(DP.getImagen(), 125, 125));
+        restaurante = DP.getRestaurante();
         limpiarTablaPedidos();
-        cargarTablaPedidos(VIP.ventanaPrincipal.CU.getDataPedidosProducto(DP.getRestaurante(), DP.getNombre()));
+        cargarTablaPedidos(DPed);
         if (DP instanceof DataIndividual) {
             Label_Tipo.setText("Producto Individual");
             jLabel3.setVisible(false);
@@ -343,7 +354,7 @@ public class PanelInfoProducto extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void TablaIndividualesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaIndividualesMouseClicked
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_TablaIndividualesMouseClicked
 
     private void TablaPedidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaPedidosMouseClicked

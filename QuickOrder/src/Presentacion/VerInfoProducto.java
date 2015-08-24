@@ -5,10 +5,7 @@
  */
 package Presentacion;
 
-
 import Logica.DataTypes.DataProducto;
-import java.awt.Component;
-import java.awt.Container;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -35,8 +32,8 @@ public class VerInfoProducto extends javax.swing.JInternalFrame {
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         this.setVisible(true);
     }
-    
-     private void cargarProductos() throws SQLException {
+
+    private void cargarProductos() throws SQLException {
 
         HashMap OBJs = new HashMap();
 
@@ -159,7 +156,8 @@ public class VerInfoProducto extends javax.swing.JInternalFrame {
         if (evt.getClickCount() == 2) {
             String Restaurante_Producto = (String) list.getSelectedValue();
             try {
-                panelInfoProducto1.cargarInfo(ventanaPrincipal.CU.getCP().BuscarDataXRestaurante_Producto(Restaurante_Producto));
+                DataProducto DP = ventanaPrincipal.CU.getCP().BuscarDataXRestaurante_Producto(Restaurante_Producto);
+                panelInfoProducto1.cargarInfo(DP, ventanaPrincipal.CU.getDataPedidosProducto(DP.getRestaurante(), DP.getNombre()));
             } catch (IOException ex) {
                 Logger.getLogger(VerInfoProducto.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {

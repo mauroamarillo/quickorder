@@ -41,6 +41,7 @@ public class PanelInfoPedido extends javax.swing.JPanel {
         cargarInfo(DC);
         ComboEstado.setEnabled(false);
         jButton1.setVisible(false);
+        jButton2.setVisible(false);
     }
 
     public void ocultarTodo() {
@@ -278,7 +279,7 @@ public class PanelInfoPedido extends javax.swing.JPanel {
         if (dialogResult == 0) {
             try {
                 this.VIP.ventanaPrincipal.CU.cancelarPedido(pedido);
-                this.VIP.cargarPedidos();
+                this.VIP.cargarPedidos(new String());
                 ocultarTodo();
                 JOptionPane.showMessageDialog(this, "Pedido Cancelado", "- EXITO -", JOptionPane.DEFAULT_OPTION);
             } catch (SQLException ex) {

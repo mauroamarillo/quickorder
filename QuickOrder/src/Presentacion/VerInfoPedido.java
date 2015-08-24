@@ -25,28 +25,35 @@ public class VerInfoPedido extends javax.swing.JInternalFrame {
     QuickOrder ventanaPrincipal;
     HashMap OBJs;
 
-    private PanelInfoPedido panelInfoPedido1;
+    private PanelInfoPedido panelInfoPedido1 = null;
 
     public VerInfoPedido(QuickOrder vp) throws SQLException {
         this.ventanaPrincipal = vp;
         panelInfoPedido1 = new PanelInfoPedido(this);
-        
+
         initComponents();
         pa.add(panelInfoPedido1);
-        cargarPedidos();
+        cargarPedidos(new String(""));
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         this.setVisible(true);
 
     }
 
-    public void cargarPedidos() throws SQLException {
+    public void cargarPedidos(String filtro) throws SQLException {
         OBJs = ventanaPrincipal.CU.getDataPedidos();
         Iterator it = OBJs.entrySet().iterator();
         DefaultListModel model = new DefaultListModel();
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
             DataPedido DP = (DataPedido) entry.getValue();
-            model.addElement(DP.getNumero() + " | " + DP.getCliente() + " - " + DP.getRestaurante() + " - " + DP.getFecha());
+            String elemento = DP.getNumero() + " | " + DP.getCliente() + " - " + DP.getRestaurante() + " - " + DP.getFecha();
+            if (filtro.isEmpty()) {
+                model.addElement(elemento);
+            } else {
+                if (elemento.contains(filtro)) {
+                    model.addElement(elemento);
+                }
+            }
         }
         ListaClientes.setModel(model);
     }
@@ -111,6 +118,12 @@ public class VerInfoPedido extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Filtro: ");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(265, 14, -1, -1));
+
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(314, 11, 141, -1));
         getContentPane().add(pa, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 450, 310));
 
@@ -136,6 +149,14 @@ public class VerInfoPedido extends javax.swing.JInternalFrame {
 
         }
     }//GEN-LAST:event_ListaClientesMouseClicked
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        try {
+            cargarPedidos(jTextField1.getText());
+        } catch (SQLException ex) {
+            Logger.getLogger(VerInfoPedido.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jTextField1KeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList ListaClientes;

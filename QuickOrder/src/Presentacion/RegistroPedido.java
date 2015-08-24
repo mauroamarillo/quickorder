@@ -371,7 +371,7 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
             //JOptionPane.showMessageDialog(this, "Pedido registrado", "- EXITO -", JOptionPane.DEFAULT_OPTION);
             PanelInfoPedido pip = new PanelInfoPedido(ventanaPrincipal.CU.getDataPedido(numero));
             JDialog JD = new JDialog(new Frame(), true);
-            JD.setTitle("Datos del Pedido resultante");
+            JD.setTitle("Datos del Pedido Resultante");
             JD.add(pip);
             JD.setLocationRelativeTo(this);
             JD.setResizable(false);
