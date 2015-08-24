@@ -193,10 +193,13 @@ public class PanelInfoProducto extends javax.swing.JPanel {
         Label_Descripcion.setEditable(false);
         Label_Descripcion.setBackground(new java.awt.Color(240, 240, 240));
         Label_Descripcion.setColumns(20);
+        Label_Descripcion.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        Label_Descripcion.setLineWrap(true);
         Label_Descripcion.setRows(5);
+        Label_Descripcion.setWrapStyleWord(true);
+        Label_Descripcion.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         Label_Descripcion.setMaximumSize(new java.awt.Dimension(230, 39));
         Label_Descripcion.setMinimumSize(new java.awt.Dimension(230, 39));
-        Label_Descripcion.setPreferredSize(new java.awt.Dimension(230, 39));
         Label_Descripcion.setSelectedTextColor(javax.swing.UIManager.getDefaults().getColor("Button.background"));
         Label_Descripcion.setSelectionColor(java.awt.Color.lightGray);
 

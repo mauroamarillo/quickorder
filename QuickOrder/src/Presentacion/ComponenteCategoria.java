@@ -30,6 +30,10 @@ public class ComponenteCategoria extends javax.swing.JPanel {
     public int getIndex(){
         return index;
     }
+    public void borrar(){
+        this.setVisible(false);
+        this.validate();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

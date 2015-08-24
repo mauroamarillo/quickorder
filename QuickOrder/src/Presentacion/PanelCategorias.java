@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 public class PanelCategorias extends JPanel {
 
     public PanelCategorias() {
-        setPreferredSize(new Dimension(170, 0));
+
     }
 
     private int pos = 1;
@@ -28,6 +28,18 @@ public class PanelCategorias extends JPanel {
         this.CATs.put("key_" + index, CC);
         //se incrementa contador de componentes
         pos++;
+    }
+
+    public void reset() {
+        setPreferredSize(new Dimension(170, 0));
+        pos = 1;
+       Iterator it = CATs.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            ComponenteCategoria CC = ((ComponenteCategoria) entry.getValue());
+            CC.borrar();
+        }
+        CATs.clear();
     }
     /*obtener las categorias seleccionadas*/
 

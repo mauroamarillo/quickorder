@@ -152,7 +152,7 @@ public class QuickOrder extends javax.swing.JFrame {
         Registros.add(jMenu5);
 
         jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem4.setText("Generar Pedido");
+        jMenuItem4.setText("Registrar Pedido");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem4ActionPerformed(evt);

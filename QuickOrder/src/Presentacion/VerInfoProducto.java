@@ -111,6 +111,12 @@ public class VerInfoProducto extends javax.swing.JInternalFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Seleccione Producto ");
 
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
+
         PanelContenedor.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         PanelContenedor.setMaximumSize(new java.awt.Dimension(450, 418));
         PanelContenedor.setMinimumSize(new java.awt.Dimension(450, 418));
@@ -173,13 +179,15 @@ public class VerInfoProducto extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
         try {
             cargarProductos(jTextField1.getText());
         } catch (SQLException ex) {
             Logger.getLogger(VerInfoClientes.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+
+    }//GEN-LAST:event_jTextField1KeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList ListaClientes;

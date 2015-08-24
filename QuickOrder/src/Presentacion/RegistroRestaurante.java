@@ -318,6 +318,7 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
     private void Button_NCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_NCategoriaActionPerformed
         try {
             ventanaPrincipal.CU.insertarCategoria(JOptionPane.showInputDialog("Ingrese el nombre de la categoria:"));
+            PC.reset();
             disponerCategorias();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE);

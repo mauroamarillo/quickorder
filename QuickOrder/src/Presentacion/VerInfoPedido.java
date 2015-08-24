@@ -76,9 +76,9 @@ public class VerInfoPedido extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setTitle("Informacion Pedidos");
-        setMaximumSize(new java.awt.Dimension(480, 470));
-        setMinimumSize(new java.awt.Dimension(480, 470));
-        setPreferredSize(new java.awt.Dimension(480, 470));
+        setMaximumSize(new java.awt.Dimension(480, 605));
+        setMinimumSize(new java.awt.Dimension(480, 605));
+        setPreferredSize(new java.awt.Dimension(480, 605));
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -110,7 +110,7 @@ public class VerInfoPedido extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(ListaClientes);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 37, 444, 60));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 37, 444, 210));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Seleccionar Pedido");
@@ -125,7 +125,7 @@ public class VerInfoPedido extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(314, 11, 141, -1));
-        getContentPane().add(pa, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 450, 310));
+        getContentPane().add(pa, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 450, 310));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
