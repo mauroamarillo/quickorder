@@ -27,19 +27,26 @@ public class VerInfoClientes extends javax.swing.JInternalFrame {
     public VerInfoClientes(QuickOrder vp) throws SQLException {
         this.ventanaPrincipal = vp;
         initComponents();
-        cargarClientes();
+        cargarClientes(new String());
         this.setLocation(220, 80);
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         this.setVisible(true);
     }
-    
-    private void cargarClientes() throws SQLException {
+
+    private void cargarClientes(String filtro) throws SQLException {
         HashMap OBJs = ventanaPrincipal.CU.getDataClientes();
         Iterator it = OBJs.entrySet().iterator();
         DefaultListModel model = new DefaultListModel();
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
-            model.addElement(((DataCliente) entry.getValue()).getNickname());
+            DataCliente DC = (DataCliente) entry.getValue();
+            if (filtro.isEmpty()) {
+                model.addElement(DC.getNickname());
+            } else {
+                if (DC.getNickname().contains(filtro)) {
+                    model.addElement(DC.getNickname());
+                }
+            }
         }
         ListaClientes.setModel(model);
     }
@@ -100,6 +107,12 @@ public class VerInfoClientes extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Filtro: ");
 
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -151,7 +164,7 @@ public class VerInfoClientes extends javax.swing.JInternalFrame {
             String Cliente = (String) list.getSelectedValue();
             try {
                 panelInfoCliente1.cargarInfo(ventanaPrincipal.CU.buscarCliente(Cliente));
-               // panelInfoCliente1.cargarTablaPedidos(ventanaPrincipal.CU.getDataPedidos(Cliente));
+                // panelInfoCliente1.cargarTablaPedidos(ventanaPrincipal.CU.getDataPedidos(Cliente));
             } catch (SQLException ex) {
                 Logger.getLogger(VerInfoClientes.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
@@ -159,6 +172,14 @@ public class VerInfoClientes extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_ListaClientesMouseClicked
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        try {
+            cargarClientes(jTextField1.getText());
+        } catch (SQLException ex) {
+            Logger.getLogger(VerInfoClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jTextField1KeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList ListaClientes;

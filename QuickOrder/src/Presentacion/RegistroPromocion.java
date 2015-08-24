@@ -47,8 +47,6 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
             Logger.getLogger(RegistroPromocion.class.getName()).log(Level.SEVERE, null, ex);
         }
         limpiarTabla();
-        //ESTE CAMPO SOLO PUEDE SER NUMERICO
-        Text_Descuento.setDocument(new LimitadorCaracteres());
         this.setLocation(220, 80);
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         this.setVisible(true);
@@ -66,16 +64,24 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
         ListaRestaurante.setModel(model);
     }
 
-    private void cargarProductos(String R) throws SQLException {
-        HashMap OBJs = ventanaPrincipal.CU.buscarRestaurante(R).getIndividuales();
-        Iterator it = OBJs.entrySet().iterator();
-        DefaultListModel model = new DefaultListModel();
-        while (it.hasNext()) {
-            Map.Entry entry = (Map.Entry) it.next();
-            DataIndividual I = ((DataIndividual) entry.getValue());
-            model.addElement(I.getNombre());
+    private void cargarProductos(String R, String filtro) throws SQLException {
+        if (!R.isEmpty()) {
+            HashMap OBJs = ventanaPrincipal.CU.buscarRestaurante(R).getIndividuales();
+            Iterator it = OBJs.entrySet().iterator();
+            DefaultListModel model = new DefaultListModel();
+            while (it.hasNext()) {
+                Map.Entry entry = (Map.Entry) it.next();
+                DataIndividual I = ((DataIndividual) entry.getValue());
+                if (filtro == null || filtro.isEmpty()) {
+                    model.addElement(I.getNombre());
+                } else {
+                    if (I.getNombre().contains(filtro)) {
+                        model.addElement(I.getNombre());
+                    }
+                }
+            }
+            ListaSubProducto.setModel(model);
         }
-        ListaSubProducto.setModel(model);
     }
 
     private void limpiarTabla() {
@@ -181,6 +187,15 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
             }
         });
 
+        Text_Descuento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                Text_DescuentoKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                Text_DescuentoKeyTyped(evt);
+            }
+        });
+
         Text_Filtro_Restaurante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Text_Filtro_RestauranteActionPerformed(evt);
@@ -192,6 +207,15 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
             }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 Text_Filtro_RestauranteKeyTyped(evt);
+            }
+        });
+
+        Text_Filtro_Producto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                Text_Filtro_ProductoKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                Text_Filtro_ProductoKeyTyped(evt);
             }
         });
 
@@ -482,7 +506,7 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
         if (evt.getClickCount() == 2) {
             restaurante = (String) list.getSelectedValue();
             try {
-                cargarProductos(restaurante);
+                cargarProductos(restaurante, Text_Filtro_Producto.getText());
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
                 Logger.getLogger(RegistroPromocion.class.getName()).log(Level.SEVERE, null, ex);
@@ -498,6 +522,35 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
             agregarLineaProducto(DI);
         }
     }//GEN-LAST:event_ListaSubProductoMouseClicked
+
+    private void Text_DescuentoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Text_DescuentoKeyReleased
+
+    }//GEN-LAST:event_Text_DescuentoKeyReleased
+
+    private void Text_DescuentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Text_DescuentoKeyTyped
+        char car = evt.getKeyChar();
+        String desc = Text_Descuento.getText();
+        if (Character.isDigit(car) || Character.compare(car, '.') == 0) {
+            if (desc.contains(".") && Character.compare(car, '.') == 0) {
+                evt.consume();
+            }
+        } else {
+            evt.consume();
+        }
+    }//GEN-LAST:event_Text_DescuentoKeyTyped
+
+    private void Text_Filtro_ProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Text_Filtro_ProductoKeyTyped
+
+    }//GEN-LAST:event_Text_Filtro_ProductoKeyTyped
+
+    private void Text_Filtro_ProductoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Text_Filtro_ProductoKeyReleased
+        try {
+            cargarProductos(restaurante, Text_Filtro_Producto.getText());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(RegistroPromocion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_Text_Filtro_ProductoKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

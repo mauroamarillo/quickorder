@@ -33,12 +33,11 @@ public class RegistroIndividual extends javax.swing.JInternalFrame {
         initComponents();
         cargarRestaurantes();
         //ESTE CAMPO SOLO PUEDE SER NUMERICO
-        Text_Precio.setDocument(new LimitadorCaracteres());
-        
-      //  this.setLocation(220, 80);
+
+        //  this.setLocation(220, 80);
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         this.setVisible(true);
-Text_Nombre.requestFocus();
+        Text_Nombre.requestFocus();
     }
 
     private void cargarRestaurantes() throws SQLException {
@@ -102,6 +101,12 @@ Text_Nombre.requestFocus();
             public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
+
+        Text_Precio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                Text_PrecioKeyTyped(evt);
             }
         });
 
@@ -301,6 +306,18 @@ Text_Nombre.requestFocus();
         }
         jList2.setModel(model);
     }//GEN-LAST:event_Text_FiltroKeyReleased
+
+    private void Text_PrecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Text_PrecioKeyTyped
+        char car = evt.getKeyChar();
+        String desc = Text_Precio.getText();
+        if (Character.isDigit(car) || Character.compare(car, '.') == 0) {
+            if (desc.contains(".") && Character.compare(car, '.') == 0) {
+                evt.consume();
+            }
+        } else {
+            evt.consume();
+        }
+    }//GEN-LAST:event_Text_PrecioKeyTyped
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Button_Aceptar;

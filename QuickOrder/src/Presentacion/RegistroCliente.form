@@ -52,7 +52,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="jLabel1" min="-2" pref="239" max="-2" attributes="0"/>
                       <EmptySpace pref="30" max="32767" attributes="0"/>
@@ -60,42 +60,36 @@
                       <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="Button_Registrar" min="-2" pref="103" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="Button_Cancelar" min="-2" pref="103" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="Label_Nickname" min="-2" max="-2" attributes="0"/>
-                                  <Component id="Label_Nombre" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="Label_Apellido" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="Label_Email" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="Label_Fecha" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="Label_Direccion" alignment="0" min="-2" pref="95" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="Label_Nickname" min="-2" max="-2" attributes="0"/>
+                          <Component id="Label_Nombre" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="Label_Apellido" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="Label_Email" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="Label_Fecha" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="Label_Direccion" alignment="0" min="-2" pref="95" max="-2" attributes="0"/>
+                          <Component id="Button_Registrar" alignment="0" min="-2" pref="103" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="-2" pref="107" max="-2" attributes="0"/>
+                                  <Component id="Button_Cancelar" min="-2" pref="103" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="Spinner_D" min="-2" pref="49" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="Label_Fecha_D" min="-2" pref="15" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="Spinner_M" min="-2" pref="47" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="Label_Fecha_M" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="Spinner_A" min="-2" pref="64" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="Label_Fecha_A" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="Text_Nickname" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="Text_Nickname" alignment="0" pref="210" max="32767" attributes="0"/>
                                   <Component id="Text_Nombre" alignment="0" max="32767" attributes="0"/>
                                   <Component id="Text_Apellido" alignment="0" max="32767" attributes="0"/>
                                   <Component id="Text_Email" alignment="0" max="32767" attributes="0"/>
                                   <Component id="Text_Direccion" alignment="0" max="32767" attributes="0"/>
                               </Group>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="Box_Dia" min="-2" pref="39" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="Box_Mes" min="-2" pref="95" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="Box_Anio" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
@@ -139,13 +133,10 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="Spinner_D" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Spinner_M" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Spinner_A" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Label_Fecha_D" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Label_Fecha_M" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Label_Fecha_A" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="Label_Fecha" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Box_Mes" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Box_Dia" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Box_Anio" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -208,45 +199,9 @@
         <Property name="text" type="java.lang.String" value="Direcci&#xf3;n:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JSpinner" name="Spinner_D">
-      <Properties>
-        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-          <SpinnerModel initial="1" maximum="31" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JSpinner" name="Spinner_M">
-      <Properties>
-        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-          <SpinnerModel initial="1" maximum="12" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JSpinner" name="Spinner_A">
-      <Properties>
-        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-          <SpinnerModel initial="1900" maximum="2015" minimum="1900" numberType="java.lang.Integer" stepSize="1" type="number"/>
-        </Property>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JLabel" name="Label_Fecha">
       <Properties>
         <Property name="text" type="java.lang.String" value="Fecha de Nacimiento:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="Label_Fecha_D">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="D"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="Label_Fecha_M">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="M"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="Label_Fecha_A">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="A"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="Label_resultadoImg">
@@ -283,6 +238,57 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Button_CancelarActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="Box_Mes">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="12">
+            <StringItem index="0" value="enero"/>
+            <StringItem index="1" value="febrero"/>
+            <StringItem index="2" value="marzo"/>
+            <StringItem index="3" value="abril"/>
+            <StringItem index="4" value="mayo"/>
+            <StringItem index="5" value="junio"/>
+            <StringItem index="6" value="julio"/>
+            <StringItem index="7" value="agosto"/>
+            <StringItem index="8" value="septiembre"/>
+            <StringItem index="9" value="octubre"/>
+            <StringItem index="10" value="noviembre"/>
+            <StringItem index="11" value="diciembre"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Box_MesActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="Box_Dia">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="5">
+            <StringItem index="0" value="01"/>
+            <StringItem index="1" value="02"/>
+            <StringItem index="2" value="03"/>
+            <StringItem index="3" value="04"/>
+            <StringItem index="4" value="05"/>
+          </StringArray>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="Box_Anio">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="4">
+            <StringItem index="0" value="Item 1"/>
+            <StringItem index="1" value="Item 2"/>
+            <StringItem index="2" value="Item 3"/>
+            <StringItem index="3" value="Item 4"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Box_AnioActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

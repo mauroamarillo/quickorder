@@ -3,9 +3,10 @@ package Presentacion;
 import Logica.HerramientaImagenes;
 import java.io.File;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import static javax.swing.JFileChooser.APPROVE_OPTION;
 import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameEvent;
@@ -28,13 +29,22 @@ public class RegistroCliente extends javax.swing.JInternalFrame implements Inter
      */
     QuickOrder ventanaPrincipal;
     File foto = null;
+    DefaultComboBoxModel modeloDias = new DefaultComboBoxModel();
+    DefaultComboBoxModel modeloAnio = new DefaultComboBoxModel();
 
-    public RegistroCliente(QuickOrder vp) {
+    public RegistroCliente(QuickOrder vp) throws ParseException {
 
         ventanaPrincipal = vp;
         initComponents();
 
-        this.setLocation(200, 50);
+        int A = Calendar.getInstance().get(Calendar.YEAR);
+        modeloAnio.removeAllElements();
+        for (int x = 1900; x <= A; x++) {
+            modeloAnio.addElement(x);
+        }
+        Box_Dia.setModel(modeloDias);
+        Box_Anio.setModel(modeloAnio);
+        setearDia(1, 1900);
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         this.addInternalFrameListener(this);
         this.setVisible(true);
@@ -60,17 +70,14 @@ public class RegistroCliente extends javax.swing.JInternalFrame implements Inter
         Label_Apellido = new javax.swing.JLabel();
         Label_Email = new javax.swing.JLabel();
         Label_Direccion = new javax.swing.JLabel();
-        Spinner_D = new javax.swing.JSpinner();
-        Spinner_M = new javax.swing.JSpinner();
-        Spinner_A = new javax.swing.JSpinner();
         Label_Fecha = new javax.swing.JLabel();
-        Label_Fecha_D = new javax.swing.JLabel();
-        Label_Fecha_M = new javax.swing.JLabel();
-        Label_Fecha_A = new javax.swing.JLabel();
         Label_resultadoImg = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         Button_Registrar = new javax.swing.JButton();
         Button_Cancelar = new javax.swing.JButton();
+        Box_Mes = new javax.swing.JComboBox();
+        Box_Dia = new javax.swing.JComboBox();
+        Box_Anio = new javax.swing.JComboBox();
 
         jFileChooser1.setCurrentDirectory(new java.io.File("C:\\Users\\Jean\\Pictures"));
         jFileChooser1.setFileFilter(new FileNameExtensionFilter("Imagenes jpg ", "jpg"));
@@ -123,19 +130,7 @@ public class RegistroCliente extends javax.swing.JInternalFrame implements Inter
 
         Label_Direccion.setText("Dirección:");
 
-        Spinner_D.setModel(new javax.swing.SpinnerNumberModel(1, 1, 31, 1));
-
-        Spinner_M.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
-
-        Spinner_A.setModel(new javax.swing.SpinnerNumberModel(1900, 1900, 2015, 1));
-
         Label_Fecha.setText("Fecha de Nacimiento:");
-
-        Label_Fecha_D.setText("D");
-
-        Label_Fecha_M.setText("M");
-
-        Label_Fecha_A.setText("A");
 
         Label_resultadoImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/perfil.jpg"))); // NOI18N
         Label_resultadoImg.setName(""); // NOI18N
@@ -163,51 +158,61 @@ public class RegistroCliente extends javax.swing.JInternalFrame implements Inter
             }
         });
 
+        Box_Mes.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre" }));
+        Box_Mes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Box_MesActionPerformed(evt);
+            }
+        });
+
+        Box_Dia.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "01", "02", "03", "04", "05" }));
+
+        Box_Anio.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        Box_Anio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Box_AnioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(65, 65, 65)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                         .addComponent(Label_resultadoImg)
                         .addGap(100, 100, 100))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(Button_Registrar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(Button_Cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(Label_Nickname)
-                                    .addComponent(Label_Nombre)
-                                    .addComponent(Label_Apellido)
-                                    .addComponent(Label_Email)
-                                    .addComponent(Label_Fecha)
-                                    .addComponent(Label_Direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Label_Nickname)
+                            .addComponent(Label_Nombre)
+                            .addComponent(Label_Apellido)
+                            .addComponent(Label_Email)
+                            .addComponent(Label_Fecha)
+                            .addComponent(Label_Direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Button_Registrar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(107, 107, 107)
+                                    .addComponent(Button_Cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(Spinner_D, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(Label_Fecha_D, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(Spinner_M, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(Label_Fecha_M)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(Spinner_A, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(Label_Fecha_A))
-                                    .addComponent(Text_Nickname)
+                                    .addComponent(Text_Nickname, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
                                     .addComponent(Text_Nombre)
                                     .addComponent(Text_Apellido)
                                     .addComponent(Text_Email)
-                                    .addComponent(Text_Direccion))))
+                                    .addComponent(Text_Direccion)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(Box_Dia, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Box_Mes, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Box_Anio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(76, 76, 76))))
         );
         layout.setVerticalGroup(
@@ -239,13 +244,10 @@ public class RegistroCliente extends javax.swing.JInternalFrame implements Inter
                     .addComponent(Label_Direccion))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Spinner_D, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Spinner_M, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Spinner_A, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Label_Fecha_D)
-                    .addComponent(Label_Fecha_M)
-                    .addComponent(Label_Fecha_A)
-                    .addComponent(Label_Fecha))
+                    .addComponent(Label_Fecha)
+                    .addComponent(Box_Mes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Box_Dia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Box_Anio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Button_Registrar)
@@ -285,19 +287,19 @@ public class RegistroCliente extends javax.swing.JInternalFrame implements Inter
     }//GEN-LAST:event_Label_resultadoImgMouseClicked
 
     private void Button_RegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_RegistrarActionPerformed
-
-        String fechaTexo = Spinner_A.getValue().toString() + "-" + Spinner_M.getValue().toString() + "-" + Spinner_D.getValue().toString();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
-        java.sql.Date fechaSQL;
         try {
-            fechaSQL = new java.sql.Date(formatter.parse(fechaTexo).getTime());
-            ventanaPrincipal.CU.insertarCliente(Text_Nickname.getText(), Text_Email.getText(), Text_Direccion.getText(), Text_Nombre.getText(), Text_Apellido.getText(), fechaSQL, foto);
+            ventanaPrincipal.CU.insertarCliente(Text_Nickname.getText(),
+                    Text_Email.getText(),
+                    Text_Direccion.getText(),
+                    Text_Nombre.getText(),
+                    Text_Apellido.getText(),
+                    String.valueOf(Box_Dia.getSelectedIndex() + 1),
+                    Box_Mes.getSelectedItem().toString(),
+                    String.valueOf((int) Box_Anio.getSelectedItem()),
+                    foto);
             JOptionPane.showMessageDialog(this, "Cliente registrado", "- EXITO -", JOptionPane.DEFAULT_OPTION);
             ventanaPrincipal.setOperando(false);
             this.dispose();
-        } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
-            Logger.getLogger(RegistroCliente.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(RegistroCliente.class.getName()).log(Level.SEVERE, null, ex);
@@ -310,6 +312,51 @@ public class RegistroCliente extends javax.swing.JInternalFrame implements Inter
         this.dispose();
     }//GEN-LAST:event_Button_CancelarActionPerformed
 
+    private void Box_MesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Box_MesActionPerformed
+        setearDia(Box_Mes.getSelectedIndex() + 1, (int) Box_Anio.getSelectedItem());
+    }//GEN-LAST:event_Box_MesActionPerformed
+
+    private void Box_AnioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Box_AnioActionPerformed
+        setearDia(Box_Mes.getSelectedIndex() + 1, (int) Box_Anio.getSelectedItem());
+    }//GEN-LAST:event_Box_AnioActionPerformed
+    private void setearDia(int mes, int anio) {
+        int diasMes = 0;
+        switch (mes) {
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:		// meses de 31 dias
+                diasMes = 31;
+                break;
+
+            case 4:
+            case 6:
+            case 9:
+            case 11:		// meses de 30 dias
+                diasMes = 30;
+                break;
+
+            case 2:		// febrero
+                if (esBisiesto(anio)) {
+                    diasMes = 29;
+                } else {
+                    diasMes = 28;
+                }
+                break;
+        }
+        modeloDias.removeAllElements();
+        for (int x = 0; x < diasMes; x++) {
+            modeloDias.addElement(x + 1);
+        }
+    }
+
+    private boolean esBisiesto(int agno) {
+        return ((((agno % 4) == 0) && ((agno % 100) != 0)) || ((agno % 400) == 0));
+    }
+
     @Override
     public void internalFrameClosing(InternalFrameEvent e) {
         ventanaPrincipal.setOperando(false);
@@ -317,21 +364,18 @@ public class RegistroCliente extends javax.swing.JInternalFrame implements Inter
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox Box_Anio;
+    private javax.swing.JComboBox Box_Dia;
+    private javax.swing.JComboBox Box_Mes;
     private javax.swing.JButton Button_Cancelar;
     private javax.swing.JButton Button_Registrar;
     private javax.swing.JLabel Label_Apellido;
     private javax.swing.JLabel Label_Direccion;
     private javax.swing.JLabel Label_Email;
     private javax.swing.JLabel Label_Fecha;
-    private javax.swing.JLabel Label_Fecha_A;
-    private javax.swing.JLabel Label_Fecha_D;
-    private javax.swing.JLabel Label_Fecha_M;
     private javax.swing.JLabel Label_Nickname;
     private javax.swing.JLabel Label_Nombre;
     private javax.swing.JLabel Label_resultadoImg;
-    private javax.swing.JSpinner Spinner_A;
-    private javax.swing.JSpinner Spinner_D;
-    private javax.swing.JSpinner Spinner_M;
     private javax.swing.JTextField Text_Apellido;
     private javax.swing.JTextField Text_Direccion;
     private javax.swing.JTextField Text_Email;

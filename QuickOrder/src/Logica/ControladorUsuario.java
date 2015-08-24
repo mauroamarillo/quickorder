@@ -158,12 +158,14 @@ public final class ControladorUsuario {
         return res;
     }
 
-    public void insertarCliente(String nick, String email, String dir, String nombre, String apellido, Date fecha, File img) throws SQLException, Exception {
+    public void insertarCliente(String nick, String email, String dir, String nombre, String apellido, String D, String M, String A, File img) throws SQLException, Exception {
         Cliente C;
+        Fecha fecha = new Fecha(D, M, A);
+
         if (img != null) {
-            C = new Cliente(nick, nombre, email, dir, apellido, fecha, img.getPath(), new HashMap());
+            C = new Cliente(nick, nombre, email, dir, apellido, fecha.getSQLDate(), img.getPath(), new HashMap());
         } else {
-            C = new Cliente(nick, nombre, email, dir, apellido, fecha, "sin_imagen", new HashMap());
+            C = new Cliente(nick, nombre, email, dir, apellido, fecha.getSQLDate(), "sin_imagen", new HashMap());
         }
         validarDatosC(C);
         UsuarioDatos.agregarCliente(C.getNickname(), C.getNombre(), C.getEmail(), C.getDireccion(), C.getApellido(), C.getFechaNac(), C.getImagen());
@@ -389,10 +391,11 @@ public final class ControladorUsuario {
         }
     }
 
-    public int insertarPedido(Date fecha, Estado estado, String cliente, String restaurante, HashMap dataProdPedidos) throws SQLException, Exception {
-        Pedido P = new Pedido(0, fecha, estado, this._buscarCliente(cliente), this._buscarRestaurante(restaurante), dataProdPedidos);
+    public int insertarPedido(String D, String M, String A, Estado estado, String cliente, String restaurante, HashMap dataProdPedidos) throws SQLException, Exception {
+        Fecha fecha = new Fecha(D, M, A);
+        Pedido P = new Pedido(0, fecha.getSQLDate(), estado, this._buscarCliente(cliente), this._buscarRestaurante(restaurante), dataProdPedidos);
         validarPedido(P);
-        int numero = (PedidoDatos.agregarPedido(fecha, estado.ordinal(), cliente, restaurante));
+        int numero = (PedidoDatos.agregarPedido(fecha.getSQLDate(), estado.ordinal(), cliente, restaurante));
         Iterator it = P.getProdPedidos().entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();

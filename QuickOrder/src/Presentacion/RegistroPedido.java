@@ -14,8 +14,10 @@ import Logica.Estado;
 import java.awt.Frame;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -367,7 +369,11 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
 
     private void ButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAceptarActionPerformed
         try {
-            int numero = ventanaPrincipal.CU.insertarPedido(new Date(10, 10, 1990), Estado.preparacion, ListaClientes.getSelectedValue().toString(), restaurante, LineasPedido);
+            String D, M, A;
+            D = String.valueOf(Calendar.getInstance().get(Calendar.DATE));
+            A = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+            M = getMes(Calendar.getInstance().get(Calendar.MONTH));
+            int numero = ventanaPrincipal.CU.insertarPedido(D, M, A, Estado.preparacion, ListaClientes.getSelectedValue().toString(), restaurante, LineasPedido);
             //JOptionPane.showMessageDialog(this, "Pedido registrado", "- EXITO -", JOptionPane.DEFAULT_OPTION);
             PanelInfoPedido pip = new PanelInfoPedido(ventanaPrincipal.CU.getDataPedido(numero));
             JDialog JD = new JDialog(new Frame(), true);
@@ -385,7 +391,16 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         }
 
     }//GEN-LAST:event_ButtonAceptarActionPerformed
-
+    private String getMes(int mesInt) throws Exception {
+        String[] meses = {"enero", "febrero", "marzo", "abril", "mayo",
+            "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"};
+        for (int i = 0; i < meses.length; i++) {
+            if (i == mesInt) {
+                return meses[i];
+            }
+        }
+        return "enero";
+    }
     private void MenuTablaEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuTablaEliminarActionPerformed
         borrarLineaProducto();
     }//GEN-LAST:event_MenuTablaEliminarActionPerformed

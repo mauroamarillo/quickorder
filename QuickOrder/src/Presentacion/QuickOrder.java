@@ -5,9 +5,15 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.beans.PropertyVetoException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import javax.swing.UnsupportedLookAndFeelException;
 /*
@@ -45,7 +51,15 @@ public class QuickOrder extends javax.swing.JFrame {
             Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.CU = new ControladorUsuario();
+
         initComponents();
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        ((JPanel) getContentPane()).setOpaque(false);
+        ImageIcon II = new ImageIcon(this.getClass().getResource("/img/NoImgDisp.png"));
+        JLabel JL = new JLabel();
+        JL.setIcon(II);
+        this.getLayeredPane().add(JL, JLayeredPane.FRAME_CONTENT_LAYER);
+        JL.setBounds(0, 0, getWidth(), getHeight());
         //setContentPane(new FondoVentanaPrincipal("/img/back.png"));
         setLocationRelativeTo(null);
 
@@ -200,15 +214,17 @@ public class QuickOrder extends javax.swing.JFrame {
 
     private void Menu_RClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Menu_RClienteActionPerformed
         if (!operando) {
-            RegistroCliente registroCliente = new RegistroCliente(this);
-            this.add(registroCliente, BorderLayout.CENTER);
-            Dimension desktopSize = this.getContentPane().getSize();
-            Dimension FrameSize = registroCliente.getSize();
-            registroCliente.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
             try {
+                RegistroCliente registroCliente = new RegistroCliente(this);
+                this.add(registroCliente, BorderLayout.CENTER);
+                Dimension desktopSize = this.getContentPane().getSize();
+                Dimension FrameSize = registroCliente.getSize();
+                registroCliente.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
                 registroCliente.setSelected(true);
                 operando = true;
             } catch (PropertyVetoException ex) {
+                Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
                 Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

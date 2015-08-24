@@ -23,17 +23,20 @@ import javax.swing.JList;
 public class VerInfoProducto extends javax.swing.JInternalFrame {
 
     QuickOrder ventanaPrincipal;
+    private PanelInfoProducto panelInfoProducto1;
 
     public VerInfoProducto(QuickOrder vp) throws SQLException {
         this.ventanaPrincipal = vp;
         initComponents();
-        cargarProductos();
+        cargarProductos(new String());
+        panelInfoProducto1 = new PanelInfoProducto(this);
+        PanelContenedor.add(panelInfoProducto1);
         this.setLocation(220, 80);
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         this.setVisible(true);
     }
 
-    private void cargarProductos() throws SQLException {
+    private void cargarProductos(String filtro) throws SQLException {
 
         HashMap OBJs = new HashMap();
 
@@ -45,7 +48,12 @@ public class VerInfoProducto extends javax.swing.JInternalFrame {
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
             DataProducto DP = (DataProducto) entry.getValue();
-            model.addElement(DP.getRestaurante() + "_" + DP.getNombre());
+            String elemento = DP.getRestaurante() + "_" + DP.getNombre();
+            if (filtro.isEmpty()) {
+                model.addElement(elemento);
+            } else if (elemento.contains(filtro)) {
+                model.addElement(elemento);
+            }
         }
         ListaClientes.setModel(model);
     }
@@ -62,9 +70,8 @@ public class VerInfoProducto extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         ListaClientes = new javax.swing.JList();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        panelInfoProducto1 = new Presentacion.PanelInfoProducto(this);
+        PanelContenedor = new javax.swing.JPanel();
 
         setClosable(true);
         setTitle("Informacion Productos");
@@ -104,43 +111,44 @@ public class VerInfoProducto extends javax.swing.JInternalFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Seleccione Producto ");
 
-        jLabel2.setText("Filtro: ");
+        PanelContenedor.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        PanelContenedor.setMaximumSize(new java.awt.Dimension(450, 418));
+        PanelContenedor.setMinimumSize(new java.awt.Dimension(450, 418));
+        PanelContenedor.setPreferredSize(new java.awt.Dimension(450, 418));
+        PanelContenedor.setLayout(new java.awt.BorderLayout());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(45, 45, 45))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 16, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 1, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(panelInfoProducto1, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                            .addComponent(jTextField1)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
+                .addComponent(PanelContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(panelInfoProducto1, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(8, 8, 8)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(59, Short.MAX_VALUE))
+                        .addComponent(jLabel1)
+                        .addGap(32, 32, 32)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(PanelContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -166,12 +174,23 @@ public class VerInfoProducto extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_ListaClientesMouseClicked
 
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {
+        try {
+            cargarProductos(jTextField1.getText());
+        } catch (SQLException ex) {
+            Logger.getLogger(VerInfoClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList ListaClientes;
+    private javax.swing.JPanel PanelContenedor;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
-    private Presentacion.PanelInfoProducto panelInfoProducto1;
     // End of variables declaration//GEN-END:variables
 }

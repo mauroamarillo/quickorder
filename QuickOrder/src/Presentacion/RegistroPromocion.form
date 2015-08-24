@@ -214,6 +214,10 @@
     <Component class="javax.swing.JTextField" name="Text_Descripcion">
     </Component>
     <Component class="javax.swing.JTextField" name="Text_Descuento">
+      <Events>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="Text_DescuentoKeyReleased"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="Text_DescuentoKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="Text_Filtro_Restaurante">
       <Events>
@@ -223,6 +227,10 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="Text_Filtro_Producto">
+      <Events>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="Text_Filtro_ProductoKeyReleased"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="Text_Filtro_ProductoKeyTyped"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane2">
       <AuxValues>
