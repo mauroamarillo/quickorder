@@ -277,7 +277,7 @@ public class RegistroIndividual extends javax.swing.JInternalFrame {
             ventanaPrincipal.setOperando(false);
             this.dispose();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "!ERROR¡", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(RegistroIndividual.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Button_AceptarActionPerformed

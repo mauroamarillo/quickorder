@@ -20,12 +20,12 @@ import javax.swing.JOptionPane;
  *
  * @author Mauro
  */
-public class Extra {
+public class ExtraD {
     
     private final Estructura es = new Estructura();
     private final Statement st;
 
-    public Extra() throws SQLException, ClassNotFoundException {
+    public ExtraD() throws SQLException, ClassNotFoundException {
         this.st = es.generarSt();
     }
     
@@ -48,20 +48,18 @@ public class Extra {
     }
     
     public void cargarDatosDePrueba() throws IOException, SQLException{
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("c:\\datosPrueba.sql"), "UTF-8"))){
-            StringBuilder sb = new StringBuilder();
-            String line = br.readLine();
+        BufferedReader br = new BufferedReader(new FileReader("c:\\datosPrueba.sql"));
+        StringBuilder sb = new StringBuilder();
+        String line = br.readLine();
+        if(line!=null) line = line.substring(1);
 
-            while (line != null){
-                if(line.startsWith("INSERT") || line.startsWith("TRUNCATE")){
-                    sb.append(line);
-                }
-                line = br.readLine();
-            }
-            
-            JOptionPane.showMessageDialog(null, sb.toString(), "A ver", JOptionPane.INFORMATION_MESSAGE);
-            
-            st.execute(sb.toString());
+        while (line != null){
+            sb.append(line);
+            sb.append("\n");
+            line = br.readLine();
         }
+        
+        JOptionPane.showMessageDialog(null, sb.toString(), "A ver", JOptionPane.INFORMATION_MESSAGE);
+        st.execute(sb.toString());
     }
 }
