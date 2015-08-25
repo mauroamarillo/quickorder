@@ -256,5 +256,6 @@ public final class ControladorProductos {
     void actualizarDatos() throws SQLException {
         this.individuales = retornarIndividuales();
         this.promociones = retornarPromociones();
+        this.asignarProductosDePromocion();
     }
 }

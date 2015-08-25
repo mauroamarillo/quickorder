@@ -34,11 +34,10 @@ public class QuickOrder extends javax.swing.JFrame {
     private boolean operando = false;
     ControladorUsuario CU;
     Extra e;
-    
+
     /*
      codigo para ver si anda bien esto
      */
-
     public QuickOrder() throws SQLException, ClassNotFoundException {
         try {
             javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -60,7 +59,7 @@ public class QuickOrder extends javax.swing.JFrame {
 
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-         setLocationRelativeTo(null);
+        setLocationRelativeTo(null);
 
     }
 
@@ -430,9 +429,8 @@ public class QuickOrder extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE);
                 Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        else {
-           JOptionPane.showMessageDialog(this, "Operacion cancelada", "Operacion cancelada", JOptionPane.DEFAULT_OPTION);
+        } else {
+            JOptionPane.showMessageDialog(this, "Operacion cancelada", "Operacion cancelada", JOptionPane.DEFAULT_OPTION);
         }
     }//GEN-LAST:event_Menu_DatosPruebaActionPerformed
 
