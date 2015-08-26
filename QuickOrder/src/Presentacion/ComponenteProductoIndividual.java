@@ -15,26 +15,28 @@ import javax.swing.JOptionPane;
  *
  * @author Jean
  */
-public class ComponenteProductoIndividual extends javax.swing.JPanel {
+public class ComponenteProductoIndividual extends javax.swing.JPanel implements Runnable {
 
     /**
      * Creates new form ComponenteProducto
      */
     private DataIndividual P;
     private int cantidad = 1;
-    
+
     private PanelProductos PP;
-    
+    private Thread thread;
+
     public ComponenteProductoIndividual(DataIndividual I, PanelProductos PP) {
         this.P = I;
         this.PP = PP;
         initComponents();
         Nombre.setText(P.getNombre());
-        Precio.setText("$"+String.valueOf(P.getPrecio()));
-        IMG.setText("");
-        IMG.setIcon(HerramientaImagenes.cargarYescalar(P.getImagen(), 78, 78));
+        Precio.setText("$" + String.valueOf(P.getPrecio()));
+        IMG.setText("Cargando...");
+        thread = new Thread(this, "cargar_img");
+        thread.start();
     }
-    
+
     public DataIndividual getProducto() {
         return P;
     }
@@ -111,7 +113,7 @@ public class ComponenteProductoIndividual extends javax.swing.JPanel {
             cantidad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese Cantidad"));
             this.setVisible(false);
             PP.agregarProductoaLista(this, P, cantidad);
-            
+
         } catch (NumberFormatException nfe) {
             JOptionPane.showMessageDialog(null, "Cantidad invalida", "ENTRADA INCORRECTA", JOptionPane.ERROR_MESSAGE);
         }
@@ -124,4 +126,10 @@ public class ComponenteProductoIndividual extends javax.swing.JPanel {
     private javax.swing.JLabel Precio;
     private javax.swing.JLabel label;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void run() {
+        IMG.setIcon(HerramientaImagenes.cargarYescalar(P.getImagen(), 78, 78));
+        IMG.setText("");
+    }
 }

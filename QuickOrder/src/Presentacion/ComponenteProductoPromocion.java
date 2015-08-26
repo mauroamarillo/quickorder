@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
  *
  * @author Jean
  */
-public class ComponenteProductoPromocion extends javax.swing.JPanel {
+public class ComponenteProductoPromocion extends javax.swing.JPanel implements Runnable {
 
     /**
      * Creates new form ComponenteProducto
@@ -22,15 +22,17 @@ public class ComponenteProductoPromocion extends javax.swing.JPanel {
     private int cantidad = 1;
 
     private PanelProductos PP;
+    private Thread thread;
 
     public ComponenteProductoPromocion(DataPromocion Pr, PanelProductos PP) {
         this.P = Pr;
         this.PP = PP;
         initComponents();
         Nombre.setText(P.getNombre());
-        Precio.setText("$"+String.valueOf(P.getPrecio()));
-        IMG.setText("");
-        IMG.setIcon(HerramientaImagenes.cargarYescalar(P.getImagen(), 78, 78));
+        Precio.setText("$" + String.valueOf(P.getPrecio()));
+        IMG.setText("Cargando...");
+        thread = new Thread(this, "cargar_img");
+        thread.start();
     }
 
     public DataPromocion getProducto() {
@@ -115,7 +117,11 @@ public class ComponenteProductoPromocion extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Cantidad invalida", "ENTRADA INCORRECTA", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_formMouseClicked
-
+    @Override
+    public void run() {
+        IMG.setIcon(HerramientaImagenes.cargarYescalar(P.getImagen(), 78, 78));
+        IMG.setText("");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel IMG;

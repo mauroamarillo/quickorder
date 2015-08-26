@@ -24,7 +24,6 @@ public class PanelProductos extends JPanel {
     public void iniciarPanel(HashMap listaDataProductos) {
         this.removeAll();
         dataProductos.clear();
-
         Iterator it = listaDataProductos.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();

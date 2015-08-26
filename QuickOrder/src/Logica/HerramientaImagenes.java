@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
  */
 public abstract class HerramientaImagenes {
 
+
     public static ImageIcon obtenerImagenEscalada(String path, int w, int h) {
         Image img = new ImageIcon(path).getImage();
         Image newImg;

@@ -6,33 +6,26 @@
 package Presentacion;
 
 import Logica.ControladorUsuario;
-import Logica.DataTypes.DataCliente;
 import Logica.DataTypes.DataIndividual;
 import Logica.DataTypes.DataPedido;
-import Logica.DataTypes.DataProdPedido;
 import Logica.DataTypes.DataProdPromo;
 import Logica.DataTypes.DataProducto;
 import Logica.DataTypes.DataPromocion;
 import Logica.HerramientaImagenes;
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Frame;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Jean
  */
-public class PanelInfoProducto extends javax.swing.JPanel {
+public class PanelInfoProducto extends javax.swing.JPanel implements Runnable {
 
     /**
      * Creates new form PanelInfoCliente
@@ -41,6 +34,8 @@ public class PanelInfoProducto extends javax.swing.JPanel {
     DefaultTableModel modeloTablaPedidos;
     ControladorUsuario CU;
     String restaurante;
+    private Thread thread;
+    private String path;
 
     public PanelInfoProducto(VerInfoProducto vip) {
         initComponents();
@@ -79,10 +74,12 @@ public class PanelInfoProducto extends javax.swing.JPanel {
 
         Label_Nombre.setText(DP.getNombre());
         Label_Descripcion.setText(DP.getDescripcion());
-        Label_IMG.setText("");
         String precio = String.valueOf(DP.getPrecio());
         Label_Precio.setText(precio);
-        Label_IMG.setIcon(HerramientaImagenes.cargarYescalar(DP.getImagen(), 125, 125));
+        path = DP.getImagen();
+        Label_IMG.setText("Cargando...");
+        thread = new Thread(this, "cargar_img");
+        thread.start();
         restaurante = DP.getRestaurante();
         limpiarTablaPedidos();
         cargarTablaPedidos(DPed);
@@ -383,4 +380,11 @@ public class PanelInfoProducto extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void run() {
+        Label_IMG.setIcon(null);
+        Label_IMG.setIcon(HerramientaImagenes.cargarYescalar(path, 125, 125));
+        Label_IMG.setText("");
+    }
 }

@@ -7,8 +7,6 @@ package Presentacion;
 
 import Logica.HerramientaImagenes;
 import java.awt.Frame;
-import java.awt.Image;
-import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,24 +15,23 @@ import javax.swing.JPanel;
  *
  * @author Jean
  */
-public final class miniaturaIMG extends JPanel {
+public final class miniaturaIMG extends JPanel implements Runnable {
 
     /**
      * Creates new form miniaturaIMG
      */
     String Path;
+    Thread thread;
 
     public miniaturaIMG() {
-
         initComponents();
     }
 
     public void cargarIMGs(String x) {
-
         Path = x;
-        jLabel1.setIcon(HerramientaImagenes.cargarYescalar(Path,150, 150));
-        this.validate();
-
+        jLabel1.setText("Cargando...");
+        thread = new Thread(this, "cargar_img");
+        thread.start();
     }
 
     /**
@@ -80,7 +77,7 @@ public final class miniaturaIMG extends JPanel {
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         java.awt.Dimension D = new java.awt.Dimension(800, 600);
         JLabel I = new JLabel();
-        I.setIcon(HerramientaImagenes.cargarYescalar(Path,800, 600));
+        I.setIcon(HerramientaImagenes.cargarYescalar(Path, 800, 600));
         JDialog d = new JDialog(new Frame(), true);
         d.setLocationByPlatform(true);
         d.setMaximumSize(D);
@@ -93,4 +90,10 @@ public final class miniaturaIMG extends JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void run() {
+        jLabel1.setIcon(HerramientaImagenes.cargarYescalar(Path, 150, 150));
+        jLabel1.setText("");
+    }
 }

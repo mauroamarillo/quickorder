@@ -18,13 +18,15 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Jean
  */
-public class PanelInfoCliente extends javax.swing.JPanel {
+public class PanelInfoCliente extends javax.swing.JPanel implements Runnable {
 
     /**
      * Creates new form PanelInfoCliente
      */
     DefaultTableModel modeloTabla;
     HashMap dataPedidos;
+    private Thread thread;
+    private String path;
 
     public PanelInfoCliente() {
         initComponents();
@@ -41,8 +43,10 @@ public class PanelInfoCliente extends javax.swing.JPanel {
         Label_Email.setText(DC.getEmail());
         Label_Direccion.setText(DC.getDireccion());
         Label_FN.setText(DC.getFechaNac().toString());
-        Label_IMG.setText("");
-        Label_IMG.setIcon(HerramientaImagenes.cargarYescalar(DC.getImagen(), 125, 125));
+        Label_IMG.setText("Cargando...");
+        path = DC.getImagen();
+        thread = new Thread(this, "cargar_img");
+        thread.start();
         dataPedidos = DC.getPedidos();
         limpiarTabla();
         cargarTablaPedidos();
@@ -242,4 +246,11 @@ public class PanelInfoCliente extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void run() {
+        Label_IMG.setIcon(null);
+        Label_IMG.setIcon(HerramientaImagenes.cargarYescalar(path, 125, 125));
+        Label_IMG.setText("");
+    }
 }
