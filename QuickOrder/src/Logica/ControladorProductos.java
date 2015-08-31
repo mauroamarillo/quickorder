@@ -124,7 +124,7 @@ public final class ControladorProductos {
         }
     }
 
-    public HashMap retornarIndividuales() throws SQLException {
+    public HashMap retornarIndividuales() throws SQLException, ClassNotFoundException {
         HashMap resultado = new HashMap();
         java.sql.ResultSet rs = PD.listarIndividuales();
         while (rs.next()) {
@@ -220,7 +220,7 @@ public final class ControladorProductos {
         asignarProductosDePromocion();
     }
 
-    public HashMap retornarPromociones() throws SQLException {
+    public HashMap retornarPromociones() throws SQLException, ClassNotFoundException {
         HashMap resultado = new HashMap();
         java.sql.ResultSet rs = PD.listarPromociones();
         while (rs.next()) {
@@ -238,7 +238,7 @@ public final class ControladorProductos {
         return resultado;
     }
 
-    public void asignarProductosDePromocion() throws SQLException {
+    public void asignarProductosDePromocion() throws SQLException, ClassNotFoundException {
         Iterator it = promociones.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
@@ -253,7 +253,7 @@ public final class ControladorProductos {
         }
     }
     
-    void actualizarDatos() throws SQLException {
+    void actualizarDatos() throws SQLException, ClassNotFoundException {
         this.individuales = retornarIndividuales();
         this.promociones = retornarPromociones();
         this.asignarProductosDePromocion();

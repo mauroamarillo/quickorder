@@ -34,7 +34,7 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
     File foto[] = null;
     int idCat[];
 
-    public RegistroRestaurante(QuickOrder vp) {
+    public RegistroRestaurante(QuickOrder vp) throws ClassNotFoundException {
 
         ventanaPrincipal = vp;
         initComponents();
@@ -51,7 +51,7 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
         this.setVisible(true);
     }
 
-    private void disponerCategorias() {
+    private void disponerCategorias() throws ClassNotFoundException {
         /*pido las categorias al ControladorUsuario*/
         HashMap categorias;
         try {
@@ -323,6 +323,8 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(RegistroRestaurante.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Button_NCategoriaActionPerformed
 

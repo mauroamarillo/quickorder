@@ -169,6 +169,8 @@ public class VerInfoClientes extends javax.swing.JInternalFrame {
                 Logger.getLogger(VerInfoClientes.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
                 Logger.getLogger(VerInfoClientes.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(VerInfoClientes.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_ListaClientesMouseClicked

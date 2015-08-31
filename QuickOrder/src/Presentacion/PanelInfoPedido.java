@@ -285,6 +285,8 @@ public class PanelInfoPedido extends javax.swing.JPanel {
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "¡ERROR!", JOptionPane.ERROR_MESSAGE);
                 Logger.getLogger(PanelInfoPedido.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(PanelInfoPedido.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -299,6 +301,8 @@ public class PanelInfoPedido extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Estado de Pedido Alterado \nPara ver cambios recargar panel", "- EXITO -", JOptionPane.DEFAULT_OPTION);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "¡ERROR!", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(PanelInfoPedido.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(PanelInfoPedido.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton2ActionPerformed

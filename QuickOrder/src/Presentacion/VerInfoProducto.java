@@ -171,6 +171,8 @@ public class VerInfoProducto extends javax.swing.JInternalFrame {
                 Logger.getLogger(VerInfoProducto.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 Logger.getLogger(VerInfoProducto.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(VerInfoProducto.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_ListaClientesMouseClicked

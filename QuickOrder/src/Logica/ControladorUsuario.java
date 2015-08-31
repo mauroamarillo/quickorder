@@ -8,7 +8,6 @@ import Logica.DataTypes.DataPedido;
 import Logica.DataTypes.DataProdPedido;
 import Logica.DataTypes.DataRestaurante;
 import java.io.File;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -40,6 +39,14 @@ public final class ControladorUsuario {
         this.CP = new ControladorProductos(this);
         this.asignarPedidosAClientes();
 
+    }
+
+    public boolean nickOcupado(String nick) throws SQLException, ClassNotFoundException {
+        return UsuarioDatos.nickOcupado(nick);
+    }
+
+    public boolean emailOcupado(String email) throws SQLException, ClassNotFoundException {
+        return UsuarioDatos.emailOcupado(email);
     }
 
     public HashMap getDataClientes() {
@@ -82,7 +89,7 @@ public final class ControladorUsuario {
 
 
     /*obtener pedidos de un cliente especifico*/
-    public HashMap getDataPedidos(String nick) throws SQLException {
+    public HashMap getDataPedidos(String nick) throws SQLException, ClassNotFoundException {
         HashMap resultado = new HashMap();
         Cliente C = this._buscarCliente(nick);
         Iterator it = C.getPedidos().entrySet().iterator();
@@ -95,7 +102,7 @@ public final class ControladorUsuario {
     }
 
     /*Obtener todos los pedidos registrados*/
-    public HashMap getDataPedidos() throws SQLException {
+    public HashMap getDataPedidos() throws SQLException, ClassNotFoundException {
         HashMap resultado = new HashMap();
         Iterator it = this.getClientes().entrySet().iterator();
         while (it.hasNext()) {
@@ -107,7 +114,7 @@ public final class ControladorUsuario {
     }
     /*obtener pedidos de un producto*/
 
-    public HashMap getDataPedidosProducto(String R, String P) throws SQLException {
+    public HashMap getDataPedidosProducto(String R, String P) throws SQLException, ClassNotFoundException {
         HashMap resultado = new HashMap();
         HashMap aux = getDataPedidos();
         Iterator it = aux.entrySet().iterator();
@@ -130,11 +137,11 @@ public final class ControladorUsuario {
     }
     /*obtener pedido por numero*/
 
-    public DataPedido getDataPedido(int numero) throws SQLException {
+    public DataPedido getDataPedido(int numero) throws SQLException, ClassNotFoundException {
         return (DataPedido) getDataPedidos().get(numero);
     }
 
-    public HashMap consultarCategorias() throws SQLException {
+    public HashMap consultarCategorias() throws SQLException, ClassNotFoundException {
         HashMap resultado = new HashMap();
         java.sql.ResultSet rs;
         rs = CategoriaDatos.consultarCategorias();
@@ -156,6 +163,10 @@ public final class ControladorUsuario {
             }
         }
         return res;
+    }
+
+    public int cantidadPorCategoria(String categoria) {
+        return consultarRestaurantesPorCategoria(categoria).size();
     }
 
     public void insertarCliente(String nick, String email, String dir, String nombre, String apellido, String D, String M, String A, File img) throws SQLException, Exception {
@@ -194,8 +205,8 @@ public final class ControladorUsuario {
         }
         this.Restaurantes = retornarRestaurantes();
     }
-    
-    public void insertarCategoria(String nombre) throws SQLException{
+
+    public void insertarCategoria(String nombre) throws SQLException, ClassNotFoundException {
         CategoriaDatos.agregarCategoria(nombre);
         this.Categorias = consultarCategorias();
     }
@@ -251,7 +262,7 @@ public final class ControladorUsuario {
     }
     /*FALTA COMPLETAR ESTO!!!!!!!!!!!!!!!!!!*/
 
-    public HashMap retornarClientes() throws SQLException {
+    public HashMap retornarClientes() throws SQLException, ClassNotFoundException {
         HashMap resultado = new HashMap();
         java.sql.ResultSet rs = UsuarioDatos.listarClientes();
         while (rs.next()) {
@@ -267,11 +278,11 @@ public final class ControladorUsuario {
         return resultado;
     }
 
-    private String retornarIMGCliente(String nick) throws SQLException {
+    private String retornarIMGCliente(String nick) throws SQLException, ClassNotFoundException {
         return UsuarioDatos.obtenerIMGCliente(nick);
     }
 
-    public HashMap retornarRestaurantes() throws SQLException {
+    public HashMap retornarRestaurantes() throws SQLException, ClassNotFoundException {
         HashMap resultado = new HashMap();
         java.sql.ResultSet rs = UsuarioDatos.listarRestaurantes();
         while (rs.next()) {
@@ -293,7 +304,7 @@ public final class ControladorUsuario {
         return resultado;
     }
 
-    public HashMap retornarIMGsRestaurantes(String nick) throws SQLException {
+    public HashMap retornarIMGsRestaurantes(String nick) throws SQLException, ClassNotFoundException {
         HashMap resultado = new HashMap();
         java.sql.ResultSet rs = UsuarioDatos.listarIMGsRestaurante(nick);
         int index = 1;
@@ -304,7 +315,7 @@ public final class ControladorUsuario {
         return resultado;
     }
 
-    public HashMap retornarCategoriasRestaurantes(String nick) throws SQLException {
+    public HashMap retornarCategoriasRestaurantes(String nick) throws SQLException, ClassNotFoundException {
         HashMap resultado = new HashMap();
         java.sql.ResultSet rs = CategoriaDatos.listarCatsRestaurante(nick);
         while (rs.next()) {
@@ -332,7 +343,7 @@ public final class ControladorUsuario {
      Primero vemos si el usuario que buscamos esta entre los datos que 
      el sistema ya tiene y si no lo encontramos, buscamos en la base de datos
      */
-    public DataRestaurante buscarRestaurante(String nickname) throws SQLException {
+    public DataRestaurante buscarRestaurante(String nickname) throws SQLException, ClassNotFoundException {
         if ((Restaurante) Restaurantes.get(nickname) == null) {
             Restaurantes = this.retornarRestaurantes();
         }
@@ -343,7 +354,7 @@ public final class ControladorUsuario {
         return new DataRestaurante(R);
     }
 
-    public DataCliente buscarCliente(String nickname) throws SQLException {
+    public DataCliente buscarCliente(String nickname) throws SQLException, ClassNotFoundException {
         if ((Cliente) Clientes.get(nickname) == null) {
             Clientes = this.retornarRestaurantes();
         }
@@ -354,7 +365,7 @@ public final class ControladorUsuario {
         return new DataCliente(C);
     }
 
-    public Restaurante _buscarRestaurante(String nickname) throws SQLException {
+    public Restaurante _buscarRestaurante(String nickname) throws SQLException, ClassNotFoundException {
         if ((Restaurante) Restaurantes.get(nickname) == null) {
             Restaurantes = this.retornarRestaurantes();
         }
@@ -373,7 +384,7 @@ public final class ControladorUsuario {
         return null;
     }
 
-    public Cliente _buscarCliente(String nickname) throws SQLException {
+    public Cliente _buscarCliente(String nickname) throws SQLException, ClassNotFoundException {
         if ((Cliente) Clientes.get(nickname) == null) {
             Clientes = this.retornarRestaurantes();
         }
@@ -411,7 +422,7 @@ public final class ControladorUsuario {
         return numero;
     }
 
-    private void asignarPedidosAClientes() throws SQLException {
+    private void asignarPedidosAClientes() throws SQLException, ClassNotFoundException {
         Iterator it = Clientes.entrySet().iterator();
         //Asigno a cada cliente sus pedidos
         while (it.hasNext()) {
@@ -451,17 +462,17 @@ public final class ControladorUsuario {
 
     }
 
-    public void cancelarPedido(int numero) throws SQLException {
+    public void cancelarPedido(int numero) throws SQLException, ClassNotFoundException {
         PedidoDatos.eliminarPedido(numero);
         asignarPedidosAClientes();
     }
 
-    public void cambiarEstadoPedido(int numero, int estado) throws SQLException {
+    public void cambiarEstadoPedido(int numero, int estado) throws SQLException, ClassNotFoundException {
         PedidoDatos.modificarEstado(numero, estado);
         asignarPedidosAClientes();
     }
-    
-    public void actualizarDatos() throws SQLException{
+
+    public void actualizarDatos() throws SQLException, ClassNotFoundException {
         this.Restaurantes = retornarRestaurantes();
         CP.actualizarDatos();
         this.Clientes = retornarClientes();

@@ -253,16 +253,17 @@ public class QuickOrder extends javax.swing.JFrame {
 
     private void Menu_RRestauranteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Menu_RRestauranteActionPerformed
         if (!operando) {
-            RegistroRestaurante registroRestaurante = new RegistroRestaurante(this);
-            this.add(registroRestaurante, BorderLayout.CENTER);
-            Dimension desktopSize = this.getContentPane().getSize();
-            Dimension FrameSize = registroRestaurante.getSize();
-            registroRestaurante.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
-
             try {
+                RegistroRestaurante registroRestaurante = new RegistroRestaurante(this);
+                this.add(registroRestaurante, BorderLayout.CENTER);
+                Dimension desktopSize = this.getContentPane().getSize();
+                Dimension FrameSize = registroRestaurante.getSize();
+                registroRestaurante.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
                 registroRestaurante.setSelected(true);
                 operando = true;
             } catch (PropertyVetoException ex) {
+                Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
                 Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -412,6 +413,8 @@ public class QuickOrder extends javax.swing.JFrame {
                 Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
@@ -428,6 +431,8 @@ public class QuickOrder extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE);
                 Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Operacion cancelada", "Operacion cancelada", JOptionPane.DEFAULT_OPTION);
@@ -439,6 +444,8 @@ public class QuickOrder extends javax.swing.JFrame {
             CU.insertarCategoria(JOptionPane.showInputDialog("Ingrese el nombre de la categoria:"));
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Menu_RCategoriaActionPerformed

@@ -27,7 +27,7 @@ public class VerInfoPedido extends javax.swing.JInternalFrame {
 
     private PanelInfoPedido panelInfoPedido1 = null;
 
-    public VerInfoPedido(QuickOrder vp) throws SQLException {
+    public VerInfoPedido(QuickOrder vp) throws SQLException, ClassNotFoundException {
         this.ventanaPrincipal = vp;
         panelInfoPedido1 = new PanelInfoPedido(this);
 
@@ -39,7 +39,7 @@ public class VerInfoPedido extends javax.swing.JInternalFrame {
 
     }
 
-    public void cargarPedidos(String filtro) throws SQLException {
+    public void cargarPedidos(String filtro) throws SQLException, ClassNotFoundException {
         OBJs = ventanaPrincipal.CU.getDataPedidos();
         Iterator it = OBJs.entrySet().iterator();
         DefaultListModel model = new DefaultListModel();
@@ -154,6 +154,8 @@ public class VerInfoPedido extends javax.swing.JInternalFrame {
         try {
             cargarPedidos(jTextField1.getText());
         } catch (SQLException ex) {
+            Logger.getLogger(VerInfoPedido.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(VerInfoPedido.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jTextField1KeyReleased

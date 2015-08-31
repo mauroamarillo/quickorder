@@ -64,7 +64,7 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
         ListaRestaurante.setModel(model);
     }
 
-    private void cargarProductos(String R, String filtro) throws SQLException {
+    private void cargarProductos(String R, String filtro) throws SQLException, ClassNotFoundException {
         if (!R.isEmpty()) {
             HashMap OBJs = ventanaPrincipal.CU.buscarRestaurante(R).getIndividuales();
             Iterator it = OBJs.entrySet().iterator();
@@ -510,6 +510,8 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE);
                 Logger.getLogger(RegistroPromocion.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(RegistroPromocion.class.getName()).log(Level.SEVERE, null, ex);
             }
             limpiarTabla();
         }
@@ -548,6 +550,8 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
             cargarProductos(restaurante, Text_Filtro_Producto.getText());
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(RegistroPromocion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(RegistroPromocion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Text_Filtro_ProductoKeyReleased

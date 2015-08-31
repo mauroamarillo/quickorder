@@ -23,7 +23,7 @@ public class Extra {
         e = new ExtraD();
     }
 
-    public void cargarDatosPrueba() throws IOException, SQLException {
+    public void cargarDatosPrueba() throws IOException, SQLException, ClassNotFoundException {
         e.cargarDatosDePrueba();
         cu.actualizarDatos();
     }
