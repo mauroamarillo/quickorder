@@ -9,20 +9,21 @@ package Datos;
  *
  * @author usuario
  */
-
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Estructura {
+
     private Statement st;
-      
-    public Statement generarSt() throws  SQLException, ClassNotFoundException{
+
+    public Statement generarSt() throws SQLException, ClassNotFoundException {
         Configuracion config = new Configuracion();
         config.conectarBD();
-        
-      
-            st = config.getConexion().createStatement();
-            return st;
-      
+        st = config.getConexion().createStatement();
+        return st;
+    }
+
+    public void cerrarSt() throws SQLException {
+        st.getConnection().close();
     }
 }

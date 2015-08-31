@@ -18,13 +18,13 @@ import java.sql.Statement;
 public class ExtraD {
 
     private final Estructura es = new Estructura();
-    private final Statement st;
+    private Statement st;
 
-    public ExtraD() throws SQLException, ClassNotFoundException {
-        this.st = es.generarSt();
+    public ExtraD() {// throws SQLException, ClassNotFoundException {
+        //  this.st = es.generarSt();
     }
 
-    public void restaurarSchema() throws IOException  {/*
+    public void restaurarSchema() throws IOException {/*
          Runtime r;
          Process p;
          //ProcessBuilder pb;
@@ -60,7 +60,7 @@ public class ExtraD {
 
     }
 
-    public void cargarDatosDePrueba() throws IOException, SQLException {
+    public void cargarDatosDePrueba() throws IOException, SQLException, ClassNotFoundException {
         BufferedReader br = new BufferedReader(new FileReader("src/sql/datosPrueba.sql"));
         StringBuilder sb = new StringBuilder();
         String line = br.readLine();
@@ -74,6 +74,8 @@ public class ExtraD {
             line = br.readLine();
         }
         // JOptionPane.showMessageDialog(null, sb.toString(), "A ver", JOptionPane.INFORMATION_MESSAGE);
+        this.st = es.generarSt();
         st.execute(sb.toString());
+        st.getConnection().close();
     }
 }

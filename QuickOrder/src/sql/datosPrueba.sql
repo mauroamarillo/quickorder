@@ -5,23 +5,23 @@ TRUNCATE TABLE categorias CASCADE;
 
 -- Clientes e imagenes de clientes
 
-INSERT INTO usuarios(nickname, nombre, email, direccion) VALUES('costas', 'Gerardo', 'gcostas@gmail.com', 'Av. Italia 2078');
+INSERT INTO usuarios(nickname, contrasenia, nombre, email, direccion) VALUES('costas', '1234', 'Gerardo', 'gcostas@gmail.com', 'Av. Italia 2078');
 INSERT INTO clientes("nicknameC", apellido, "fechaN") VALUES('costas', 'Costas', '15/11/1983');
 INSERT INTO clientes_imagenes(cliente, imagen) VALUES ('costas', 'http://bit.ly/1yTfPav');
 
-INSERT INTO usuarios(nickname, nombre, email, direccion) VALUES('roro', 'Rodrigo', 'rcotelo@yahoo.com', 'Pdte. Berro 1548');
+INSERT INTO usuarios(nickname, contrasenia, nombre, email, direccion) VALUES('roro', '1234', 'Rodrigo', 'rcotelo@yahoo.com', 'Pdte. Berro 1548');
 INSERT INTO clientes("nicknameC", apellido, "fechaN") VALUES('roro', 'Cotelo', '02/08/1975');
 INSERT INTO clientes_imagenes(cliente, imagen) VALUES ('roro', 'http://bit.ly/Xwsg0F');
 
-INSERT INTO usuarios(nickname, nombre, email, direccion) VALUES('chechi', 'Cecilia', 'cgarrido@hotmail.com', 'Gral.Urquiza 1548');
+INSERT INTO usuarios(nickname, contrasenia,nombre, email, direccion) VALUES('chechi', '1234', 'Cecilia', 'cgarrido@hotmail.com', 'Gral.Urquiza 1548');
 INSERT INTO clientes("nicknameC", apellido, "fechaN") VALUES('chechi', 'Garrido', '12/09/1951');
 INSERT INTO clientes_imagenes(cliente, imagen) VALUES ('chechi', 'http://bit.ly/1AtwVOA');
 
-INSERT INTO usuarios(nickname, nombre, email, direccion) VALUES('andy', 'Andrea', 'agarcia@gmail.com', 'Dr. Manuel Albo 5412');
+INSERT INTO usuarios(nickname, contrasenia,nombre, email, direccion) VALUES('andy', '1234', 'Andrea', 'agarcia@gmail.com', 'Dr. Manuel Albo 5412');
 INSERT INTO clientes("nicknameC", apellido, "fechaN") VALUES('andy', 'Garcia', '28/07/1951');
 INSERT INTO clientes_imagenes(cliente, imagen) VALUES ('andy', 'http://bit.ly/1AtxfwQ');
 
-INSERT INTO usuarios(nickname, nombre, email, direccion) VALUES('weiss', 'Adrian', 'aweiss@hotmail.com', 'Monte Caseros 5615');
+INSERT INTO usuarios(nickname, contrasenia,nombre, email, direccion) VALUES('weiss', '1234', 'Adrian', 'aweiss@hotmail.com', 'Monte Caseros 5615');
 INSERT INTO clientes("nicknameC", apellido, "fechaN") VALUES('weiss', 'Weiss', '23/12/1978');
 INSERT INTO clientes_imagenes(cliente, imagen) VALUES ('weiss', 'http://bit.ly/1uPV2XC');
 
@@ -45,16 +45,16 @@ INSERT INTO categorias(nombre) VALUES('Sushi');
 
 -- Restaurantes
 
-INSERT INTO usuarios(nickname, nombre, email, direccion) VALUES('mera', 'Pizzeria Mera', 'mera@hotmail.com', 'Av. 8 de octubre 2704');
+INSERT INTO usuarios(nickname,contrasenia, nombre, email, direccion) VALUES('mera', '1234', 'Pizzeria Mera', 'mera@hotmail.com', 'Av. 8 de octubre 2704');
 INSERT INTO restaurantes("nicknameR") VALUES('mera');
 
-INSERT INTO usuarios(nickname, nombre, email, direccion) VALUES('rossell', 'Bar Rosell', 'bar.rosell@gmail.com', 'Bvar. Artigas 1601');
+INSERT INTO usuarios(nickname,contrasenia, nombre, email, direccion) VALUES('rossell','1234', 'Bar Rosell', 'bar.rosell@gmail.com', 'Bvar. Artigas 1601');
 INSERT INTO restaurantes("nicknameR") VALUES('rossell');
 
-INSERT INTO usuarios(nickname, nombre, email, direccion) VALUES('bocatti', 'Empanadas Bocatti', 'bocatti@gmail.com', '18 de julio 2138');
+INSERT INTO usuarios(nickname,contrasenia, nombre, email, direccion) VALUES('bocatti','1234', 'Empanadas Bocatti', 'bocatti@gmail.com', '18 de julio 2138');
 INSERT INTO restaurantes("nicknameR") VALUES('bocatti');
 
-INSERT INTO usuarios(nickname, nombre, email, direccion) VALUES('winb', 'Wok in Box', 'wok.in.box@hotmail.com', 'Libertad 2535');
+INSERT INTO usuarios(nickname,contrasenia, nombre, email, direccion) VALUES('winb', '1234','Wok in Box', 'wok.in.box@hotmail.com', 'Libertad 2535');
 INSERT INTO restaurantes("nicknameR") VALUES('winb');
 
 -- Categorias de restaurantes
