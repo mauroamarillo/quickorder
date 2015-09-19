@@ -24,7 +24,7 @@ public class VerInfoClientes extends javax.swing.JInternalFrame {
 
     QuickOrder ventanaPrincipal;
 
-    public VerInfoClientes(QuickOrder vp) throws SQLException {
+    public VerInfoClientes(QuickOrder vp) throws SQLException, ClassNotFoundException {
         this.ventanaPrincipal = vp;
         initComponents();
         cargarClientes(new String());
@@ -33,7 +33,7 @@ public class VerInfoClientes extends javax.swing.JInternalFrame {
         this.setVisible(true);
     }
 
-    private void cargarClientes(String filtro) throws SQLException {
+    private void cargarClientes(String filtro) throws SQLException, ClassNotFoundException {
         HashMap OBJs = ventanaPrincipal.CU.getDataClientes();
         Iterator it = OBJs.entrySet().iterator();
         DefaultListModel model = new DefaultListModel();
@@ -179,6 +179,8 @@ public class VerInfoClientes extends javax.swing.JInternalFrame {
         try {
             cargarClientes(jTextField1.getText());
         } catch (SQLException ex) {
+            Logger.getLogger(VerInfoClientes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(VerInfoClientes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jTextField1KeyReleased

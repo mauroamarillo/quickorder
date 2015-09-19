@@ -98,6 +98,8 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
         Scroll_Imagenes = new javax.swing.JScrollPane();
         jButton1 = new javax.swing.JButton();
         Button_NCategoria = new javax.swing.JButton();
+        Label_Nickname1 = new javax.swing.JLabel();
+        Text_Pass = new javax.swing.JTextField();
 
         jFileChooser1.setCurrentDirectory(new java.io.File("C:\\Users\\Jean\\Pictures"));
         jFileChooser1.setFileFilter(new FileNameExtensionFilter("JPG Images", "jpg"));
@@ -186,6 +188,14 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
             }
         });
 
+        Label_Nickname1.setText("Contraseña:");
+
+        Text_Pass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Text_PassActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -203,16 +213,19 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(Button_Cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(Label_Nickname)
-                                    .addComponent(Label_Nombre)
-                                    .addComponent(Label_Email)
-                                    .addComponent(Label_Direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Label_Categorias)
-                                    .addComponent(Scroll_Categorias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(Button_NCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(Label_Nickname)
+                                        .addComponent(Label_Nombre)
+                                        .addComponent(Label_Email)
+                                        .addComponent(Label_Direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(Label_Categorias)
+                                        .addComponent(Scroll_Categorias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(Button_NCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(Label_Nickname1))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Text_Pass)
                                     .addComponent(Text_Nickname)
                                     .addComponent(Text_Nombre)
                                     .addComponent(Text_Email)
@@ -232,10 +245,14 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
             .addGroup(layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addComponent(Label_Titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Text_Nickname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Label_Nickname))
+                .addGap(7, 7, 7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Text_Pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Label_Nickname1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Text_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -264,7 +281,7 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Button_Registrar)
                     .addComponent(Button_Cancelar))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         pack();
@@ -290,7 +307,14 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
         idCat = PC.getCategorias();
         HashMap IMGs = PI.GuardarColeccion(Text_Nickname.getText());
         try {
-            ventanaPrincipal.CU.insertarRestaurante(Text_Nickname.getText(), Text_Email.getText(), Text_Direccion.getText(), Text_Nombre.getText(), IMGs, idCat);
+            ventanaPrincipal.CU.insertarRestaurante(
+                    Text_Nickname.getText(),
+                    Text_Email.getText(),
+                    Text_Direccion.getText(),
+                    Text_Nombre.getText(),
+                    IMGs,
+                    idCat,
+                    Text_Pass.getText());
             JOptionPane.showMessageDialog(this, "Restaurante registrado", "- EXITO -", JOptionPane.DEFAULT_OPTION);
             ventanaPrincipal.setOperando(false);
             this.dispose();
@@ -328,6 +352,10 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
         }
     }//GEN-LAST:event_Button_NCategoriaActionPerformed
 
+    private void Text_PassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Text_PassActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Text_PassActionPerformed
+
     @Override
     public void internalFrameClosing(InternalFrameEvent e) {
         ventanaPrincipal.setOperando(false);
@@ -343,6 +371,7 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
     private javax.swing.JLabel Label_Email;
     private javax.swing.JLabel Label_Imagenes;
     private javax.swing.JLabel Label_Nickname;
+    private javax.swing.JLabel Label_Nickname1;
     private javax.swing.JLabel Label_Nombre;
     private javax.swing.JLabel Label_Titulo;
     private javax.swing.JScrollPane Scroll_Categorias;
@@ -351,6 +380,7 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
     private javax.swing.JTextField Text_Email;
     private javax.swing.JTextField Text_Nickname;
     private javax.swing.JTextField Text_Nombre;
+    private javax.swing.JTextField Text_Pass;
     private javax.swing.JButton jButton1;
     private javax.swing.JFileChooser jFileChooser1;
     // End of variables declaration//GEN-END:variables

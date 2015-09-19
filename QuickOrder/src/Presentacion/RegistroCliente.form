@@ -52,8 +52,8 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
                       <Component id="jLabel1" min="-2" pref="239" max="-2" attributes="0"/>
                       <EmptySpace pref="30" max="32767" attributes="0"/>
                       <Component id="Label_resultadoImg" min="-2" max="-2" attributes="0"/>
@@ -68,22 +68,19 @@
                           <Component id="Label_Fecha" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="Label_Direccion" alignment="0" min="-2" pref="95" max="-2" attributes="0"/>
                           <Component id="Button_Registrar" alignment="0" min="-2" pref="103" max="-2" attributes="0"/>
+                          <Component id="Label_Nickname1" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="107" max="-2" attributes="0"/>
-                                  <Component id="Button_Cancelar" min="-2" pref="103" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="Text_Nickname" alignment="0" pref="210" max="32767" attributes="0"/>
-                                  <Component id="Text_Nombre" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="Text_Apellido" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="Text_Email" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="Text_Direccion" alignment="0" max="32767" attributes="0"/>
-                              </Group>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="107" max="-2" attributes="0"/>
+                              <Component id="Button_Cancelar" min="-2" pref="103" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="Text_Nickname" alignment="0" max="32767" attributes="0"/>
+                          <Component id="Text_Nombre" alignment="0" max="32767" attributes="0"/>
+                          <Component id="Text_Apellido" alignment="0" max="32767" attributes="0"/>
+                          <Component id="Text_Email" alignment="0" max="32767" attributes="0"/>
+                          <Component id="Text_Direccion" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Component id="Box_Dia" min="-2" pref="39" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -91,6 +88,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="Box_Anio" max="32767" attributes="0"/>
                           </Group>
+                          <Component id="Text_Pass" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
                   </Group>
@@ -112,6 +110,11 @@
                   <Component id="Label_Nickname" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="Label_Nickname1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Text_Pass" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="Text_Nombre" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="Label_Nombre" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -138,12 +141,12 @@
                   <Component id="Box_Dia" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="Box_Anio" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="Button_Registrar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="Button_Cancelar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="168" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="147" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -289,6 +292,16 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Box_AnioActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="Label_Nickname1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Contrase&#xf1;a:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="Text_Pass">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Text_PassActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

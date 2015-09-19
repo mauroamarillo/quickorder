@@ -64,18 +64,22 @@
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="Button_Cancelar" min="-2" pref="103" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="Label_Nickname" min="-2" max="-2" attributes="0"/>
-                                  <Component id="Label_Nombre" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="Label_Email" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="Label_Direccion" alignment="0" min="-2" pref="95" max="-2" attributes="0"/>
-                                  <Component id="Label_Categorias" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="Scroll_Categorias" max="32767" attributes="0"/>
-                                  <Component id="Button_NCategoria" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="Label_Nickname" min="-2" max="-2" attributes="0"/>
+                                      <Component id="Label_Nombre" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="Label_Email" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="Label_Direccion" alignment="0" min="-2" pref="95" max="-2" attributes="0"/>
+                                      <Component id="Label_Categorias" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="Scroll_Categorias" max="32767" attributes="0"/>
+                                      <Component id="Button_NCategoria" alignment="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Component id="Label_Nickname1" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="Text_Pass" max="32767" attributes="0"/>
                                   <Component id="Text_Nickname" alignment="0" max="32767" attributes="0"/>
                                   <Component id="Text_Nombre" alignment="0" max="32767" attributes="0"/>
                                   <Component id="Text_Email" alignment="0" max="32767" attributes="0"/>
@@ -105,10 +109,15 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
               <Component id="Label_Titulo" min="-2" pref="31" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="Text_Nickname" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="Label_Nickname" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="Text_Pass" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Label_Nickname1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -145,7 +154,7 @@
                   <Component id="Button_Registrar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="Button_Cancelar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="17" max="32767" attributes="0"/>
+              <EmptySpace pref="39" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -270,6 +279,16 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Button_NCategoriaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="Label_Nickname1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Contrase&#xf1;a:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="Text_Pass">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Text_PassActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

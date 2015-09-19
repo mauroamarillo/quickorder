@@ -78,6 +78,8 @@ public class RegistroCliente extends javax.swing.JInternalFrame implements Inter
         Box_Mes = new javax.swing.JComboBox();
         Box_Dia = new javax.swing.JComboBox();
         Box_Anio = new javax.swing.JComboBox();
+        Label_Nickname1 = new javax.swing.JLabel();
+        Text_Pass = new javax.swing.JTextField();
 
         jFileChooser1.setCurrentDirectory(new java.io.File("C:\\Users\\Jean\\Pictures"));
         jFileChooser1.setFileFilter(new FileNameExtensionFilter("Imagenes jpg ", "jpg"));
@@ -174,19 +176,27 @@ public class RegistroCliente extends javax.swing.JInternalFrame implements Inter
             }
         });
 
+        Label_Nickname1.setText("Contraseña:");
+
+        Text_Pass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Text_PassActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(65, 65, 65)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                         .addComponent(Label_resultadoImg)
                         .addGap(100, 100, 100))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Label_Nickname)
                             .addComponent(Label_Nombre)
@@ -194,25 +204,25 @@ public class RegistroCliente extends javax.swing.JInternalFrame implements Inter
                             .addComponent(Label_Email)
                             .addComponent(Label_Fecha)
                             .addComponent(Label_Direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Button_Registrar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(Button_Registrar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Label_Nickname1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(107, 107, 107)
-                                    .addComponent(Button_Cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(Text_Nickname, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-                                    .addComponent(Text_Nombre)
-                                    .addComponent(Text_Apellido)
-                                    .addComponent(Text_Email)
-                                    .addComponent(Text_Direccion)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(107, 107, 107)
+                                .addComponent(Button_Cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(Text_Nickname)
+                            .addComponent(Text_Nombre)
+                            .addComponent(Text_Apellido)
+                            .addComponent(Text_Email)
+                            .addComponent(Text_Direccion)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(Box_Dia, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(Box_Mes, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Box_Anio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(Box_Anio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(Text_Pass))
                         .addGap(76, 76, 76))))
         );
         layout.setVerticalGroup(
@@ -227,6 +237,10 @@ public class RegistroCliente extends javax.swing.JInternalFrame implements Inter
                     .addComponent(Text_Nickname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Label_Nickname))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Label_Nickname1)
+                    .addComponent(Text_Pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Text_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Label_Nombre))
@@ -248,11 +262,11 @@ public class RegistroCliente extends javax.swing.JInternalFrame implements Inter
                     .addComponent(Box_Mes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Box_Dia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Box_Anio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(50, 50, 50)
+                .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Button_Registrar)
                     .addComponent(Button_Cancelar))
-                .addGap(168, 168, 168))
+                .addGap(147, 147, 147))
         );
 
         pack();
@@ -296,7 +310,8 @@ public class RegistroCliente extends javax.swing.JInternalFrame implements Inter
                     String.valueOf(Box_Dia.getSelectedIndex() + 1),
                     Box_Mes.getSelectedItem().toString(),
                     String.valueOf((int) Box_Anio.getSelectedItem()),
-                    foto);
+                    foto,
+                    Text_Pass.getText());
             JOptionPane.showMessageDialog(this, "Cliente registrado", "- EXITO -", JOptionPane.DEFAULT_OPTION);
             ventanaPrincipal.setOperando(false);
             this.dispose();
@@ -319,6 +334,10 @@ public class RegistroCliente extends javax.swing.JInternalFrame implements Inter
     private void Box_AnioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Box_AnioActionPerformed
         setearDia(Box_Mes.getSelectedIndex() + 1, (int) Box_Anio.getSelectedItem());
     }//GEN-LAST:event_Box_AnioActionPerformed
+
+    private void Text_PassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Text_PassActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Text_PassActionPerformed
     private void setearDia(int mes, int anio) {
         int diasMes = 0;
         switch (mes) {
@@ -374,6 +393,7 @@ public class RegistroCliente extends javax.swing.JInternalFrame implements Inter
     private javax.swing.JLabel Label_Email;
     private javax.swing.JLabel Label_Fecha;
     private javax.swing.JLabel Label_Nickname;
+    private javax.swing.JLabel Label_Nickname1;
     private javax.swing.JLabel Label_Nombre;
     private javax.swing.JLabel Label_resultadoImg;
     private javax.swing.JTextField Text_Apellido;
@@ -381,6 +401,7 @@ public class RegistroCliente extends javax.swing.JInternalFrame implements Inter
     private javax.swing.JTextField Text_Email;
     private javax.swing.JTextField Text_Nickname;
     private javax.swing.JTextField Text_Nombre;
+    private javax.swing.JTextField Text_Pass;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables

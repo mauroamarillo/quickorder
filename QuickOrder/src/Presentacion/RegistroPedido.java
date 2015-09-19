@@ -51,7 +51,7 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
     HashMap LineasPedido;
     String restaurante;
 
-    public RegistroPedido(QuickOrder vp) throws SQLException {
+    public RegistroPedido(QuickOrder vp) throws SQLException, ClassNotFoundException {
         this.ventanaPrincipal = vp;
         initComponents();
         modeloTabla = new DefaultTableModel();
@@ -91,7 +91,7 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         ArbolRestaurantes.setCellRenderer(renderer);                    // asigno el RestaurantesCellRenderer
     }
 
-    private void cargarClientes() throws SQLException {
+    private void cargarClientes() throws SQLException, ClassNotFoundException {
         DefaultListModel model = new DefaultListModel();
         HashMap clientes = ventanaPrincipal.CU.getDataClientes();
 
