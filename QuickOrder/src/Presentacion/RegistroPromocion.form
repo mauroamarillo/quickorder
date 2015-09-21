@@ -254,23 +254,23 @@
     </Container>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Nombre: "/>
+        <Property name="text" type="java.lang.String" value="Nombre*: "/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Descripcion:"/>
+        <Property name="text" type="java.lang.String" value="Descripcion*:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Descuento:"/>
+        <Property name="text" type="java.lang.String" value="Descuento*:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Restaurante -&gt; "/>
+        <Property name="text" type="java.lang.String" value="Restaurante* -&gt; "/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="Label_Img">
@@ -405,7 +405,7 @@
     <Component class="javax.swing.JLabel" name="jLabel9">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Producto -&gt; "/>
+        <Property name="text" type="java.lang.String" value="Producto* -&gt; "/>
       </Properties>
     </Component>
   </SubComponents>

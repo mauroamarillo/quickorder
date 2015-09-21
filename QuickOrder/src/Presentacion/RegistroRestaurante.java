@@ -136,13 +136,13 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
             }
         });
 
-        Label_Nickname.setText("Nickname:");
+        Label_Nickname.setText("Nickname*:");
 
-        Label_Nombre.setText("Nombre:");
+        Label_Nombre.setText("Nombre*:");
 
-        Label_Email.setText("Email:");
+        Label_Email.setText("Email*:");
 
-        Label_Direccion.setText("Dirección:");
+        Label_Direccion.setText("Dirección*:");
 
         Label_Titulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         Label_Titulo.setText("- Ingresar datos del restaurante -");
@@ -150,7 +150,7 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
 
         Label_Imagenes.setText("Imagenes: ");
 
-        Label_Categorias.setText("Categorias: ");
+        Label_Categorias.setText("Categorias* (al menos 1): ");
 
         Button_Registrar.setText("Registrar");
         Button_Registrar.addActionListener(new java.awt.event.ActionListener() {
@@ -188,7 +188,7 @@ public class RegistroRestaurante extends javax.swing.JInternalFrame implements I
             }
         });
 
-        Label_Nickname1.setText("Contraseña:");
+        Label_Nickname1.setText("Contraseña*:");
 
         Text_Pass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

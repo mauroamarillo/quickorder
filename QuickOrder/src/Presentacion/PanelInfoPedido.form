@@ -65,7 +65,7 @@
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="ComboEstado" max="32767" attributes="0"/>
                               <Component id="jButton2" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jButton1" alignment="1" max="32767" attributes="0"/>
+                              <Component id="jButton1" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -85,7 +85,7 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="Label_Cliente" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -95,11 +95,6 @@
                           <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="Label_Restaurante" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                  </Group>
-                  <Component id="jButton2" alignment="0" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -111,14 +106,15 @@
                           <Component id="Label_Fecha" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jButton2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
-              <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="159" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
@@ -174,9 +170,9 @@
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="4" rowCount="4">
                 <Column editable="false" title="Producto" type="java.lang.Object"/>
-                <Column editable="false" title="Costo" type="java.lang.Integer"/>
+                <Column editable="false" title="Costo $" type="java.lang.Integer"/>
                 <Column editable="false" title="Cantidad" type="java.lang.Integer"/>
-                <Column editable="false" title="SubTotal" type="java.lang.Integer"/>
+                <Column editable="false" title="SubTotal $" type="java.lang.Integer"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -240,7 +236,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Costo Total:"/>
+        <Property name="text" type="java.lang.String" value="Costo Total: $"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton2">

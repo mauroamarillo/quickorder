@@ -154,7 +154,6 @@ public class PanelInfoProducto extends javax.swing.JPanel implements Runnable {
         Label_IMG = new javax.swing.JLabel();
         Label_Nombre = new javax.swing.JLabel();
         Label_Tipo = new javax.swing.JLabel();
-        Label_Descripcion = new javax.swing.JTextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
         TablaIndividuales = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
@@ -164,6 +163,8 @@ public class PanelInfoProducto extends javax.swing.JPanel implements Runnable {
         jScrollPane2 = new javax.swing.JScrollPane();
         TablaPedidos = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        Label_Descripcion = new javax.swing.JTextArea();
 
         setMaximumSize(new java.awt.Dimension(450, 418));
         setMinimumSize(new java.awt.Dimension(450, 418));
@@ -186,19 +187,6 @@ public class PanelInfoProducto extends javax.swing.JPanel implements Runnable {
         Label_Nombre.setText("Nombre Producto");
 
         Label_Tipo.setText("   ");
-
-        Label_Descripcion.setEditable(false);
-        Label_Descripcion.setBackground(new java.awt.Color(240, 240, 240));
-        Label_Descripcion.setColumns(20);
-        Label_Descripcion.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
-        Label_Descripcion.setLineWrap(true);
-        Label_Descripcion.setRows(5);
-        Label_Descripcion.setWrapStyleWord(true);
-        Label_Descripcion.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        Label_Descripcion.setMaximumSize(new java.awt.Dimension(230, 39));
-        Label_Descripcion.setMinimumSize(new java.awt.Dimension(230, 39));
-        Label_Descripcion.setSelectedTextColor(javax.swing.UIManager.getDefaults().getColor("Button.background"));
-        Label_Descripcion.setSelectionColor(java.awt.Color.lightGray);
 
         TablaIndividuales.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -236,7 +224,7 @@ public class PanelInfoProducto extends javax.swing.JPanel implements Runnable {
 
         Label_Precio.setText(" ");
 
-        jLabel5.setText("Precio: ");
+        jLabel5.setText("Precio: $ ");
 
         TablaPedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -246,7 +234,7 @@ public class PanelInfoProducto extends javax.swing.JPanel implements Runnable {
                 {null, null, null}
             },
             new String [] {
-                "Cliente", "Fecha", "Monto"
+                "Cliente", "Fecha", "Monto $"
             }
         ) {
             Class[] types = new Class [] {
@@ -278,6 +266,20 @@ public class PanelInfoProducto extends javax.swing.JPanel implements Runnable {
 
         jLabel6.setText("Pedidos");
 
+        Label_Descripcion.setEditable(false);
+        Label_Descripcion.setBackground(new java.awt.Color(240, 240, 240));
+        Label_Descripcion.setColumns(20);
+        Label_Descripcion.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        Label_Descripcion.setLineWrap(true);
+        Label_Descripcion.setRows(5);
+        Label_Descripcion.setWrapStyleWord(true);
+        Label_Descripcion.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        Label_Descripcion.setMaximumSize(new java.awt.Dimension(230, 39));
+        Label_Descripcion.setMinimumSize(new java.awt.Dimension(230, 39));
+        Label_Descripcion.setSelectedTextColor(javax.swing.UIManager.getDefaults().getColor("Button.background"));
+        Label_Descripcion.setSelectionColor(java.awt.Color.lightGray);
+        jScrollPane3.setViewportView(Label_Descripcion);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -287,33 +289,41 @@ public class PanelInfoProducto extends javax.swing.JPanel implements Runnable {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Label_Tipo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(Label_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 5, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Label_IMG, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel3))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
                                     .addComponent(jLabel4)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel2))
+                                    .addComponent(jLabel5))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(Label_Activa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(Label_Precio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(Label_Tipo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(Label_Descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(Label_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Label_IMG, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
+                                    .addComponent(Label_Precio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(128, 128, 128))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18))))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -330,26 +340,26 @@ public class PanelInfoProducto extends javax.swing.JPanel implements Runnable {
                             .addComponent(jLabel1)
                             .addComponent(Label_Tipo))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Label_Descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(Label_Precio))
-                        .addGap(1, 1, 1)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(Label_Activa))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(Label_Precio))
+                .addGap(1, 1, 1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(Label_Activa))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGap(21, 21, 21))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -379,6 +389,7 @@ public class PanelInfoProducto extends javax.swing.JPanel implements Runnable {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     // End of variables declaration//GEN-END:variables
 
     @Override

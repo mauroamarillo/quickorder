@@ -75,10 +75,10 @@
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="Text_Precio" alignment="0" min="-2" pref="188" max="-2" attributes="0"/>
                           <Component id="jScrollPane2" alignment="1" min="-2" pref="188" max="-2" attributes="0"/>
@@ -192,23 +192,23 @@
     </Container>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Nombre: "/>
+        <Property name="text" type="java.lang.String" value="Nombre*: "/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Descripcion:"/>
+        <Property name="text" type="java.lang.String" value="Descripcion*:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Precio:"/>
+        <Property name="text" type="java.lang.String" value="Precio*:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Restaurante: "/>
+        <Property name="text" type="java.lang.String" value="Restaurante*: "/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="Label_Img">

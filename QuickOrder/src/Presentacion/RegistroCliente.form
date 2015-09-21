@@ -179,32 +179,32 @@
     </Component>
     <Component class="javax.swing.JLabel" name="Label_Nickname">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Nickname:"/>
+        <Property name="text" type="java.lang.String" value="Nickname*:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="Label_Nombre">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Nombre:"/>
+        <Property name="text" type="java.lang.String" value="Nombre*:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="Label_Apellido">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Apellido:"/>
+        <Property name="text" type="java.lang.String" value="Apellido*:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="Label_Email">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Email:"/>
+        <Property name="text" type="java.lang.String" value="Email*:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="Label_Direccion">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Direcci&#xf3;n:"/>
+        <Property name="text" type="java.lang.String" value="Direcci&#xf3;n*:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="Label_Fecha">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Fecha de Nacimiento:"/>
+        <Property name="text" type="java.lang.String" value="Fecha de Nacimiento*:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="Label_resultadoImg">
@@ -296,7 +296,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="Label_Nickname1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Contrase&#xf1;a:"/>
+        <Property name="text" type="java.lang.String" value="Contrase&#xf1;a*:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="Text_Pass">

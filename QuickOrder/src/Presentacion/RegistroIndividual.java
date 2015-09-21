@@ -127,14 +127,14 @@ public class RegistroIndividual extends javax.swing.JInternalFrame {
         jList2.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(jList2);
 
-        jLabel1.setText("Nombre: ");
+        jLabel1.setText("Nombre*: ");
 
-        jLabel2.setText("Descripcion:");
+        jLabel2.setText("Descripcion*:");
 
-        jLabel3.setText("Precio:");
+        jLabel3.setText("Precio*:");
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Restaurante: ");
+        jLabel4.setText("Restaurante*: ");
 
         Label_Img.setBackground(new java.awt.Color(45, 245, 245));
         Label_Img.setFont(new java.awt.Font("High Tower Text", 0, 24)); // NOI18N
@@ -194,9 +194,9 @@ public class RegistroIndividual extends javax.swing.JInternalFrame {
                             .addComponent(Text_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel7))
-                        .addGap(18, 18, 18)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Text_Precio, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))

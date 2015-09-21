@@ -182,22 +182,22 @@
     </Component>
     <Component class="javax.swing.JLabel" name="Label_Nickname">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Nickname:"/>
+        <Property name="text" type="java.lang.String" value="Nickname*:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="Label_Nombre">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Nombre:"/>
+        <Property name="text" type="java.lang.String" value="Nombre*:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="Label_Email">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Email:"/>
+        <Property name="text" type="java.lang.String" value="Email*:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="Label_Direccion">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Direcci&#xf3;n:"/>
+        <Property name="text" type="java.lang.String" value="Direcci&#xf3;n*:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="Label_Titulo">
@@ -216,7 +216,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="Label_Categorias">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Categorias: "/>
+        <Property name="text" type="java.lang.String" value="Categorias* (al menos 1): "/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="Button_Registrar">
@@ -283,7 +283,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="Label_Nickname1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Contrase&#xf1;a:"/>
+        <Property name="text" type="java.lang.String" value="Contrase&#xf1;a*:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="Text_Pass">

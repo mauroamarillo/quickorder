@@ -227,14 +227,14 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(ListaRestaurante);
 
-        jLabel1.setText("Nombre: ");
+        jLabel1.setText("Nombre*: ");
 
-        jLabel2.setText("Descripcion:");
+        jLabel2.setText("Descripcion*:");
 
-        jLabel3.setText("Descuento:");
+        jLabel3.setText("Descuento*:");
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Restaurante -> ");
+        jLabel4.setText("Restaurante* -> ");
 
         Label_Img.setBackground(new java.awt.Color(45, 245, 245));
         Label_Img.setFont(new java.awt.Font("High Tower Text", 0, 24)); // NOI18N
@@ -322,7 +322,7 @@ public class RegistroPromocion extends javax.swing.JInternalFrame {
         jLabel8.setText("Seleccionar");
 
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("Producto -> ");
+        jLabel9.setText("Producto* -> ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

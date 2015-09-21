@@ -122,17 +122,17 @@ public class RegistroCliente extends javax.swing.JInternalFrame implements Inter
             }
         });
 
-        Label_Nickname.setText("Nickname:");
+        Label_Nickname.setText("Nickname*:");
 
-        Label_Nombre.setText("Nombre:");
+        Label_Nombre.setText("Nombre*:");
 
-        Label_Apellido.setText("Apellido:");
+        Label_Apellido.setText("Apellido*:");
 
-        Label_Email.setText("Email:");
+        Label_Email.setText("Email*:");
 
-        Label_Direccion.setText("Dirección:");
+        Label_Direccion.setText("Dirección*:");
 
-        Label_Fecha.setText("Fecha de Nacimiento:");
+        Label_Fecha.setText("Fecha de Nacimiento*:");
 
         Label_resultadoImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/perfil.jpg"))); // NOI18N
         Label_resultadoImg.setName(""); // NOI18N
@@ -176,7 +176,7 @@ public class RegistroCliente extends javax.swing.JInternalFrame implements Inter
             }
         });
 
-        Label_Nickname1.setText("Contraseña:");
+        Label_Nickname1.setText("Contraseña*:");
 
         Text_Pass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
