@@ -78,7 +78,7 @@ public class PanelInfoPedido extends javax.swing.JPanel {
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
             DataProdPedido DP = (DataProdPedido) entry.getValue();
-            modeloTabla.addRow(new Object[]{DP.getProducto().getNombre(), DP.getProducto().getPrecio(), DP.getCantidad(), (DP.getProducto().getPrecio() * DP.getCantidad())});
+            modeloTabla.addRow(new Object[]{DP.getProducto().getNombre(), "$ " + DP.getProducto().getPrecio(), DP.getCantidad(), "$ " + (DP.getProducto().getPrecio() * DP.getCantidad())});
         }
     }
 
@@ -140,7 +140,7 @@ public class PanelInfoPedido extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "Producto", "Costo $", "Cantidad", "SubTotal $"
+                "Producto", "Precio individual", "Cantidad", "SubTotal"
             }
         ) {
             Class[] types = new Class [] {
@@ -185,7 +185,7 @@ public class PanelInfoPedido extends javax.swing.JPanel {
 
         Label_Costo.setText("  ");
 
-        jLabel7.setText("Costo Total: $");
+        jLabel7.setText("Monto Total:");
 
         jButton2.setText("Cambiar Estado");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -207,20 +207,16 @@ public class PanelInfoPedido extends javax.swing.JPanel {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel2)
-                                            .addGap(34, 34, 34)
-                                            .addComponent(Label_Cliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jLabel3)
-                                                .addComponent(jLabel7)
-                                                .addComponent(jLabel5))
-                                            .addGap(16, 16, 16)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(Label_Fecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(Label_Restaurante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(Label_Costo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                        .addComponent(jLabel3)
+                                        .addComponent(jLabel7)
+                                        .addComponent(jLabel5)
+                                        .addComponent(jLabel2))
+                                    .addGap(16, 16, 16)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(Label_Cliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(Label_Fecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(Label_Restaurante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(Label_Costo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGap(34, 34, 34))
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(Label_Numero, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
