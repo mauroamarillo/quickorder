@@ -1,5 +1,6 @@
 package Presentacion;
 
+import Logica.DataTypes.DataHistorialPedido;
 import Logica.DataTypes.DataPedido;
 import Logica.DataTypes.DataProdPedido;
 import Logica.Estado;
@@ -17,7 +18,8 @@ import javax.swing.table.DefaultTableModel;
 
 public class PanelInfoPedido extends javax.swing.JPanel {
 
-    DefaultTableModel modeloTabla;
+    DefaultTableModel modeloTablaP;
+    DefaultTableModel modeloTablaH;
     HashMap dataLineasProd;
     int pedido;
     VerInfoPedido VIP;
@@ -25,18 +27,18 @@ public class PanelInfoPedido extends javax.swing.JPanel {
     public PanelInfoPedido(VerInfoPedido vip) {
         this.VIP = vip;
         initComponents();
-        modeloTabla = (DefaultTableModel) TablaProd.getModel();
-        TablaProd.setModel(modeloTabla);
-        limpiarTabla();
+        modeloTablaP = (DefaultTableModel) TablaProd.getModel();
+        TablaProd.setModel(modeloTablaP);
+        limpiarTablas();
         dataLineasProd = new HashMap();
         ocultarTodo();
     }
 
     public PanelInfoPedido(DataPedido DC) throws IOException {
         initComponents();
-        modeloTabla = (DefaultTableModel) TablaProd.getModel();
-        TablaProd.setModel(modeloTabla);
-        limpiarTabla();
+        modeloTablaP = (DefaultTableModel) TablaProd.getModel();
+        TablaProd.setModel(modeloTablaP);
+        limpiarTablas();
         dataLineasProd = new HashMap();
         cargarInfo(DC);
         ComboEstado.setEnabled(false);
@@ -69,8 +71,9 @@ public class PanelInfoPedido extends javax.swing.JPanel {
         if (DC.getEstado().equals(Estado.enviado) || DC.getEstado().equals(Estado.recibido)) {
             jButton1.setVisible(false);
         }
-        limpiarTabla();
+        limpiarTablas();
         cargarTablaPedidos();
+        cargarTablaHistorial(DC.getHistorialEstados());
     }
 
     public void cargarTablaPedidos() {
@@ -78,14 +81,29 @@ public class PanelInfoPedido extends javax.swing.JPanel {
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
             DataProdPedido DP = (DataProdPedido) entry.getValue();
-            modeloTabla.addRow(new Object[]{DP.getProducto().getNombre(), "$ " + DP.getProducto().getPrecio(), DP.getCantidad(), "$ " + (DP.getProducto().getPrecio() * DP.getCantidad())});
+            modeloTablaP.addRow(new Object[]{DP.getProducto().getNombre(), "$ " + DP.getProducto().getPrecio(), DP.getCantidad(), "$ " + (DP.getProducto().getPrecio() * DP.getCantidad())});
+        }
+    }
+    
+    public void cargarTablaHistorial(HashMap datos) {
+        Iterator it = datos.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            DataHistorialPedido DP = (DataHistorialPedido) entry.getValue();
+            modeloTablaH.addRow(new Object[]{Estado.values()[DP.getEstado()].toString(), DP.getFechaHora()});
         }
     }
 
-    private void limpiarTabla() {
-        modeloTabla = (DefaultTableModel) TablaProd.getModel();
-        while (modeloTabla.getRowCount() > 0) {
-            modeloTabla.removeRow(0);
+    private void limpiarTablas() {
+        modeloTablaP = (DefaultTableModel) TablaProd.getModel();
+        modeloTablaH = (DefaultTableModel) tablaHistorial.getModel();
+        
+        while (modeloTablaP.getRowCount() > 0) {
+            modeloTablaP.removeRow(0);
+        }
+        
+        while (modeloTablaH.getRowCount() > 0) {
+            modeloTablaH.removeRow(0);
         }
     }
 
@@ -113,6 +131,8 @@ public class PanelInfoPedido extends javax.swing.JPanel {
         Label_Costo = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaHistorial = new javax.swing.JTable();
 
         setMaximumSize(new java.awt.Dimension(445, 304));
         setMinimumSize(new java.awt.Dimension(445, 304));
@@ -194,6 +214,31 @@ public class PanelInfoPedido extends javax.swing.JPanel {
             }
         });
 
+        tablaHistorial.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Estado", "Fecha y hora"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tablaHistorial);
+        if (tablaHistorial.getColumnModel().getColumnCount() > 0) {
+            tablaHistorial.getColumnModel().getColumn(0).setResizable(false);
+            tablaHistorial.getColumnModel().getColumn(1).setResizable(false);
+        }
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -201,32 +246,36 @@ public class PanelInfoPedido extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel3)
-                                        .addComponent(jLabel7)
-                                        .addComponent(jLabel5)
-                                        .addComponent(jLabel2))
-                                    .addGap(16, 16, 16)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(Label_Cliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(Label_Fecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(Label_Restaurante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(Label_Costo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGap(34, 34, 34))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(Label_Numero, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(238, 238, 238)))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(ComboEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING))))
-                    .addComponent(jLabel6))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel2))
+                                .addGap(16, 16, 16)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(Label_Cliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(Label_Fecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(Label_Restaurante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(Label_Costo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(34, 34, 34))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(Label_Numero, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(238, 238, 238)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(ComboEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -252,17 +301,18 @@ public class PanelInfoPedido extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(Label_Fecha))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel6))
+                            .addComponent(Label_Fecha)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jButton1)))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -318,5 +368,7 @@ public class PanelInfoPedido extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tablaHistorial;
     // End of variables declaration//GEN-END:variables
 }

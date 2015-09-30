@@ -6,6 +6,7 @@
 package Presentacion;
 
 import Logica.DataTypes.DataPedido;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -13,8 +14,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
-import javax.swing.JList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -23,7 +23,7 @@ import javax.swing.JList;
 public class VerInfoPedido extends javax.swing.JInternalFrame {
 
     QuickOrder ventanaPrincipal;
-    HashMap OBJs;
+    HashMap pedidos;
 
     private PanelInfoPedido panelInfoPedido1 = null;
 
@@ -36,26 +36,33 @@ public class VerInfoPedido extends javax.swing.JInternalFrame {
         cargarPedidos(new String(""));
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         this.setVisible(true);
-
     }
 
     public void cargarPedidos(String filtro) throws SQLException, ClassNotFoundException {
-        OBJs = ventanaPrincipal.CU.getDataPedidos();
-        Iterator it = OBJs.entrySet().iterator();
-        DefaultListModel model = new DefaultListModel();
+        pedidos = ventanaPrincipal.CU.getDataPedidos();
+        Iterator it = pedidos.entrySet().iterator();
+        DefaultTableModel model = (DefaultTableModel) tablaPedidos.getModel();
+
+        while (model.getRowCount() > 0) {
+            model.removeRow(0);
+        }
+
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
             DataPedido DP = (DataPedido) entry.getValue();
-            String elemento = DP.getNumero() + " | " + DP.getCliente() + " - " + DP.getRestaurante() + " - " + DP.getFecha();
+            Object[] elemento = new Object[]{DP.getNumero(), ventanaPrincipal.CU.buscarRestaurante(DP.getRestaurante()).getNombre(), ventanaPrincipal.CU.buscarCliente(DP.getCliente()).getNombre() + " " + ventanaPrincipal.CU.buscarCliente(DP.getCliente()).getApellido(), DP.getFecha()};
             if (filtro.isEmpty()) {
-                model.addElement(elemento);
+                model.addRow(elemento);
             } else {
-                if (elemento.contains(filtro)) {
-                    model.addElement(elemento);
+                if (elemento[0].toString().toLowerCase().contains(filtro.toLowerCase())
+                        || elemento[1].toString().toLowerCase().contains(filtro.toLowerCase())
+                        || elemento[2].toString().toLowerCase().contains(filtro.toLowerCase())
+                        || elemento[3].toString().toLowerCase().contains(filtro.toLowerCase())) {
+                    model.addRow(elemento);
                 }
             }
         }
-        ListaClientes.setModel(model);
+        tablaPedidos.setModel(model);
     }
 
     /**
@@ -67,12 +74,12 @@ public class VerInfoPedido extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        ListaClientes = new javax.swing.JList();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         pa = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaPedidos = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Informacion Pedidos");
@@ -98,34 +105,56 @@ public class VerInfoPedido extends javax.swing.JInternalFrame {
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        ListaClientes.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        ListaClientes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ListaClientesMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(ListaClientes);
-
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 37, 444, 210));
-
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Seleccionar Pedido");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 14, 202, -1));
-
-        jLabel2.setText("Filtro: ");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(265, 14, -1, -1));
 
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTextField1KeyReleased(evt);
             }
         });
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(314, 11, 141, -1));
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 10, 130, -1));
         getContentPane().add(pa, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 450, 310));
+
+        tablaPedidos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Numero", "Restaurante", "Cliente", "Fecha"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tablaPedidos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaPedidosMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tablaPedidos);
+        if (tablaPedidos.getColumnModel().getColumnCount() > 0) {
+            tablaPedidos.getColumnModel().getColumn(0).setResizable(false);
+            tablaPedidos.getColumnModel().getColumn(1).setResizable(false);
+            tablaPedidos.getColumnModel().getColumn(2).setResizable(false);
+            tablaPedidos.getColumnModel().getColumn(3).setResizable(false);
+        }
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 450, 210));
+
+        jButton1.setText("Filtrar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 10, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -135,37 +164,38 @@ public class VerInfoPedido extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_formInternalFrameClosing
 
-    private void ListaClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListaClientesMouseClicked
-        JList list = (JList) evt.getSource();
-        if (evt.getClickCount() == 2) {
-            String pedido = (String) list.getSelectedValue();
-            String[] parts = pedido.split(" | ");
-            int x = Integer.parseInt(parts[0]);
-            try {
-                panelInfoPedido1.cargarInfo(((DataPedido) OBJs.get(x)));
-            } catch (IOException ex) {
-                Logger.getLogger(VerInfoPedido.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
-    }//GEN-LAST:event_ListaClientesMouseClicked
-
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
-        try {
-            cargarPedidos(jTextField1.getText());
-        } catch (SQLException ex) {
-            Logger.getLogger(VerInfoPedido.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(VerInfoPedido.class.getName()).log(Level.SEVERE, null, ex);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            filtrar();
         }
     }//GEN-LAST:event_jTextField1KeyReleased
 
+    private void tablaPedidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaPedidosMouseClicked
+        try {
+            panelInfoPedido1.cargarInfo(ventanaPrincipal.CU.getDataPedido(Integer.parseInt(tablaPedidos.getValueAt(tablaPedidos.getSelectedRow(), 0).toString())));
+        } catch (IOException | SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(VerInfoPedido.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_tablaPedidosMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        filtrar();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void filtrar() {
+        try {
+            cargarPedidos(jTextField1.getText());
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(VerInfoPedido.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList ListaClientes;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel pa;
+    private javax.swing.JTable tablaPedidos;
     // End of variables declaration//GEN-END:variables
 }
