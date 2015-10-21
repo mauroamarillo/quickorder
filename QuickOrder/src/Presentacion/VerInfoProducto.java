@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,11 +25,15 @@ public class VerInfoProducto extends javax.swing.JInternalFrame {
 
     QuickOrder ventanaPrincipal;
     private PanelInfoProducto panelInfoProducto1;
+    public webservices.WSQuickOrder port = null;
 
     public VerInfoProducto(QuickOrder vp) throws SQLException {
+        webservices.WSQuickOrder_Service service = new webservices.WSQuickOrder_Service();
+        port = service.getWSQuickOrderPort();
+        
         this.ventanaPrincipal = vp;
         initComponents();
-        cargarProductos(new String());
+        cargarProductos(new String(""));
         panelInfoProducto1 = new PanelInfoProducto(this);
         PanelContenedor.add(panelInfoProducto1);
         this.setLocation(220, 80);
@@ -37,17 +42,15 @@ public class VerInfoProducto extends javax.swing.JInternalFrame {
     }
 
     private void cargarProductos(String filtro) throws SQLException {
+        List<Object> OBJs = port.getDataIndividuales();
 
-        HashMap OBJs = new HashMap();
+        OBJs.addAll(port.getDataPromociones());
+        //OBJs.putAll(ventanaPrincipal.CU.getCP().getDataPromociones());
 
-        OBJs.putAll(ventanaPrincipal.CU.getCP().getDataIndividuales());
-        OBJs.putAll(ventanaPrincipal.CU.getCP().getDataPromociones());
-
-        Iterator it = OBJs.entrySet().iterator();
+        Iterator it = OBJs.iterator();
         DefaultListModel model = new DefaultListModel();
         while (it.hasNext()) {
-            Map.Entry entry = (Map.Entry) it.next();
-            DataProducto DP = (DataProducto) entry.getValue();
+            webservices.DataProducto DP = (webservices.DataProducto) it.next();
             String elemento = DP.getRestaurante() + "_" + DP.getNombre();
             if (filtro.isEmpty()) {
                 model.addElement(elemento);
@@ -165,13 +168,11 @@ public class VerInfoProducto extends javax.swing.JInternalFrame {
         if (evt.getClickCount() == 2) {
             String Restaurante_Producto = (String) list.getSelectedValue();
             try {
-                DataProducto DP = ventanaPrincipal.CU.getCP().BuscarDataXRestaurante_Producto(Restaurante_Producto);
-                panelInfoProducto1.cargarInfo(DP, ventanaPrincipal.CU.getDataPedidosProducto(DP.getRestaurante(), DP.getNombre()));
+                webservices.DataProducto DP = port.buscarDataXRestauranteProducto(Restaurante_Producto);
+                panelInfoProducto1.cargarInfo(DP, port.getDataPedidosProducto(DP.getRestaurante(), DP.getNombre()));
             } catch (IOException ex) {
                 Logger.getLogger(VerInfoProducto.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
-                Logger.getLogger(VerInfoProducto.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
                 Logger.getLogger(VerInfoProducto.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

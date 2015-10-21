@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,8 +24,11 @@ import javax.swing.JList;
 public class VerInfoClientes extends javax.swing.JInternalFrame {
 
     QuickOrder ventanaPrincipal;
-
+    public webservices.WSQuickOrder port = null;
+    
     public VerInfoClientes(QuickOrder vp) throws SQLException, ClassNotFoundException {
+        webservices.WSQuickOrder_Service service = new webservices.WSQuickOrder_Service();
+        port = service.getWSQuickOrderPort();
         this.ventanaPrincipal = vp;
         initComponents();
         cargarClientes(new String());
@@ -34,12 +38,11 @@ public class VerInfoClientes extends javax.swing.JInternalFrame {
     }
 
     private void cargarClientes(String filtro) throws SQLException, ClassNotFoundException {
-        HashMap OBJs = ventanaPrincipal.CU.getDataClientes();
-        Iterator it = OBJs.entrySet().iterator();
+        List<Object> OBJs = port.getDataClientes();
+        Iterator it = OBJs.iterator();
         DefaultListModel model = new DefaultListModel();
         while (it.hasNext()) {
-            Map.Entry entry = (Map.Entry) it.next();
-            DataCliente DC = (DataCliente) entry.getValue();
+            webservices.DataCliente DC = (webservices.DataCliente) it.next();
             if (filtro.isEmpty()) {
                 model.addElement(DC.getNickname());
             } else {
@@ -163,13 +166,9 @@ public class VerInfoClientes extends javax.swing.JInternalFrame {
         if (evt.getClickCount() == 2) {
             String Cliente = (String) list.getSelectedValue();
             try {
-                panelInfoCliente1.cargarInfo(ventanaPrincipal.CU.buscarCliente(Cliente));
+                panelInfoCliente1.cargarInfo(port.buscarCliente(Cliente));
                 // panelInfoCliente1.cargarTablaPedidos(ventanaPrincipal.CU.getDataPedidos(Cliente));
-            } catch (SQLException ex) {
-                Logger.getLogger(VerInfoClientes.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
-                Logger.getLogger(VerInfoClientes.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
                 Logger.getLogger(VerInfoClientes.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -193,4 +192,5 @@ public class VerInfoClientes extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextField1;
     private Presentacion.PanelInfoCliente panelInfoCliente1;
     // End of variables declaration//GEN-END:variables
+
 }

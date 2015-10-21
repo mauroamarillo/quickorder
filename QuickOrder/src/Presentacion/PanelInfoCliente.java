@@ -5,13 +5,10 @@
  */
 package Presentacion;
 
-import Logica.DataTypes.DataCliente;
-import Logica.DataTypes.DataPedido;
 import Logica.HerramientaImagenes;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -24,19 +21,21 @@ public class PanelInfoCliente extends javax.swing.JPanel implements Runnable {
      * Creates new form PanelInfoCliente
      */
     DefaultTableModel modeloTabla;
-    HashMap dataPedidos;
+    List<Object> dataPedidos;
     private Thread thread;
     private String path;
+    webservices.WSQuickOrder port;
 
     public PanelInfoCliente() {
+        webservices.WSQuickOrder_Service service = new webservices.WSQuickOrder_Service();
+        port = service.getWSQuickOrderPort();
         initComponents();
         modeloTabla = (DefaultTableModel) TablaPedidos.getModel();
         TablaPedidos.setModel(modeloTabla);
         limpiarTabla();
-        dataPedidos = new HashMap();
     }
 
-    public void cargarInfo(DataCliente DC) throws IOException {
+    public void cargarInfo(webservices.DataCliente DC) throws IOException {
         Label_Nick.setText(DC.getNickname());
         Label_Apellido.setText(DC.getApellido());
         Label_Nombre.setText(DC.getNombre());
@@ -47,16 +46,15 @@ public class PanelInfoCliente extends javax.swing.JPanel implements Runnable {
         path = DC.getImagen();
         thread = new Thread(this, "cargar_img");
         thread.start();
-        dataPedidos = DC.getPedidos();
+        dataPedidos = port.clienteGetPedidos(DC.getNickname());
         limpiarTabla();
         cargarTablaPedidos();
     }
 
     public void cargarTablaPedidos() {
-        Iterator it = dataPedidos.entrySet().iterator();
+        Iterator it = dataPedidos.iterator();
         while (it.hasNext()) {
-            Map.Entry entry = (Map.Entry) it.next();
-            DataPedido DP = (DataPedido) entry.getValue();
+            webservices.DataPedido DP = (webservices.DataPedido) it.next();
             modeloTabla.addRow(new Object[]{DP.getRestaurante(), DP.getFecha().toString()});
         }
     }

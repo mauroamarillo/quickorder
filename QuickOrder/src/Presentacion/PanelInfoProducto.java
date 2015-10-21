@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 
@@ -36,8 +37,10 @@ public class PanelInfoProducto extends javax.swing.JPanel implements Runnable {
     String restaurante;
     private Thread thread;
     private String path;
+    VerInfoProducto vip;
 
     public PanelInfoProducto(VerInfoProducto vip) {
+        this.vip = vip;
         initComponents();
         modeloTablaProductos = (DefaultTableModel) TablaIndividuales.getModel();
         modeloTablaPedidos = (DefaultTableModel) TablaPedidos.getModel();
@@ -64,7 +67,7 @@ public class PanelInfoProducto extends javax.swing.JPanel implements Runnable {
         }
     }
 
-    public void cargarInfo(DataProducto DP, HashMap DPed) throws IOException, SQLException {
+    public void cargarInfo(webservices.DataProducto DP, List<Object> DPed) throws IOException, SQLException {
         if (DP == null) {
             panelEnBlanco();
             return;
@@ -83,7 +86,7 @@ public class PanelInfoProducto extends javax.swing.JPanel implements Runnable {
         restaurante = DP.getRestaurante();
         limpiarTablaPedidos();
         cargarTablaPedidos(DPed);
-        if (DP instanceof DataIndividual) {
+        if (DP instanceof webservices.DataIndividual) {
             Label_Tipo.setText("Producto Individual");
             jLabel3.setVisible(false);
             jLabel4.setVisible(false);
@@ -92,7 +95,7 @@ public class PanelInfoProducto extends javax.swing.JPanel implements Runnable {
             limpiarTablaProductos();
         } else {
             Label_Tipo.setText("Producto Promocional");
-            DataPromocion DPr = (DataPromocion) DP;
+            webservices.DataPromocion DPr = (webservices.DataPromocion) DP;
             if (DPr.isActivo()) {
                 Label_Activa.setText("SI");
             } else {
@@ -103,24 +106,22 @@ public class PanelInfoProducto extends javax.swing.JPanel implements Runnable {
             Label_Activa.setVisible(true);
             jScrollPane1.setVisible(true);
             limpiarTablaProductos();
-            cargarTablaProductos(DPr.getDataProdPromo());
+            cargarTablaProductos(vip.port.promocionGetProdPromo(DPr.getRestaurante()+"_"+DPr.getNombre()));
         }
     }
 
-    public void cargarTablaProductos(HashMap dataSubProductos) {
-        Iterator it = dataSubProductos.entrySet().iterator();
+    public void cargarTablaProductos(List<Object> dataSubProductos) {
+        Iterator it = dataSubProductos.iterator();
         while (it.hasNext()) {
-            Map.Entry entry = (Map.Entry) it.next();
-            DataProdPromo DP = (DataProdPromo) entry.getValue();
+            webservices.DataProdPromo DP = (webservices.DataProdPromo) it.next();
             modeloTablaProductos.addRow(new Object[]{DP.getIndividual().getNombre(), DP.getCantidad()});
         }
     }
 
-    public void cargarTablaPedidos(HashMap dataPedidos) {
-        Iterator it = dataPedidos.entrySet().iterator();
+    public void cargarTablaPedidos(List<Object> dataPedidos) {
+        Iterator it = dataPedidos.iterator();
         while (it.hasNext()) {
-            Map.Entry entry = (Map.Entry) it.next();
-            DataPedido DP = (DataPedido) entry.getValue();
+            webservices.DataPedido DP = (webservices.DataPedido) it.next();
             modeloTablaPedidos.addRow(new Object[]{DP.getCliente(), DP.getFecha(), DP.getPrecio()});
         }
     }

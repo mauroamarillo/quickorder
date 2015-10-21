@@ -2,7 +2,6 @@ package Presentacion;
 
 import Logica.ControladorUsuario;
 import Logica.Extra;
-import Logica.HerramientaImagenes;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.beans.PropertyVetoException;
@@ -11,12 +10,8 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 import javax.swing.UnsupportedLookAndFeelException;
 /*
@@ -91,6 +86,7 @@ public class QuickOrder extends javax.swing.JFrame {
         Menu_Info_Cliente = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
         Menu_Extra = new javax.swing.JMenu();
         Menu_DatosPrueba = new javax.swing.JMenuItem();
 
@@ -202,6 +198,14 @@ public class QuickOrder extends javax.swing.JFrame {
             }
         });
         Infirmacion.add(jMenuItem2);
+
+        jMenuItem6.setText("Estadisticas de visitas");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        Infirmacion.add(jMenuItem6);
 
         jMenuBar1.add(Infirmacion);
 
@@ -456,6 +460,22 @@ public class QuickOrder extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_Menu_RCategoriaActionPerformed
 
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        if (!operando) {
+            try {
+                VerInfoVisitas vip = new VerInfoVisitas(this);
+                this.add(vip, BorderLayout.CENTER);
+                Dimension desktopSize = this.getContentPane().getSize();
+                Dimension FrameSize = vip.getSize();
+                vip.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+                vip.setSelected(true);
+                operando = true;
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(QuickOrder.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -516,5 +536,6 @@ public class QuickOrder extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem6;
     // End of variables declaration//GEN-END:variables
 }
