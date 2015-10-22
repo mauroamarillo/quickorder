@@ -5,12 +5,7 @@
  */
 package Presentacion;
 
-import Logica.DataTypes.DataIndividual;
-import Logica.DataTypes.DataPromocion;
-import Logica.DataTypes.DataRestaurante;
-import java.net.MalformedURLException;
 import java.util.Iterator;
-import java.util.Map;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 
@@ -23,23 +18,28 @@ public class PanelInfoRest extends javax.swing.JPanel {
     /**
      * Creates new form PanelInfoRest
      */
-    DataRestaurante R;
+    webservices.DataRestaurante R;
+    webservices.WSQuickOrder port;
 
     public PanelInfoRest() {
+        webservices.WSQuickOrder_Service service = new webservices.WSQuickOrder_Service();
+        port = service.getWSQuickOrderPort();
         this.R = null;
         initComponents();
         this.setVisible(false);
     }
 
-    public void cargarInfo(DataRestaurante R) throws MalformedURLException {
-        this.R = R;
+    public void cargarInfo(String nick){
+        
+        System.out.println(nick);
+        this.R = port.buscarRestaurante(nick);
         if (R != null) {
             nickname.setText(R.getNickname());
             direccion.setText(R.getDireccion());
             email.setText(R.getEmail());
             nombre.setText(R.getNombre());
             PanelInfoResIMG panelIMG = new PanelInfoResIMG();
-            panelIMG.cargar(R.getImagenes());
+            panelIMG.cargar(port.restauranteGetImagenes(R.getNickname()));
             jScrollPane3.setViewportView(panelIMG);
             cargarproductos(R);
             cargarcategorias(R);
@@ -49,33 +49,31 @@ public class PanelInfoRest extends javax.swing.JPanel {
         }
     }
 
-    public void cargarproductos(DataRestaurante R) {
+    public void cargarproductos(webservices.DataRestaurante R) {
         DefaultListModel model = new DefaultListModel();
-        if (R.getIndividuales() != null) {
-            Iterator it = R.getIndividuales().entrySet().iterator();
+        if (port.restauranteGetIndividuales(R.getNickname()) != null) {
+            Iterator it = port.restauranteGetIndividuales(R.getNickname()).iterator();
             while (it.hasNext()) {
-                Map.Entry entry = (Map.Entry) it.next();
-                DataIndividual I = ((DataIndividual) entry.getValue());
+                webservices.DataIndividual I = ((webservices.DataIndividual) it.next());
                 model.addElement(I.getNombre());
             }
         }
-        if (R.getPromociones() != null) {
-            Iterator it = R.getPromociones().entrySet().iterator();
+        
+        if (port.restauranteGetPromociones(R.getNickname()) != null) {
+            Iterator it = port.restauranteGetPromociones(R.getNickname()).iterator();
             while (it.hasNext()) {
-                Map.Entry entry = (Map.Entry) it.next();
-                DataPromocion P = ((DataPromocion) entry.getValue());
+                webservices.DataPromocion P = (webservices.DataPromocion) it.next();
                 model.addElement(P.getNombre());
             }
         }
         ListaProductos.setModel(model);
     }
 
-    public void cargarcategorias(DataRestaurante R) {
-        Iterator it = R.getCategorias().entrySet().iterator();
+    public void cargarcategorias(webservices.DataRestaurante R) {
+        Iterator it = port.restauranteGetCategorias(R.getNickname()).iterator();
         DefaultListModel model = new DefaultListModel();
         while (it.hasNext()) {
-            Map.Entry entry = (Map.Entry) it.next();
-            String C = ((String) entry.getValue());
+            String C = (String) it.next();
             model.addElement(C);
         }
         ListaCategorias.setModel(model);

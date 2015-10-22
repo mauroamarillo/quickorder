@@ -5,9 +5,8 @@
  */
 package Presentacion;
 
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
+import java.util.List;
 
 /**
  *
@@ -23,12 +22,11 @@ public final class PanelInfoResIMG extends javax.swing.JPanel {
         initComponents();
     }
 
-    public void cargar(HashMap imgs) {
-        Iterator it = imgs.entrySet().iterator();
+    public void cargar(List<Object> imgs) {
+        Iterator it = imgs.iterator();
         int x = 0;
         while (it.hasNext()) {
-            Map.Entry entry = (Map.Entry) it.next();
-            String path = (String) entry.getValue();
+            String path = (String) it.next();
             miniaturaIMG m = new miniaturaIMG();
             m.cargarIMGs(path);
             this.add(m);
@@ -45,5 +43,4 @@ public final class PanelInfoResIMG extends javax.swing.JPanel {
     private void initComponents() {
         setPreferredSize(new java.awt.Dimension(300, 0));
     }
-
 }

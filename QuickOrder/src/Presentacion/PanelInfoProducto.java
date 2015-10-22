@@ -6,20 +6,12 @@
 package Presentacion;
 
 import Logica.ControladorUsuario;
-import Logica.DataTypes.DataIndividual;
-import Logica.DataTypes.DataPedido;
-import Logica.DataTypes.DataProdPromo;
-import Logica.DataTypes.DataProducto;
-import Logica.DataTypes.DataPromocion;
-import Logica.HerramientaImagenes;
 import java.awt.Component;
 import java.awt.Container;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 
 /**

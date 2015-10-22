@@ -5,12 +5,10 @@
  */
 package Presentacion;
 
-import Logica.DataTypes.DataRestaurante;
 import java.net.MalformedURLException;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -28,11 +26,15 @@ public class VerInfoRestaurantes extends javax.swing.JInternalFrame {
     DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Categorias");
     DefaultMutableTreeNode nodoCategoria;
     DefaultMutableTreeNode nodoRestaurante;
-    HashMap Categorias;
+    List<Object> Categorias;
+    public webservices.WSQuickOrder port = null;
 
     public VerInfoRestaurantes(QuickOrder vp) throws SQLException {
+        webservices.WSQuickOrder_Service service = new webservices.WSQuickOrder_Service();
+        port = service.getWSQuickOrderPort();
+        
         this.ventanaPrincipal = vp;
-        this.Categorias = ventanaPrincipal.CU.getCategorias();
+        this.Categorias = port.getCategorias();
         initComponents();
         cargarArbol();
         this.setLocation(220, 80);
@@ -43,16 +45,14 @@ public class VerInfoRestaurantes extends javax.swing.JInternalFrame {
 
     private void cargarArbol() {
         /*Guardo las categorias en la lista de categorias*/
-        Iterator it = Categorias.entrySet().iterator();
+        Iterator it = Categorias.iterator();
         while (it.hasNext()) {
-            Map.Entry entry = (Map.Entry) it.next();
-            String nombreCategoria = (String) entry.getValue();
+            String nombreCategoria = (String) it.next();
             nodoCategoria = new DefaultMutableTreeNode(nombreCategoria);    // creo un nodo con el nombreCategoria
-            HashMap rest = ventanaPrincipal.CU.consultarRestaurantesPorCategoria(nombreCategoria);  // Obtengo los una lista de DATATYPEs de restaurantes 
-            Iterator it2 = rest.entrySet().iterator();
+            List<Object> rest = port.consultarRestaurantesPorCategoria(nombreCategoria);  // Obtengo los una lista de DATATYPEs de restaurantes 
+            Iterator it2 = rest.iterator();
             while (it2.hasNext()) {
-                Map.Entry entry2 = (Map.Entry) it2.next();
-                DataRestaurante R = (DataRestaurante) entry2.getValue();
+                webservices.DataRestaurante R = (webservices.DataRestaurante) it2.next();
                 nodoRestaurante = new DefaultMutableTreeNode(R);        // creo un nodo por cada datatype obtenido
                 nodoRestaurante.setAllowsChildren(false);               // estos nodos no pueden tener nodos anidados, esto lo uso despues para saber cual nodo es de un restaurante y cual no
                 nodoCategoria.add(nodoRestaurante);                     // agrego cada nodo restaurante al nodo de la categoria que encontre
@@ -154,11 +154,7 @@ public class VerInfoRestaurantes extends javax.swing.JInternalFrame {
         if (evt.getNewLeadSelectionPath() != null) {
             DefaultMutableTreeNode x = (DefaultMutableTreeNode) evt.getNewLeadSelectionPath().getLastPathComponent();
             if (x.getAllowsChildren() == false) {
-                try {
-                    panelInfoRest2.cargarInfo((DataRestaurante) x.getUserObject());
-                } catch (MalformedURLException ex) {
-                    Logger.getLogger(VerInfoRestaurantes.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                panelInfoRest2.cargarInfo(((webservices.DataRestaurante) x.getUserObject()).getNickname());
             }
         }
     }//GEN-LAST:event_ArbolRestaurantesValueChanged

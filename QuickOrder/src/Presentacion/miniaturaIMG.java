@@ -5,7 +5,6 @@
  */
 package Presentacion;
 
-import Logica.HerramientaImagenes;
 import java.awt.Frame;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
